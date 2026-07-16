@@ -1,0 +1,29 @@
+name: Deploy Prototype
+
+on:
+  push:
+    branches: [ deploy/prototype ]
+  pull_request:
+    branches: [ deploy/prototype ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Copy static files to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: prototype.eventaz.space
+          username: root
+          key: ${{ secrets.SSH_KEY }}
+          source: "prototype/static/*"
+          target: "/var/www/eventaz-prototype"
+          strip_components: 2
+
+      
+
+

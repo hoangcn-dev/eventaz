@@ -2,9 +2,9 @@ name: Deploy Prototype
 
 on:
   push:
-    branches: [ prototype ]
+    branches: [ deploy/prototype ]
   pull_request:
-    branches: [ prototype ]
+    branches: [ deploy/prototype ]
 
 jobs:
   deploy:

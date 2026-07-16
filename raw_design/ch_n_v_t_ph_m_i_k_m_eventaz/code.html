@@ -1,0 +1,369 @@
+<!DOCTYPE html><html class="light" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Chọn vật phẩm đi kèm - EventAZ</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#003c36",
+                        "primary-fixed": "#dde1ff",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#3755c3",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#001453",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-tertiary-fixed": "#00201d",
+                        "background": "#f8f9ff",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "on-primary-container": "#a8b8ff",
+                        "on-secondary-container": "#fffbff",
+                        "on-tertiary-fixed-variant": "#005049",
+                        "tertiary-fixed": "#89f5e7",
+                        "tertiary-container": "#00554e",
+                        "outline-variant": "#c4c5d5",
+                        "surface-container-high": "#dce9ff",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "primary-container": "#1e40af",
+                        "inverse-primary": "#b8c4ff",
+                        "on-secondary-fixed": "#25005a",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary": "#00288e",
+                        "surface-dim": "#cbdbf5",
+                        "error-container": "#ffdad6",
+                        "surface": "#f8f9ff",
+                        "outline": "#757684",
+                        "on-tertiary-container": "#5fcdbf",
+                        "on-primary-fixed-variant": "#173bab",
+                        "secondary-container": "#8a4cfc",
+                        "on-surface": "#0b1c30",
+                        "tertiary-fixed-dim": "#6bd8cb",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "surface-container-low": "#eff4ff",
+                        "error": "#ba1a1a",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "on-background": "#0b1c30",
+                        "surface-container": "#e5eeff",
+                        "surface-bright": "#f8f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#213145",
+                        "surface-variant": "#d3e4fe",
+                        "secondary-fixed": "#eaddff",
+                        "secondary": "#712ae2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "margin-desktop": "40px",
+                        "gutter": "24px",
+                        "base": "8px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "mono-sm": ["JetBrains Mono"],
+                        "headline-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .step-active { @apply text-primary font-bold; }
+        .step-complete { @apply text-tertiary; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="bg-surface-container-lowest border-b border-outline-variant sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="text-headline-md font-headline-md font-extrabold text-primary tracking-tight">EventAZ</div>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Events</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">My Tickets</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Support</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="flex items-center gap-2 p-1 pr-3 hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined text-3xl" data-icon="account_circle">account_circle</span>
+<span class="text-label-md hidden md:inline">Account</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-desktop py-8">
+<!-- Progress Tracker -->
+<div class="mb-10 max-w-3xl mx-auto">
+<div class="relative flex justify-between items-center">
+<!-- Line -->
+<div class="absolute top-1/2 left-0 w-full h-0.5 bg-outline-variant -translate-y-1/2 z-0"></div>
+<!-- Step 1 -->
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-tertiary text-on-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined" data-icon="check">check</span>
+</div>
+<span class="text-label-md text-tertiary">Step 1: Tickets</span>
+</div>
+<!-- Step 2 -->
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md ring-4 ring-primary-fixed">
+<span class="font-bold">2</span>
+</div>
+<span class="text-label-md text-primary font-bold">Step 2: Add-ons</span>
+</div>
+<!-- Step 3 -->
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center">
+<span class="font-bold">3</span>
+</div>
+<span class="text-label-md text-on-surface-variant">Step 3: Payment</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Add-ons Selection -->
+<div class="lg:col-span-8">
+<div class="mb-6">
+<h1 class="text-headline-md font-headline-md text-on-surface mb-2">Nâng tầm trải nghiệm của bạn</h1>
+<p class="text-body-md text-on-surface-variant">Lựa chọn các vật phẩm và dịch vụ bổ sung cho sự kiện Tech Summit sắp tới.</p>
+</div>
+<!-- Category Navigation -->
+<div class="flex gap-4 mb-8 overflow-x-auto scrollbar-hide pb-2">
+<button class="px-6 py-2 rounded-full bg-primary text-on-primary font-label-md whitespace-nowrap shadow-sm">Tất cả</button>
+<button class="px-6 py-2 rounded-full bg-surface-container-lowest border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-all font-label-md whitespace-nowrap">Quà lưu niệm</button>
+<button class="px-6 py-2 rounded-full bg-surface-container-lowest border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-all font-label-md whitespace-nowrap">Dịch vụ</button>
+<button class="px-6 py-2 rounded-full bg-surface-container-lowest border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-all font-label-md whitespace-nowrap">Thiết bị</button>
+</div>
+<!-- Add-on Grid (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Áo thun sự kiện -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-md transition-shadow group flex flex-col">
+<div class="relative h-48 bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A premium black cotton t-shirt with a minimalist neon blue Tech Summit 2024 logo on the chest, displayed on a sleek modern clothing rack in a high-end retail environment with cool studio lighting. The aesthetic is clean, professional, and corporate modern." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBWYIMKQ0hYrkoWgMKAD_KCWLW1qn3g63ayNSG-2amXszuTIOn2QsvJGxrEbLloAWjLAJvTTefEwJgWyXDOtIbSnuoI3r-AUtlbMJlzoYQdSsPyHEOPT0g_oa-jDLCs1Me30efZ4XhOyFia2u5O-cVpqxRM76r4K72Z-XVSuiSV9jkp03S0NPJktxrPzaWsk2JribQUGpt0GFSM2RInd7OImyqbCBB3xv7OVAXEh9CKgkjPGCnAAbUBQ">
+<div class="absolute top-3 right-3 bg-secondary-container text-on-secondary-container px-2 py-1 rounded text-label-md">Must-have</div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-sm text-on-surface">Áo thun sự kiện Tech Summit</h3>
+<span class="font-bold text-primary text-lg">$25</span>
+</div>
+<p class="text-body-sm text-on-surface-variant mb-4 flex-grow">Chất liệu premium cotton 100%, co giãn 4 chiều. Thiết kế độc bản cho thành viên tham dự.</p>
+<div class="flex flex-col gap-4">
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded border border-outline-variant text-label-md hover:border-primary hover:text-primary transition-colors">S</button>
+<button class="w-8 h-8 rounded border border-primary bg-primary text-on-primary text-label-md">M</button>
+<button class="w-8 h-8 rounded border border-outline-variant text-label-md hover:border-primary hover:text-primary transition-colors">L</button>
+<button class="w-8 h-8 rounded border border-outline-variant text-label-md hover:border-primary hover:text-primary transition-colors">XL</button>
+</div>
+<button class="w-full py-2.5 bg-primary text-on-primary rounded-lg font-label-md flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-lg" data-icon="add_shopping_cart">add_shopping_cart</span>
+                                    Thêm vào giỏ
+                                </button>
+</div>
+</div>
+</div>
+<!-- Thẻ ăn trưa cao cấp -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-md transition-shadow group flex flex-col">
+<div class="relative h-48 bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="An elegant buffet spread in a corporate luxury setting. High-quality gourmet food, artisan breads, and fresh salads are beautifully arranged under warm ambient lighting. The background features a high-end conference hotel lounge with floor-to-ceiling windows showing a modern city skyline." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUSyIXR_SHxz3xLyt56qLCfhFtAWhws3cWA1vacgeuo_ZMv7jGcwncx0qyp3xpdzpDaGMco4ZmIxgvxfPPLf7Ct83ytVUnjknaUBwUEoctZWtudBkPw2TgSpscP7VjTYIpF0BLWULQZAZqZ1_fNdGpNDqkEKaGwyJTtCXlIGknXrnvDE9SUstQUIDur0I4ZyPW5jYYjlcPIiu06qeUgpNrZLjLHuy2WkipGlRlzVmhSq_BZC9QT8onSA">
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-sm text-on-surface">Thẻ ăn trưa cao cấp (3 ngày)</h3>
+<span class="font-bold text-primary text-lg">$45</span>
+</div>
+<p class="text-body-sm text-on-surface-variant mb-4 flex-grow">Thực đơn Buffet đa dạng mỗi ngày, bao gồm đồ uống cao cấp và khu vực ngồi VIP.</p>
+<div class="flex items-center justify-between bg-surface-container-low p-1.5 rounded-lg border border-outline-variant/30">
+<button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-highest rounded transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="remove">remove</span>
+</button>
+<span class="font-bold text-lg px-4">1</span>
+<button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-highest rounded transition-colors text-primary">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Tai nghe phiên dịch -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-md transition-shadow group flex flex-col md:col-span-1">
+<div class="relative h-48 bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Sleek, high-tech wireless translation headset on a minimalist charging dock. The device has a matte silver finish and a small digital display. The lighting is focused and clean, emphasizing its precision-engineered quality within a professional tech conference atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOfsZ2D7cguICPKJsHXwfhyzmSNNppAtQRsjzpE8BvvzIrdmLX1gfm06kGcMxoCZw5eYN9dcMtyiMhbAw-dDfL962DqnqVWAJfCsqv11lj5sZ7WGyA_K2i-C2Ep3vbK6GzGDOwUKhgtAWBXNFwnYeC9F7uor0RrtJdltQMsYXSH7on7GSrhs2C_CQJVESkN8_0C8MJQEao_9VNxTJUVceYQdcJWenvFchqQD72RL03EtvmaaHtZ2AwSw">
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-sm text-on-surface">Tai nghe phiên dịch</h3>
+<span class="font-bold text-primary text-lg">$15</span>
+</div>
+<p class="text-body-sm text-on-surface-variant mb-4 flex-grow">Truy cập kênh phiên dịch trực tiếp đa ngôn ngữ (Tiếng Anh, Nhật, Hàn, Việt).</p>
+<button class="w-full py-2.5 border-2 border-primary text-primary hover:bg-primary/5 rounded-lg font-label-md flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="add">add</span>
+                                Thêm vào giỏ
+                            </button>
+</div>
+</div>
+<!-- Bộ Sticker -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-md transition-shadow group flex flex-col">
+<div class="relative h-40 bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A collection of colorful, premium vinyl stickers featuring tech icons, abstract coding patterns, and futuristic event logos. The stickers are laid out on a dark slate grey laptop surface with subtle lighting reflections, creating a trendy developer workspace vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEoyHRjBap5_uEAXV8UNWAzmUVn6WQRAMF6j2ROEPGPeSbG-3d_VauVrw6_YLDUIayaNQTkwKmf9nmAQO3X9tQrmXvZIaiFlX9d3ITZTtsRYHHVpskO2wBE_dWzurp1Dkaub-d55r6ChbjMT54XWI22Ms-8HuTyxS9PoEQqESltFJlVvxyCse9wflKl3uQyizBE1mJ-VbPpvB6rDBoc5DpxfyHW4LdTr3Ko8tvjAK_JqV-FT687XYkCg">
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-body-lg font-bold text-on-surface">Bộ Sticker giới hạn</h3>
+<span class="font-bold text-primary">$10</span>
+</div>
+<p class="text-body-sm text-on-surface-variant mb-4">12 sticker hologram chất lượng cao, chống nước.</p>
+<button class="w-full py-2 border border-outline-variant hover:border-primary hover:text-primary rounded-lg font-label-md transition-colors">Thêm</button>
+</div>
+</div>
+<!-- Chỗ để xe -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-md transition-shadow group flex flex-col">
+<div class="relative h-40 bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A brightly lit, modern underground parking garage with clean white markings and high-end security cameras. A 'VIP Priority' sign is illuminated in soft blue LED. The space is vast, clean, and organized, conveying a sense of security and premium service for event attendees." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjkGfosaosnk9iGhmnXaqL_4n1YLliD0EhrUxhOkNKc8CGdTrEddPezv9HzqnuqToiIlqKRYgeqvwwKjeWS9tduNcyHzAuC0904IRjeWkfwhLmsEoyJ8Ic6ZXk17x-BrjHEq7ZPcRMPaf--fJFvkUjGRnPypogNAGM1Y3o0pD9cqLeTFgF0OrLt0AB_QxJFkGszcB3iOtL2zNOSaJboh6bk6d54-ZZalDnsLVPpLYgQNZuWGYIg6i8sQ">
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-body-lg font-bold text-on-surface">Chỗ để xe ưu tiên</h3>
+<span class="font-bold text-primary">$20</span>
+</div>
+<p class="text-body-sm text-on-surface-variant mb-4">Vị trí đỗ xe ngay cạnh lối vào chính, bảo vệ 24/7.</p>
+<button class="w-full py-2 border border-outline-variant hover:border-primary hover:text-primary rounded-lg font-label-md transition-colors">Thêm</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Order Summary Sidebar -->
+<div class="lg:col-span-4">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 sticky top-24 shadow-sm">
+<h2 class="text-headline-sm font-headline-sm text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="shopping_cart">shopping_cart</span>
+                        Tóm tắt đơn hàng
+                    </h2>
+<!-- Items Section -->
+<div class="space-y-4 mb-6">
+<!-- Ticket from previous step -->
+<div class="pb-4 border-b border-outline-variant">
+<div class="flex justify-between items-start mb-1">
+<span class="text-label-md text-primary bg-primary-fixed px-2 py-0.5 rounded">Tickets</span>
+<span class="text-body-md font-bold text-on-surface">$299.00</span>
+</div>
+<h4 class="text-body-md font-bold text-on-surface">1x Vé VIP Tech Summit</h4>
+<p class="text-body-sm text-on-surface-variant">Truy cập toàn bộ hội thảo &amp; Networking</p>
+</div>
+<!-- Added items -->
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="restaurant">restaurant</span>
+</div>
+<div>
+<h4 class="text-body-sm font-bold">1x Thẻ ăn trưa</h4>
+<span class="text-label-md text-on-surface-variant">Premium Pack</span>
+</div>
+</div>
+<span class="text-body-sm font-bold">$45.00</span>
+</div>
+</div>
+</div>
+<!-- Discount Section -->
+<div class="mb-6">
+<div class="flex gap-2">
+<input class="flex-grow bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2 text-body-sm focus:ring-2 focus:ring-primary focus:outline-none transition-all" placeholder="Mã giảm giá" type="text">
+<button class="px-4 py-2 bg-on-surface text-surface rounded-lg font-label-md hover:opacity-90 transition-opacity">Áp dụng</button>
+</div>
+</div>
+<!-- Totals -->
+<div class="space-y-3 mb-8">
+<div class="flex justify-between text-body-md text-on-surface-variant">
+<span>Tạm tính</span>
+<span>$344.00</span>
+</div>
+<div class="flex justify-between text-body-md text-on-surface-variant">
+<span>Phí dịch vụ (5%)</span>
+<span>$17.20</span>
+</div>
+<div class="flex justify-between items-center pt-3 border-t border-outline-variant">
+<span class="text-headline-sm font-bold text-on-surface">Tổng cộng</span>
+<span class="text-headline-sm font-extrabold text-primary">$361.20</span>
+</div>
+</div>
+<!-- CTA -->
+<a class="w-full bg-primary text-on-primary py-4 rounded-xl font-bold text-center block shadow-lg hover:shadow-xl hover:translate-y-[-2px] transition-all active:scale-[0.98]" href="#">
+                        Tiếp tục thanh toán
+                    </a>
+<p class="text-center text-label-md text-on-surface-variant mt-4 flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="lock" style="font-variation-settings: 'FILL' 1;">lock</span>
+                        Thanh toán an toàn 256-bit SSL
+                    </p>
+</div>
+<!-- Assistance Card -->
+<div class="mt-6 p-4 border border-outline-variant rounded-xl bg-surface-container-low flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary" data-icon="support_agent">support_agent</span>
+</div>
+<div>
+<h4 class="text-label-md text-on-surface">Cần hỗ trợ?</h4>
+<p class="text-body-sm text-on-surface-variant">Chat với đội ngũ support của chúng tôi 24/7.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-surface-container-lowest border-t border-outline-variant py-8 mt-12">
+<div class="max-w-container-max mx-auto px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="text-on-surface-variant text-body-sm">
+                © 2024 EventAZ Corporation. Bảo lưu mọi quyền.
+            </div>
+<div class="flex gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-md" href="#">Điều khoản</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-md" href="#">Bảo mật</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-md" href="#">Liên hệ</a>
+</div>
+</div>
+</footer>
+<!-- Micro-interaction script -->
+<script>
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (this.innerText === 'Thêm' || this.innerText === 'Thêm vào giỏ') {
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<span class="material-symbols-outlined" data-icon="done">done</span> Đã thêm';
+                    this.classList.add('bg-tertiary', 'text-on-primary', 'border-tertiary');
+                    this.classList.remove('text-primary', 'border-primary');
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.classList.remove('bg-tertiary', 'text-on-primary', 'border-tertiary');
+                    }, 2000);
+                }
+            });
+        });
+    </script>
+</body></html>

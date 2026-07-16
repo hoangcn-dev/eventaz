@@ -1,0 +1,226 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Forgot Password - EventAZ</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#001453",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#d3e4fe",
+                        "primary": "#00288e",
+                        "secondary-fixed": "#eaddff",
+                        "on-tertiary-fixed-variant": "#005049",
+                        "on-surface": "#0b1c30",
+                        "on-surface-variant": "#444653",
+                        "background": "#f8f9ff",
+                        "on-background": "#0b1c30",
+                        "inverse-primary": "#b8c4ff",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#eaf1ff",
+                        "outline-variant": "#c4c5d5",
+                        "tertiary-container": "#00554e",
+                        "primary-container": "#1e40af",
+                        "tertiary": "#003c36",
+                        "surface-container": "#e5eeff",
+                        "tertiary-fixed": "#89f5e7",
+                        "secondary-container": "#8a4cfc",
+                        "on-tertiary-container": "#5fcdbf",
+                        "surface-tint": "#3755c3",
+                        "on-secondary-container": "#fffbff",
+                        "on-primary-container": "#a8b8ff",
+                        "on-primary-fixed-variant": "#173bab",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "on-tertiary-fixed": "#00201d",
+                        "primary-fixed": "#dde1ff",
+                        "outline": "#757684",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#eff4ff",
+                        "surface": "#f8f9ff",
+                        "on-secondary-fixed": "#25005a",
+                        "inverse-surface": "#213145",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "secondary": "#712ae2",
+                        "tertiary-fixed-dim": "#6bd8cb",
+                        "surface-bright": "#f8f9ff",
+                        "surface-dim": "#cbdbf5",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#dce9ff",
+                        "surface-variant": "#d3e4fe"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "base": "8px",
+                        "margin-mobile": "16px",
+                        "container-max": "1440px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "mono-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "mono-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #f8f9ff;
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom Focus Ring for Accessibility */
+        .focus-ring:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #00288e;
+        }
+        /* Glassmorphism subtle effect for light mode */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-background text-on-background">
+<!-- Main Content Area: Centered forgot password card -->
+<main class="flex-grow flex items-center justify-center px-margin-mobile md:px-margin-desktop py-12 relative overflow-hidden">
+<!-- Subtle Decorative Elements -->
+<div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-24 -right-24 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"></div>
+<div class="w-full max-w-[480px] z-10">
+<!-- Brand Logo / Header -->
+<div class="flex flex-col items-center mb-10">
+<div class="w-16 h-16 bg-primary rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-white text-[32px]">lock_reset</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary font-extrabold tracking-tight">EventAZ</h1>
+</div>
+<!-- Forgot Password Card -->
+<div class="glass-card border border-outline-variant rounded-xl p-8 md:p-10 shadow-sm transition-all duration-300">
+<div class="mb-8">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-3">Forgot Password?</h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                        Enter your email address and we will send you a link to reset your password.
+                    </p>
+</div>
+<form class="space-y-6" id="forgotPasswordForm">
+<!-- Email Field -->
+<div class="space-y-2">
+<label class="block font-label-md text-label-md text-on-surface-variant uppercase tracking-wider" for="email">
+                            Email
+                        </label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline">mail</span>
+</div>
+<input class="w-full pl-11 pr-4 py-3.5 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md focus:ring-2 focus:ring-primary focus:border-primary transition-all placeholder:text-outline/50" id="email" name="email" placeholder="name@organization.com" required="" type="email">
+</div>
+</div>
+<!-- Submit Button -->
+<button class="w-full py-4 bg-primary text-on-primary font-label-md text-label-md rounded-lg shadow-md hover:bg-primary-container active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 group" type="submit">
+<span>Reset Password</span>
+<span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</form>
+<!-- Footer Links -->
+<div class="mt-10 pt-8 border-t border-outline-variant/50 flex flex-col items-center gap-4">
+<a class="flex items-center gap-2 font-body-sm text-body-sm text-primary font-bold hover:underline group" href="#">
+<span class="material-symbols-outlined text-[18px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                        Back to Login
+                    </a>
+</div>
+</div>
+<!-- Contextual Support -->
+<p class="mt-8 text-center font-body-sm text-body-sm text-on-surface-variant">
+                Need help? <a class="text-primary hover:underline" href="#">Contact System Support</a>
+</p>
+</div>
+</main>
+<!-- Simple Footer for Transactional Screen -->
+<footer class="w-full py-8 px-margin-desktop border-t border-outline-variant/30 flex flex-col md:flex-row justify-between items-center gap-4 bg-white/50">
+<p class="font-body-sm text-body-sm text-on-surface-variant opacity-70">
+            © 2024 EventAZ Multi-Tenant Systems. All rights reserved.
+        </p>
+<div class="flex gap-6">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+</div>
+</footer>
+<!-- Micro-interaction Script -->
+<script>
+        document.getElementById('forgotPasswordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const button = this.querySelector('button');
+            const originalContent = button.innerHTML;
+            
+            // Loading state animation
+            button.disabled = true;
+            button.innerHTML = `
+                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Processing...</span>
+            `;
+
+            // Simulate API call
+            setTimeout(() => {
+                button.classList.remove('bg-primary');
+                button.classList.add('bg-on-tertiary-fixed-variant');
+                button.innerHTML = `
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <span>Link Sent to Email</span>
+                `;
+                
+                // Feedback message
+                const card = button.closest('.glass-card');
+                const feedback = document.createElement('div');
+                feedback.className = 'mt-4 p-4 bg-tertiary-fixed/10 border border-tertiary-fixed/30 rounded-lg text-on-tertiary-fixed-variant font-body-sm text-center animate-pulse';
+                feedback.innerText = "Check your inbox for the recovery link. It may take a few minutes to arrive.";
+                card.appendChild(feedback);
+
+            }, 1500);
+        });
+    </script>
+</body></html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html><html class="light" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Vé của tôi - EventAZ</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-surface": "#213145",
+                    "tertiary-container": "#00554e",
+                    "on-secondary-fixed-variant": "#5a00c6",
+                    "on-primary-fixed": "#001453",
+                    "outline": "#757684",
+                    "on-background": "#0b1c30",
+                    "surface-dim": "#cbdbf5",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#d3e4fe",
+                    "primary-fixed": "#dde1ff",
+                    "on-primary-container": "#a8b8ff",
+                    "tertiary-fixed-dim": "#6bd8cb",
+                    "outline-variant": "#c4c5d5",
+                    "on-tertiary-fixed": "#00201d",
+                    "on-surface-variant": "#444653",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-container": "#e5eeff",
+                    "secondary-fixed-dim": "#d2bbff",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#173bab",
+                    "on-error": "#ffffff",
+                    "on-tertiary-container": "#5fcdbf",
+                    "surface-tint": "#3755c3",
+                    "secondary-fixed": "#eaddff",
+                    "secondary": "#712ae2",
+                    "on-secondary-container": "#fffbff",
+                    "surface-bright": "#f8f9ff",
+                    "on-error-container": "#93000a",
+                    "error-container": "#ffdad6",
+                    "tertiary": "#003c36",
+                    "surface-variant": "#d3e4fe",
+                    "primary-fixed-dim": "#b8c4ff",
+                    "on-surface": "#0b1c30",
+                    "background": "#f8f9ff",
+                    "surface": "#f8f9ff",
+                    "surface-container-high": "#dce9ff",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#25005a",
+                    "inverse-primary": "#b8c4ff",
+                    "on-tertiary-fixed-variant": "#005049",
+                    "primary-container": "#1e40af",
+                    "secondary-container": "#8a4cfc",
+                    "surface-container-low": "#eff4ff",
+                    "on-secondary": "#ffffff",
+                    "primary": "#00288e",
+                    "tertiary-fixed": "#89f5e7",
+                    "surface-container-lowest": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "base": "8px",
+                    "margin-desktop": "40px",
+                    "gutter": "24px",
+                    "container-max": "1440px"
+            },
+            "fontFamily": {
+                    "display-lg-mobile": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "mono-sm": ["JetBrains Mono"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "mono-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ticket-cutout::before, .ticket-cutout::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #f8f9ff;
+            border-radius: 50%;
+            left: -10px;
+        }
+        .ticket-cutout::before { top: 25%; transform: translateY(-50%); }
+        .ticket-cutout::after { bottom: 25%; transform: translateY(50%); }
+        
+        .ticket-divider {
+            border-right: 2px dashed #e2e8f0;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen">
+<!-- TopNavBar Mapping -->
+<header class="bg-surface-container-lowest border-b border-outline-variant sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+<div onclick="window.location.href='index.html'" class="text-headline-md font-headline-md font-extrabold text-primary cursor-pointer">EventAZ</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Events</a>
+<a class="text-body-md font-body-md text-primary border-b-2 border-primary pb-1" href="#">My Tickets</a>
+<a class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Support</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional user profile avatar for a tech-savvy event attendee. The lighting is soft and corporate, with a clean neutral background. The individual is wearing professional attire, and the overall style is high-fidelity and modern, matching a premium corporate dashboard aesthetic with deep blues and soft whites." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZowOJASdWT3UVO87zmvZhuBKCr4tuFfn60GKzeEQqko-LyfvYSOqau10Ok9I1i_sLIPs9T-g_AuEbW3D0h93Ll_qaXYKkKhYZqGklPMQhMBtWwLGfC4P4MVff1BlnHO8pRgILYQXuKQYHlFobdGu5oHiQZJQhOYKByz8cdC1f71A4pM68T9eagy-26xNe0EmjWnA-2YWZ5SzV4Amop0TNOQa6JVI2fs-Z_FwgW70XMF_bYvZnag4x8A">
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12">
+<!-- Page Title & Stats -->
+<div class="mb-10">
+<h1 class="text-display-lg-mobile md:text-display-lg font-display-lg text-on-surface mb-2">Vé của tôi</h1>
+<p class="text-body-lg text-on-surface-variant">Quản lý và xem lại tất cả các sự kiện bạn đã đăng ký tham gia.</p>
+</div>
+<!-- Tab System -->
+<div class="flex border-b border-outline-variant mb-8 overflow-x-auto no-scrollbar">
+<button class="px-8 py-4 text-headline-sm font-headline-sm border-b-2 border-primary text-primary transition-all duration-200 whitespace-nowrap" id="tab-upcoming" onclick="switchTab('upcoming')">
+                Sắp tới (3)
+            </button>
+<button class="px-8 py-4 text-headline-sm font-headline-sm border-b-2 border-transparent text-on-surface-variant hover:text-primary transition-all duration-200 whitespace-nowrap" id="tab-past" onclick="switchTab('past')">
+                Đã qua (12)
+            </button>
+</div>
+<!-- Ticket Grid / Container -->
+<div class="space-y-6" id="ticket-container">
+<!-- Ticket Item 1: Upcoming -->
+<div class="ticket-card upcoming-ticket group bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col md:flex-row hover:shadow-md transition-shadow relative">
+<div class="w-full md:w-72 h-48 md:h-auto overflow-hidden relative">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A vibrant and energetic corporate tech summit stage with dramatic blue and purple stage lighting. High-definition screen showing generative data art in the background. Professional crowd in soft focus in the foreground. The mood is high-stakes and exciting, shot with professional cinema optics for a high-fidelity look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp6ECss6Wvg_lUf3fqBUwGMxLzoT6PzkcdIQoB64TyXYXc7h4mmaF0XPrbzRdPbAVB3YVuRwZMYpkVYdqwR-akK5Rzzhq_U4CNso_c9x0Ed-n8gdt6ljW_KZjDax14BT4V-heiD2w0REDw1sA41o30IxuPpX3a8VVWmREYrh2Y7BFkHVYfHeg5HuFJ5mc3SLVPzuY6FWcKjqxDiTz5s3bl3AWIUuwcamU2N5rks157FQMqQgX8Nrstaw">
+<div class="absolute top-4 left-4 bg-secondary-container text-on-secondary-container px-3 py-1 rounded-lg text-label-md font-label-md">
+                        LIVE
+                    </div>
+</div>
+<div class="flex-1 p-6 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-headline-md font-headline-md text-on-surface">TechConnect Global Summit 2024</h3>
+<span class="bg-tertiary-container/10 text-tertiary-container px-3 py-1 rounded-full text-label-md font-label-md uppercase tracking-wider">Premium</span>
+</div>
+<div class="space-y-2 mb-6">
+<div class="flex items-center text-on-surface-variant gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="calendar_today">calendar_today</span>
+<span class="text-body-md">Thứ Bảy, 15 Tháng 6, 2024 • 09:00 SA</span>
+</div>
+<div class="flex items-center text-on-surface-variant gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="location_on">location_on</span>
+<span class="text-body-md">Trung tâm Hội nghị Quốc gia, Hà Nội</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/30">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-white bg-slate-200"></div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-slate-300"></div>
+</div>
+<button onclick="window.location.href='ticket-details.html'" class="px-6 py-2.5 bg-primary text-on-primary rounded-lg font-label-md hover:bg-primary-container transition-colors shadow-sm">
+    Xem chi tiết
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+<!-- Quick Navigator Injection -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Ensure Material Symbols CSS is loaded
+    if (!document.querySelector('link[href*="Material+Symbols+Outlined"]')) {
+        const link = document.createElement('link');
+        link.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined';
+        link.rel = 'stylesheet';
+        document.head.appendChild(link);
+    }
+
+    // 2. Create elements
+    const navContainer = document.createElement('div');
+    navContainer.id = 'quick-navigator';
+    navContainer.className = 'fixed bottom-6 right-6 z-[9999] font-body-md text-on-surface';
+    navContainer.style.fontFamily = "'Inter', sans-serif";
+
+    // Inject styles dynamically
+    const style = document.createElement('style');
+    style.innerHTML = `
+        #qn-panel .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        #qn-panel .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        #qn-panel .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    `;
+    document.head.appendChild(style);
+
+    navContainer.innerHTML = `
+      <!-- Trigger Button -->
+      <button id="qn-trigger" class="flex items-center justify-center w-14 h-14 rounded-full bg-primary text-on-primary shadow-xl hover:bg-primary-container active:scale-95 transition-all focus:outline-none" style="background-color: #00288e; color: #ffffff; box-shadow: 0 10px 25px -5px rgba(0, 40, 142, 0.4); border: none; cursor: pointer; width: 3.5rem; height: 3.5rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center;">
+        <span class="material-symbols-outlined" id="qn-icon" style="font-size: 28px; font-variation-settings: 'FILL' 0, 'wght' 400; color: #ffffff;">explore</span>
+      </button>
+      
+      <!-- Panel -->
+      <div id="qn-panel" class="hidden absolute bottom-16 right-0 w-80 bg-white shadow-2xl rounded-2xl border border-outline-variant/60 p-5 transition-all duration-300 flex flex-col" style="background-color: rgba(255, 255, 255, 0.96); backdrop-filter: blur(12px); border-radius: 1rem; border: 1px solid rgba(196, 197, 213, 0.6); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); max-height: 85vh; display: none;">
+        <div class="flex items-center justify-between border-b border-outline-variant/40 pb-3 mb-4" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(196, 197, 213, 0.4); padding-bottom: 0.75rem; margin-bottom: 1rem; width: 100%;">
+          <div>
+            <h3 class="font-bold text-primary text-headline-sm flex items-center gap-2" style="margin: 0; color: #00288e; font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+              <span class="material-symbols-outlined" style="color: #00288e;">route</span> Navigator
+            </h3>
+            <p class="text-[11px] text-on-surface-variant uppercase tracking-wider font-label-md mt-0.5" style="margin: 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #444653; font-weight: 600;">Prototype Screens</p>
+          </div>
+          <button id="qn-close" class="text-on-surface-variant hover:bg-surface-container rounded-full p-1 transition-colors" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; padding: 0.25rem; border-radius: 9999px; color: #444653;">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        
+        <div class="flex-grow overflow-y-auto pr-1 space-y-4 custom-scrollbar" style="overflow-y: auto; max-height: 50vh; display: flex; flex-direction: column; gap: 1rem;">
+          <!-- Group 1 -->
+          <div>
+            <h4 class="font-bold text-[11px] text-on-surface-variant uppercase tracking-widest mb-2 flex items-center gap-1.5" style="font-size: 11px; color: #444653; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.5rem 0; font-weight: 700; display: flex; align-items: center; gap: 0.375rem;">
+              <span class="material-symbols-outlined" style="font-size: 14px;">person</span> Attendee Booking Flow
+            </h4>
+            <div class="space-y-1 pl-2 border-l border-outline-variant/40" style="display: flex; flex-direction: column; gap: 0.25rem; padding-left: 0.5rem; border-left: 1px solid rgba(196, 197, 213, 0.4);">
+              <a href="index.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="index.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Landing Page</a>
+              <a href="book-ticket.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="book-ticket.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">1. Select Tickets</a>
+              <a href="choose-addons.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="choose-addons.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">2. Choose Add-ons</a>
+              <a href="payment.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="payment.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">3. Payment Checkout</a>
+              <a href="booking-success.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="booking-success.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">4. Booking Success</a>
+              <a href="my-tickets.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="my-tickets.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">5. My Tickets</a>
+              <a href="ticket-details.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="ticket-details.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">6. Ticket Details QR</a>
+            </div>
+          </div>
+          
+          <!-- Group 2 -->
+          <div>
+            <h4 class="font-bold text-[11px] text-on-surface-variant uppercase tracking-widest mb-2 flex items-center gap-1.5" style="font-size: 11px; color: #444653; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.5rem 0; font-weight: 700; display: flex; align-items: center; gap: 0.375rem;">
+              <span class="material-symbols-outlined" style="font-size: 14px;">lock</span> Portals & Authentication
+            </h4>
+            <div class="space-y-1 pl-2 border-l border-outline-variant/40" style="display: flex; flex-direction: column; gap: 0.25rem; padding-left: 0.5rem; border-left: 1px solid rgba(196, 197, 213, 0.4);">
+              <a href="login.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="login.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Login Portal</a>
+              <a href="register.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="register.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Register Account</a>
+              <a href="forgot-password.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="forgot-password.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Forgot Password</a>
+            </div>
+          </div>
+          
+          <!-- Group 3 -->
+          <div>
+            <h4 class="font-bold text-[11px] text-on-surface-variant uppercase tracking-widest mb-2 flex items-center gap-1.5" style="font-size: 11px; color: #444653; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.5rem 0; font-weight: 700; display: flex; align-items: center; gap: 0.375rem;">
+              <span class="material-symbols-outlined" style="font-size: 14px;">space_dashboard</span> Management Dashboards
+            </h4>
+            <div class="space-y-1 pl-2 border-l border-outline-variant/40" style="display: flex; flex-direction: column; gap: 0.25rem; padding-left: 0.5rem; border-left: 1px solid rgba(196, 197, 213, 0.4);">
+              <a href="organizer-dashboard.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="organizer-dashboard.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Organizer Dashboard</a>
+              <a href="sponsor-portal.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="sponsor-portal.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Sponsor Portal</a>
+              <a href="admin-dashboard.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="admin-dashboard.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">System Admin Dashboard</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(navContainer);
+
+    // 3. Setup event listeners
+    const trigger = document.getElementById('qn-trigger');
+    const panel = document.getElementById('qn-panel');
+    const icon = document.getElementById('qn-icon');
+    const closeBtn = document.getElementById('qn-close');
+
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        panel.classList.toggle('hidden');
+        if (panel.classList.contains('hidden')) {
+            panel.style.display = 'none';
+            icon.textContent = 'explore';
+        } else {
+            panel.style.display = 'flex';
+            icon.textContent = 'close';
+        }
+    });
+
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        panel.classList.add('hidden');
+        panel.style.display = 'none';
+        icon.textContent = 'explore';
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!navContainer.contains(e.target)) {
+            panel.classList.add('hidden');
+            panel.style.display = 'none';
+            icon.textContent = 'explore';
+        }
+    });
+
+    // Highlight current page
+    const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+    const links = document.querySelectorAll('.qn-link');
+    links.forEach(link => {
+        // Handle active page styling
+        if (link.getAttribute('data-page') === currentFile) {
+            link.style.backgroundColor = 'rgba(0, 40, 142, 0.1)';
+            link.style.color = '#00288e';
+            link.style.fontWeight = '700';
+        }
+        
+        // Add hover effects via JS since inline hover is tricky
+        link.addEventListener('mouseenter', () => {
+            if (link.getAttribute('data-page') !== currentFile) {
+                link.style.backgroundColor = '#eff4ff';
+            }
+        });
+        link.addEventListener('mouseleave', () => {
+            if (link.getAttribute('data-page') !== currentFile) {
+                link.style.backgroundColor = 'transparent';
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>

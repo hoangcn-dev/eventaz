@@ -1,0 +1,596 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Ticket Selection | EventAZ</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed": "#001453",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#d3e4fe",
+                    "primary": "#00288e",
+                    "secondary-fixed": "#eaddff",
+                    "on-tertiary-fixed-variant": "#005049",
+                    "on-surface": "#0b1c30",
+                    "on-surface-variant": "#444653",
+                    "background": "#f8f9ff",
+                    "on-background": "#0b1c30",
+                    "inverse-primary": "#b8c4ff",
+                    "on-secondary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#eaf1ff",
+                    "outline-variant": "#c4c5d5",
+                    "tertiary-container": "#00554e",
+                    "primary-container": "#1e40af",
+                    "tertiary": "#003c36",
+                    "surface-container": "#e5eeff",
+                    "tertiary-fixed": "#89f5e7",
+                    "secondary-container": "#8a4cfc",
+                    "on-tertiary-container": "#5fcdbf",
+                    "surface-tint": "#3755c3",
+                    "on-secondary-container": "#fffbff",
+                    "on-primary-container": "#a8b8ff",
+                    "on-primary-fixed-variant": "#173bab",
+                    "secondary-fixed-dim": "#d2bbff",
+                    "on-tertiary-fixed": "#00201d",
+                    "primary-fixed": "#dde1ff",
+                    "outline": "#757684",
+                    "on-error": "#ffffff",
+                    "surface-container-low": "#eff4ff",
+                    "surface": "#f8f9ff",
+                    "on-secondary-fixed": "#25005a",
+                    "inverse-surface": "#213145",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#5a00c6",
+                    "primary-fixed-dim": "#b8c4ff",
+                    "secondary": "#712ae2",
+                    "tertiary-fixed-dim": "#6bd8cb",
+                    "surface-bright": "#f8f9ff",
+                    "surface-dim": "#cbdbf5",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-high": "#dce9ff",
+                    "surface-variant": "#d3e4fe"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "40px",
+                    "base": "8px",
+                    "margin-mobile": "16px",
+                    "container-max": "1440px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "mono-sm": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "mono-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f8f9ff;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .ticket-card:hover {
+            border-color: #00288e;
+            box-shadow: 0 4px 20px rgba(0, 40, 142, 0.08);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #eff4ff;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c4c5d5;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface-container-lowest border-b border-outline-variant">
+<div class="flex items-center gap-8">
+<span onclick="window.location.href='index.html'" class="font-headline-md text-headline-md font-bold text-primary cursor-pointer">EventAZ</span>
+<div class="hidden md:flex gap-6">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md" href="#">Tickets</a>
+<a class="text-on-surface-variant font-medium hover:bg-surface-container-low transition-colors px-3 py-1 rounded font-body-md text-body-md" href="#">Schedule</a>
+<a class="text-on-surface-variant font-medium hover:bg-surface-container-low transition-colors px-3 py-1 rounded font-body-md text-body-md" href="#">Sponsors</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full w-64 text-body-sm font-body-sm focus:ring-2 focus:ring-primary/20" placeholder="Search events..." type="text">
+</div>
+<button class="material-symbols-outlined text-on-surface-variant cursor-pointer active:opacity-80 transition-all">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant cursor-pointer active:opacity-80 transition-all">settings</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a young administrative professional in a bright, modern corporate setting. The lighting is soft and natural, emphasizing a high-trust, professional environment. The background features a clean, white minimalist office with subtle blue accents reflecting the EventAZ brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxv9tm3wkBMcyGW7clrBE0aGd5ER8YbVJKfTcKjgXchay6Ah3_q59VoUptP2wiBMucviTtKRvEPCKdE_q7sM7CMfW-geH5cZYHP0GvxfDJuzOJz7vfCRNckdze-f_jpiUsEOl8ZE1hK5BCa1BypR0ueu7NsVyq1yhTJ-UzrW5eZpMuf0diFOCX9l8QfITgwCKZ6G7eCcfAVSRBPF9c6lPEDyuF66TE97uzx-pUo63MlWyZK0ewCuU1rA">
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="pt-24 pb-12 px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 mb-6 text-on-surface-variant font-label-md text-label-md">
+<a class="hover:text-primary" href="#">Events</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="hover:text-primary" href="#">Global Tech Summit 2024</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary font-bold">Select Tickets</span>
+</div>
+<div class="flex flex-col lg:flex-row gap-gutter">
+<!-- Left Side: Selection -->
+<div class="flex-1">
+<!-- Event Header Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 mb-8 flex flex-col md:flex-row gap-6 items-start">
+<div class="w-full md:w-48 h-48 rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A vibrant, high-energy promotional poster for a global technology summit. The design features abstract digital light patterns in shades of royal blue and electric purple. Minimalist white typography suggests themes of innovation and connectivity. The lighting is kinetic and professional, set against a deep slate background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1XuJmPdrv5MTan9kF7WPnrhqsr2uAhtG1kXY5PqxBjZFbe4xZJ4umRK_1AS-OI5yI3abdjVJCMUWQ1nwUTdqsxiYF4kJlrjQGe8wpuSkKfJ_BzeJAaS36f6G_P9ED0fCZila4HS4Yg8qtdNaQDLnzULJiblf3nTd27bw9KWNzSz3oYr3sIun3mQXpLL2IOH_6pulj8b3ejtlk9mP3Fx4qMlwc6rQr6C8wMS5tTPFpo_bub5lP8Iux4w">
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-2">
+<span class="px-2 py-0.5 rounded bg-secondary/10 text-secondary font-label-md text-label-md">Live Event</span>
+<span class="text-on-surface-variant font-label-md text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+                                Oct 12-14, 2024
+                            </span>
+</div>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface mb-3">Global Tech Summit 2024</h1>
+<p class="text-on-surface-variant font-body-md text-body-md mb-4 max-w-2xl leading-relaxed">
+                            Join 5,000+ industry leaders for three days of immersive keynotes, technical workshops, and exclusive networking sessions at the heart of the innovation district.
+                        </p>
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1 text-on-surface font-label-md text-label-md">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">location_on</span>
+                                San Francisco Convention Center
+                            </span>
+</div>
+</div>
+</div>
+<!-- Ticket Grid -->
+<h2 class="font-headline-md text-headline-md mb-6">Select Ticket Types</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Ticket Item: Early Bird -->
+<div class="ticket-card bg-surface-container-lowest border border-outline-variant rounded-xl p-6 transition-all duration-300 relative overflow-hidden">
+<div class="absolute top-0 right-0">
+<div class="bg-tertiary-container/10 text-on-tertiary-container px-4 py-1 rounded-bl-xl font-label-md text-label-md">Best Value</div>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-1">Early Bird Access</h3>
+<p class="text-on-surface-variant font-body-sm text-body-sm mb-4">Limited availability. Includes full access to all main stage keynotes and networking areas.</p>
+<div class="flex justify-between items-end">
+<div>
+<span class="text-on-surface-variant line-through font-label-md text-label-md">$499</span>
+<div class="font-headline-md text-headline-md text-primary">$299<span class="font-body-sm text-body-sm text-on-surface-variant">/pp</span></div>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-low rounded-lg p-1 border border-outline-variant">
+<button class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-surface-container-highest transition-colors active:scale-90" onclick="updateQty('early', -1)">
+<span class="material-symbols-outlined text-on-surface text-[20px]">remove</span>
+</button>
+<span class="w-6 text-center font-bold font-body-md" id="qty-early">0</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-surface-container-highest transition-colors active:scale-90" onclick="updateQty('early', 1)">
+<span class="material-symbols-outlined text-on-surface text-[20px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Ticket Item: VIP -->
+<div class="ticket-card bg-surface-container-lowest border border-outline-variant rounded-xl p-6 transition-all duration-300">
+<h3 class="font-headline-sm text-headline-sm mb-1">VIP Experience</h3>
+<p class="text-on-surface-variant font-body-sm text-body-sm mb-4">Priority seating, backstage access, gala dinner, and exclusive executive lounge access.</p>
+<div class="flex justify-between items-end">
+<div>
+<div class="font-headline-md text-headline-md text-primary">$899<span class="font-body-sm text-body-sm text-on-surface-variant">/pp</span></div>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-low rounded-lg p-1 border border-outline-variant">
+<button class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-surface-container-highest transition-colors active:scale-90" onclick="updateQty('vip', -1)">
+<span class="material-symbols-outlined text-on-surface text-[20px]">remove</span>
+</button>
+<span class="w-6 text-center font-bold font-body-md" id="qty-vip">0</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-surface-container-highest transition-colors active:scale-90" onclick="updateQty('vip', 1)">
+<span class="material-symbols-outlined text-on-surface text-[20px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Ticket Item: General Admission -->
+<div class="ticket-card bg-surface-container-lowest border border-outline-variant rounded-xl p-6 transition-all duration-300">
+<h3 class="font-headline-sm text-headline-sm mb-1">General Admission</h3>
+<p class="text-on-surface-variant font-body-sm text-body-sm mb-4">Standard entry to the conference, exhibition floor, and evening breakout sessions.</p>
+<div class="flex justify-between items-end">
+<div>
+<div class="font-headline-md text-headline-md text-primary">$399<span class="font-body-sm text-body-sm text-on-surface-variant">/pp</span></div>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-low rounded-lg p-1 border border-outline-variant">
+<button class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-surface-container-highest transition-colors active:scale-90" onclick="updateQty('ga', -1)">
+<span class="material-symbols-outlined text-on-surface text-[20px]">remove</span>
+</button>
+<span class="w-6 text-center font-bold font-body-md" id="qty-ga">0</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-surface-container-highest transition-colors active:scale-90" onclick="updateQty('ga', 1)">
+<span class="material-symbols-outlined text-on-surface text-[20px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Ticket Item: Student -->
+<div class="ticket-card bg-surface-container-lowest border border-outline-variant rounded-xl p-6 transition-all duration-300">
+<h3 class="font-headline-sm text-headline-sm mb-1">Student Pass</h3>
+<p class="text-on-surface-variant font-body-sm text-body-sm mb-4">Valid student ID required at entry. Includes full digital access and main hall sessions.</p>
+<div class="flex justify-between items-end">
+<div>
+<div class="font-headline-md text-headline-md text-primary">$149<span class="font-body-sm text-body-sm text-on-surface-variant">/pp</span></div>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-low rounded-lg p-1 border border-outline-variant">
+<button class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-surface-container-highest transition-colors active:scale-90" onclick="updateQty('stud', -1)">
+<span class="material-symbols-outlined text-on-surface text-[20px]">remove</span>
+</button>
+<span class="w-6 text-center font-bold font-body-md" id="qty-stud">0</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-surface-container-highest transition-colors active:scale-90" onclick="updateQty('stud', 1)">
+<span class="material-symbols-outlined text-on-surface text-[20px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Features/Info Section -->
+<div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
+<div class="flex flex-col gap-3">
+<div class="w-12 h-12 bg-primary/5 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">verified</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm">Secure Booking</h4>
+<p class="text-on-surface-variant font-body-sm text-body-sm">Your transactions are protected by industry-leading encryption protocols.</p>
+</div>
+<div class="flex flex-col gap-3">
+<div class="w-12 h-12 bg-primary/5 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">confirmation_number</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm">Instant Delivery</h4>
+<p class="text-on-surface-variant font-body-sm text-body-sm">Receive your digital tickets immediately via email and the EventAZ app.</p>
+</div>
+<div class="flex flex-col gap-3">
+<div class="w-12 h-12 bg-primary/5 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">support_agent</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm">24/7 Support</h4>
+<p class="text-on-surface-variant font-body-sm text-body-sm">Dedicated concierge team available for all your summit inquiries.</p>
+</div>
+</div>
+</div>
+<!-- Right Side: Order Summary -->
+<aside class="w-full lg:w-[380px] shrink-0">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 sticky top-24 shadow-sm">
+<h3 class="font-headline-md text-headline-md mb-6">Order Summary</h3>
+<div class="text-center py-10" id="empty-state">
+<span class="material-symbols-outlined text-outline text-[48px] mb-2">shopping_cart</span>
+<p class="text-on-surface-variant font-body-md text-body-md">Your cart is currently empty. Please select your tickets.</p>
+</div>
+<div class="hidden space-y-4" id="cart-content">
+<div class="space-y-4 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar" id="cart-items">
+<!-- Items dynamically added here -->
+</div>
+<hr class="border-outline-variant my-6">
+<div class="space-y-2">
+<div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+<span>Subtotal</span>
+<span id="subtotal">$0.00</span>
+</div>
+<div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+<span>Service Fee</span>
+<span id="fee">$0.00</span>
+</div>
+<div class="flex justify-between font-headline-sm text-headline-sm text-on-surface pt-2">
+<span>Total</span>
+<span id="total">$0.00</span>
+</div>
+</div>
+<button onclick="window.location.href='choose-addons.html'" class="w-full bg-primary text-on-primary py-4 rounded-lg font-headline-sm text-headline-sm mt-8 hover:bg-primary-container transition-all active:scale-95 shadow-md">
+                            Proceed to Checkout
+                        </button>
+<p class="text-center text-on-surface-variant font-label-md text-label-md mt-4">
+                            By proceeding, you agree to our <a class="text-primary underline" href="#">Terms of Service</a>.
+                        </p>
+</div>
+<!-- Promo Code -->
+<div class="mt-8 pt-8 border-t border-outline-variant">
+<label class="font-label-md text-label-md text-on-surface mb-2 block">Promo Code</label>
+<div class="flex gap-2">
+<input class="flex-1 bg-surface-container-low border-outline-variant border rounded-lg px-3 text-body-sm font-body-sm focus:ring-primary focus:border-primary" placeholder="Enter code" type="text">
+<button class="px-4 py-2 bg-surface-container-high text-on-surface font-label-md text-label-md rounded-lg hover:bg-outline-variant/30 transition-colors">Apply</button>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 px-margin-desktop mt-auto bg-surface-container-highest border-t border-outline-variant">
+<div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-start gap-8">
+<div class="max-w-xs">
+<span class="font-headline-sm text-headline-sm font-bold text-primary mb-4 block">EventAZ</span>
+<p class="text-on-surface-variant font-body-sm text-body-sm leading-relaxed">
+                    The world's leading multi-tenant event management platform for professional summits and industry expos.
+                </p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-12">
+<div class="flex flex-col gap-4">
+<span class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Company</span>
+<a class="text-on-surface-variant font-body-sm text-body-sm hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant font-body-sm text-body-sm hover:text-primary transition-colors" href="#">Terms of Service</a>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Support</span>
+<a class="text-on-surface-variant font-body-sm text-body-sm hover:text-primary transition-colors" href="#">Contact Support</a>
+<a class="text-on-surface-variant font-body-sm text-body-sm hover:text-primary transition-colors" href="#">FAQs</a>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Resources</span>
+<a class="text-on-surface-variant font-body-sm text-body-sm hover:text-primary transition-colors" href="#">Event Schedule</a>
+<a class="text-on-surface-variant font-body-sm text-body-sm hover:text-primary transition-colors" href="#">Venue Map</a>
+</div>
+</div>
+</div>
+<div class="max-w-[1440px] mx-auto mt-12 pt-8 border-t border-outline-variant flex flex-col sm:flex-row justify-between items-center gap-4">
+<p class="text-on-surface-variant font-body-sm text-body-sm">© 2024 EventAZ Multi-Tenant Systems. All rights reserved.</p>
+<div class="flex gap-4">
+<a class="w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant hover:bg-primary hover:text-on-primary transition-all" href="#">
+<span class="material-symbols-outlined text-[18px]">public</span>
+</a>
+<a class="w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant hover:bg-primary hover:text-on-primary transition-all" href="#">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</a>
+</div>
+</div>
+</footer>
+<script>
+        const tickets = {
+            early: { name: 'Early Bird Access', price: 299, qty: 0 },
+            vip: { name: 'VIP Experience', price: 899, qty: 0 },
+            ga: { name: 'General Admission', price: 399, qty: 0 },
+            stud: { name: 'Student Pass', price: 149, qty: 0 }
+        };
+
+        function updateQty(id, delta) {
+            const ticket = tickets[id];
+            ticket.qty = Math.max(0, ticket.qty + delta);
+            document.getElementById(`qty-${id}`).innerText = ticket.qty;
+            renderCart();
+        }
+
+        function renderCart() {
+            const cartItems = document.getElementById('cart-items');
+            const emptyState = document.getElementById('empty-state');
+            const cartContent = document.getElementById('cart-content');
+            const subtotalEl = document.getElementById('subtotal');
+            const feeEl = document.getElementById('fee');
+            const totalEl = document.getElementById('total');
+
+            cartItems.innerHTML = '';
+            let subtotal = 0;
+            let hasItems = false;
+
+            for (const key in tickets) {
+                const item = tickets[key];
+                if (item.qty > 0) {
+                    hasItems = true;
+                    subtotal += item.price * item.qty;
+                    
+                    const div = document.createElement('div');
+                    div.className = 'flex justify-between items-center bg-surface-container-low rounded-lg p-3';
+                    div.innerHTML = `
+                        <div>
+                            <p class="font-bold font-body-sm text-on-surface">${item.name}</p>
+                            <p class="text-on-surface-variant font-label-md text-label-md">${item.qty} x $${item.price}</p>
+                        </div>
+                        <span class="font-bold text-primary font-body-md">$${item.price * item.qty}</span>
+                    `;
+                    cartItems.appendChild(div);
+                }
+            }
+
+            if (hasItems) {
+                const fee = subtotal * 0.05; // 5% fee
+                const total = subtotal + fee;
+
+                emptyState.classList.add('hidden');
+                cartContent.classList.remove('hidden');
+                
+                subtotalEl.innerText = `$${subtotal.toLocaleString()}`;
+                feeEl.innerText = `$${fee.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                totalEl.innerText = `$${total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            } else {
+                emptyState.classList.remove('hidden');
+                cartContent.classList.add('hidden');
+            }
+        }
+    </script>
+
+<!-- Quick Navigator Injection -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Ensure Material Symbols CSS is loaded
+    if (!document.querySelector('link[href*="Material+Symbols+Outlined"]')) {
+        const link = document.createElement('link');
+        link.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined';
+        link.rel = 'stylesheet';
+        document.head.appendChild(link);
+    }
+
+    // 2. Create elements
+    const navContainer = document.createElement('div');
+    navContainer.id = 'quick-navigator';
+    navContainer.className = 'fixed bottom-6 right-6 z-[9999] font-body-md text-on-surface';
+    navContainer.style.fontFamily = "'Inter', sans-serif";
+
+    // Inject styles dynamically
+    const style = document.createElement('style');
+    style.innerHTML = `
+        #qn-panel .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        #qn-panel .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        #qn-panel .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    `;
+    document.head.appendChild(style);
+
+    navContainer.innerHTML = `
+      <!-- Trigger Button -->
+      <button id="qn-trigger" class="flex items-center justify-center w-14 h-14 rounded-full bg-primary text-on-primary shadow-xl hover:bg-primary-container active:scale-95 transition-all focus:outline-none" style="background-color: #00288e; color: #ffffff; box-shadow: 0 10px 25px -5px rgba(0, 40, 142, 0.4); border: none; cursor: pointer; width: 3.5rem; height: 3.5rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center;">
+        <span class="material-symbols-outlined" id="qn-icon" style="font-size: 28px; font-variation-settings: 'FILL' 0, 'wght' 400; color: #ffffff;">explore</span>
+      </button>
+      
+      <!-- Panel -->
+      <div id="qn-panel" class="hidden absolute bottom-16 right-0 w-80 bg-white shadow-2xl rounded-2xl border border-outline-variant/60 p-5 transition-all duration-300 flex flex-col" style="background-color: rgba(255, 255, 255, 0.96); backdrop-filter: blur(12px); border-radius: 1rem; border: 1px solid rgba(196, 197, 213, 0.6); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); max-height: 85vh; display: none;">
+        <div class="flex items-center justify-between border-b border-outline-variant/40 pb-3 mb-4" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(196, 197, 213, 0.4); padding-bottom: 0.75rem; margin-bottom: 1rem; width: 100%;">
+          <div>
+            <h3 class="font-bold text-primary text-headline-sm flex items-center gap-2" style="margin: 0; color: #00288e; font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+              <span class="material-symbols-outlined" style="color: #00288e;">route</span> Navigator
+            </h3>
+            <p class="text-[11px] text-on-surface-variant uppercase tracking-wider font-label-md mt-0.5" style="margin: 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #444653; font-weight: 600;">Prototype Screens</p>
+          </div>
+          <button id="qn-close" class="text-on-surface-variant hover:bg-surface-container rounded-full p-1 transition-colors" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; padding: 0.25rem; border-radius: 9999px; color: #444653;">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        
+        <div class="flex-grow overflow-y-auto pr-1 space-y-4 custom-scrollbar" style="overflow-y: auto; max-height: 50vh; display: flex; flex-direction: column; gap: 1rem;">
+          <!-- Group 1 -->
+          <div>
+            <h4 class="font-bold text-[11px] text-on-surface-variant uppercase tracking-widest mb-2 flex items-center gap-1.5" style="font-size: 11px; color: #444653; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.5rem 0; font-weight: 700; display: flex; align-items: center; gap: 0.375rem;">
+              <span class="material-symbols-outlined" style="font-size: 14px;">person</span> Attendee Booking Flow
+            </h4>
+            <div class="space-y-1 pl-2 border-l border-outline-variant/40" style="display: flex; flex-direction: column; gap: 0.25rem; padding-left: 0.5rem; border-left: 1px solid rgba(196, 197, 213, 0.4);">
+              <a href="index.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="index.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Landing Page</a>
+              <a href="book-ticket.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="book-ticket.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">1. Select Tickets</a>
+              <a href="choose-addons.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="choose-addons.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">2. Choose Add-ons</a>
+              <a href="payment.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="payment.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">3. Payment Checkout</a>
+              <a href="booking-success.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="booking-success.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">4. Booking Success</a>
+              <a href="my-tickets.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="my-tickets.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">5. My Tickets</a>
+              <a href="ticket-details.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="ticket-details.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">6. Ticket Details QR</a>
+            </div>
+          </div>
+          
+          <!-- Group 2 -->
+          <div>
+            <h4 class="font-bold text-[11px] text-on-surface-variant uppercase tracking-widest mb-2 flex items-center gap-1.5" style="font-size: 11px; color: #444653; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.5rem 0; font-weight: 700; display: flex; align-items: center; gap: 0.375rem;">
+              <span class="material-symbols-outlined" style="font-size: 14px;">lock</span> Portals & Authentication
+            </h4>
+            <div class="space-y-1 pl-2 border-l border-outline-variant/40" style="display: flex; flex-direction: column; gap: 0.25rem; padding-left: 0.5rem; border-left: 1px solid rgba(196, 197, 213, 0.4);">
+              <a href="login.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="login.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Login Portal</a>
+              <a href="register.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="register.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Register Account</a>
+              <a href="forgot-password.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="forgot-password.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Forgot Password</a>
+            </div>
+          </div>
+          
+          <!-- Group 3 -->
+          <div>
+            <h4 class="font-bold text-[11px] text-on-surface-variant uppercase tracking-widest mb-2 flex items-center gap-1.5" style="font-size: 11px; color: #444653; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.5rem 0; font-weight: 700; display: flex; align-items: center; gap: 0.375rem;">
+              <span class="material-symbols-outlined" style="font-size: 14px;">space_dashboard</span> Management Dashboards
+            </h4>
+            <div class="space-y-1 pl-2 border-l border-outline-variant/40" style="display: flex; flex-direction: column; gap: 0.25rem; padding-left: 0.5rem; border-left: 1px solid rgba(196, 197, 213, 0.4);">
+              <a href="organizer-dashboard.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="organizer-dashboard.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Organizer Dashboard</a>
+              <a href="sponsor-portal.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="sponsor-portal.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Sponsor Portal</a>
+              <a href="admin-dashboard.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="admin-dashboard.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">System Admin Dashboard</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(navContainer);
+
+    // 3. Setup event listeners
+    const trigger = document.getElementById('qn-trigger');
+    const panel = document.getElementById('qn-panel');
+    const icon = document.getElementById('qn-icon');
+    const closeBtn = document.getElementById('qn-close');
+
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        panel.classList.toggle('hidden');
+        if (panel.classList.contains('hidden')) {
+            panel.style.display = 'none';
+            icon.textContent = 'explore';
+        } else {
+            panel.style.display = 'flex';
+            icon.textContent = 'close';
+        }
+    });
+
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        panel.classList.add('hidden');
+        panel.style.display = 'none';
+        icon.textContent = 'explore';
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!navContainer.contains(e.target)) {
+            panel.classList.add('hidden');
+            panel.style.display = 'none';
+            icon.textContent = 'explore';
+        }
+    });
+
+    // Highlight current page
+    const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+    const links = document.querySelectorAll('.qn-link');
+    links.forEach(link => {
+        // Handle active page styling
+        if (link.getAttribute('data-page') === currentFile) {
+            link.style.backgroundColor = 'rgba(0, 40, 142, 0.1)';
+            link.style.color = '#00288e';
+            link.style.fontWeight = '700';
+        }
+        
+        // Add hover effects via JS since inline hover is tricky
+        link.addEventListener('mouseenter', () => {
+            if (link.getAttribute('data-page') !== currentFile) {
+                link.style.backgroundColor = '#eff4ff';
+            }
+        });
+        link.addEventListener('mouseleave', () => {
+            if (link.getAttribute('data-page') !== currentFile) {
+                link.style.backgroundColor = 'transparent';
+            }
+        });
+    });
+});
+</script>
+
+</body></html>

@@ -1,0 +1,493 @@
+<!DOCTYPE html><html class="light" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Chi tiết vé - EventAZ</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ticket-perforation {
+            background-image: radial-gradient(circle at 10px, transparent 10px, #f8f9ff 10px);
+            background-size: 100% 30px;
+            background-position: left -10px top;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-surface": "#213145",
+                      "tertiary-container": "#00554e",
+                      "on-secondary-fixed-variant": "#5a00c6",
+                      "on-primary-fixed": "#001453",
+                      "outline": "#757684",
+                      "on-background": "#0b1c30",
+                      "surface-dim": "#cbdbf5",
+                      "on-primary": "#ffffff",
+                      "surface-container-highest": "#d3e4fe",
+                      "primary-fixed": "#dde1ff",
+                      "on-primary-container": "#a8b8ff",
+                      "tertiary-fixed-dim": "#6bd8cb",
+                      "outline-variant": "#c4c5d5",
+                      "on-tertiary-fixed": "#00201d",
+                      "on-surface-variant": "#444653",
+                      "inverse-on-surface": "#eaf1ff",
+                      "surface-container": "#e5eeff",
+                      "secondary-fixed-dim": "#d2bbff",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed-variant": "#173bab",
+                      "on-error": "#ffffff",
+                      "on-tertiary-container": "#5fcdbf",
+                      "surface-tint": "#3755c3",
+                      "secondary-fixed": "#eaddff",
+                      "secondary": "#712ae2",
+                      "on-secondary-container": "#fffbff",
+                      "surface-bright": "#f8f9ff",
+                      "on-error-container": "#93000a",
+                      "error-container": "#ffdad6",
+                      "tertiary": "#003c36",
+                      "surface-variant": "#d3e4fe",
+                      "primary-fixed-dim": "#b8c4ff",
+                      "on-surface": "#0b1c30",
+                      "background": "#f8f9ff",
+                      "surface": "#f8f9ff",
+                      "surface-container-high": "#dce9ff",
+                      "error": "#ba1a1a",
+                      "on-secondary-fixed": "#25005a",
+                      "inverse-primary": "#b8c4ff",
+                      "on-tertiary-fixed-variant": "#005049",
+                      "primary-container": "#1e40af",
+                      "secondary-container": "#8a4cfc",
+                      "surface-container-low": "#eff4ff",
+                      "on-secondary": "#ffffff",
+                      "primary": "#00288e",
+                      "tertiary-fixed": "#89f5e7",
+                      "surface-container-lowest": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "base": "8px",
+                      "margin-desktop": "40px",
+                      "gutter": "24px",
+                      "container-max": "1440px"
+              },
+              "fontFamily": {
+                      "headline-sm": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "body-md": ["Inter"],
+                      "label-md": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "mono-sm": ["JetBrains Mono"],
+                      "body-lg": ["Inter"],
+                      "display-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "mono-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            }
+          }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- TopNavBar from JSON -->
+<nav class="bg-surface-container-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto">
+<div onclick="window.location.href='index.html'" class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed cursor-pointer">
+                EventAZ
+            </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors text-body-md font-body-md" href="index.html">Events</a>
+<a class="text-primary dark:text-primary-fixed border-b-2 border-primary dark:border-primary-fixed pb-1 text-body-md font-body-md" href="my-tickets.html">My Tickets</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors text-body-md font-body-md" href="index.html">Support</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-variant rounded-full transition-colors">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-variant rounded-full transition-colors">account_circle</button>
+</div>
+</div>
+</nav>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Ticket Display (Bento Style) -->
+<div class="lg:col-span-7 flex flex-col gap-6">
+<!-- Main Ticket Card -->
+<div class="relative bg-white rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+<!-- Event Banner Overlay -->
+<div class="h-48 md:h-64 relative">
+<div class="bg-cover bg-center w-full h-full" data-alt="A cinematic wide shot of a high-energy music festival at night, featuring massive LED screens displaying vibrant purple and blue abstract graphics. The crowd is a sea of silhouettes against the stage lights, and the atmosphere is electric and professional. The visual style is crisp and modern, matching the EventAZ corporate aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBdfJo-LGR1_OGQgnJsuXNysmNXtoFypcGtoIsHhaXJo__r9bJha369mVw1TiCRfuEWSzwIIOnt3g8moNjoR_en7piPRZ2wgdYpkYyo_4wDGfq1kzsG5lfqMndExLCfOtPlKnXDGnAfAnzONF8o7TP7Z4T0JmP2_JgCdC9Bp_qGjNMs1aGXrvHRxcjCUTfu9n5NAQpgFZEYdNRQy3l3m9xzqJT1rBL4-cDC_gYH2YcXVpjPu2C1JuZbmg')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-8">
+<span class="inline-block px-3 py-1 rounded bg-secondary text-white text-label-md font-label-md w-fit mb-3">VIP ACCESS</span>
+<h1 class="text-white font-headline-md text-headline-md">Đại Nhạc Hội Ánh Sáng Tương Lai 2024</h1>
+</div>
+</div>
+<div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Attendee Info -->
+<div class="space-y-6">
+<div>
+<p class="text-label-md font-label-md text-outline uppercase tracking-wider mb-1">Người tham dự</p>
+<p class="text-headline-sm font-headline-sm text-on-surface">Nguyễn Minh Quân</p>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="text-label-md font-label-md text-outline uppercase tracking-wider mb-1">Khu vực</p>
+<p class="text-body-lg font-body-lg font-semibold">VIP Zone A</p>
+</div>
+<div>
+<p class="text-label-md font-label-md text-outline uppercase tracking-wider mb-1">Chỗ ngồi</p>
+<p class="text-body-lg font-body-lg font-semibold">Hàng 04, Ghế 12</p>
+</div>
+</div>
+<div class="pt-4 border-t border-outline-variant">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+<p class="text-body-md font-body-md">Thứ Bảy, 24 Tháng 12, 2024</p>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">schedule</span>
+<p class="text-body-md font-body-md">19:00 - 23:00</p>
+</div>
+</div>
+</div>
+<!-- QR Code Section -->
+<div class="flex flex-col items-center justify-center bg-surface-container-low rounded-lg p-6 border border-dashed border-outline-variant">
+<div class="bg-white p-4 rounded-lg shadow-sm mb-4">
+<!-- QR Placeholder -->
+<div class="w-40 h-40 bg-cover bg-center" data-alt="A clean, high-contrast QR code centered on a white background, specifically designed for a digital event ticket interface. The QR code has rounded modules and a modern, professional look without unnecessary distortion. It is framed by a subtle border and glows slightly to indicate interactivity." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBkkRC-97XS5M8gxBcbQaBZHPbfRL6fxinxMBbRAW4KMR_8GtCzHI5Jyxk8x4C2MI2W_e6PxIUydF-AvIvNMI3JGwjjnWaSbvz2ycDu9-M0deiMfKa2aJPDdvPngUc-5MxsKdB8TtL6XVpQvou9bKdFTDMY0ix058YRrNoKMszjVBSUHfvwb5iZJftELQuUWPos8eKkqNIfDnlkLbtvfBafLQqmsSVFMG293Gr2K3geO1a958iK-9qvCA')"></div>
+</div>
+<p class="text-label-md font-label-md text-outline mb-1">MÃ VÉ: EAZ-98234-QM</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant text-center">Vui lòng xuất trình mã này tại quầy soát vé</p>
+</div>
+</div>
+<!-- Perforation Effect -->
+<div class="ticket-perforation h-4 w-full"></div>
+<!-- Bottom Action Bar -->
+<div class="p-6 bg-surface-container-lowest flex flex-col md:flex-row gap-4 items-center justify-between">
+<div class="flex items-center gap-2 text-on-tertiary-fixed-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-label-md font-label-md">VÉ HỢP LỆ</span>
+</div>
+<button class="w-full md:w-auto flex items-center justify-center gap-2 bg-primary text-on-primary px-8 py-3 rounded-lg font-semibold hover:bg-primary-container transition-all shadow-md">
+<span class="material-symbols-outlined">download</span>
+                            Tải xuống vé (PDF)
+                        </button>
+</div>
+</div>
+<!-- Bento Info Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Logistics Guide -->
+<div class="glass-card p-6 rounded-xl">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">info</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm">Hướng dẫn tham dự</h3>
+</div>
+<ul class="space-y-3 text-body-sm text-on-surface-variant">
+<li class="flex gap-2">
+<span class="text-primary font-bold">•</span> 
+                                Có mặt trước giờ bắt đầu ít nhất 45 phút để làm thủ tục.
+                            </li>
+<li class="flex gap-2">
+<span class="text-primary font-bold">•</span> 
+                                Mang theo CMND/CCCD bản gốc để đối chiếu khi cần thiết.
+                            </li>
+<li class="flex gap-2">
+<span class="text-primary font-bold">•</span> 
+                                Không mang theo đồ ăn, thức uống và vật dụng sắc nhọn.
+                            </li>
+</ul>
+</div>
+<!-- Support Card -->
+<div class="glass-card p-6 rounded-xl flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">support_agent</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm">Hỗ trợ</h3>
+</div>
+<p class="text-body-sm text-on-surface-variant mb-4">Gặp vấn đề với vé của bạn? Liên hệ đội ngũ hỗ trợ 24/7 của chúng tôi.</p>
+</div>
+<button class="w-full py-2 border border-outline text-on-surface hover:bg-surface-variant/10 rounded-lg text-label-md font-label-md transition-colors">
+                            GỬI YÊU CẦU HỖ TRỢ
+                        </button>
+</div>
+</div>
+</div>
+<!-- Right Column: Location & Details -->
+<div class="lg:col-span-5 space-y-6">
+<!-- Map Card -->
+<div class="bg-white rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+<div class="p-6">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm">Địa điểm</h3>
+</div>
+<p class="text-body-md font-body-md mb-2 font-semibold">Trung tâm Hội nghị Quốc gia</p>
+<p class="text-body-sm text-outline mb-6">Đại lộ Thăng Long, Mễ Trì, Nam Từ Liêm, Hà Nội</p>
+<!-- Map Snippet Placeholder -->
+<div class="rounded-lg overflow-hidden h-64 relative border border-outline-variant">
+<div class="w-full h-full" data-location="National Convention Center Hanoi">
+<img class="w-full h-full object-cover" data-alt="A clean, minimalist map interface showing the area around the National Convention Center in Hanoi. The map features a professional blue and gray color scheme, with a clear location pin marking the destination. The lighting is bright and the UI labels on the map are sharp and legible, fitting a high-end corporate dashboard aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB94VQMv8LaJLvtN3DFSjZqMpe8kpxbLkJ_vAoQRiXBqB52-Hwehv71Rnsh06yXGQtA855nRGugzPuP7jIoZcLuknYjD5iCzjJ8qGZN37gbh2qHXBWy4f3qLqg_XU-jIBsL78lZhIJQseEoB_xg9_DMCPCKN0ybIiNJd4g1AwxAZs48pWKlmMlrU73L93apuTVeDlSWMTrttPExGBRvqBjo6NFgo9oP-WhUSKqS3SeHuFsZb2wfpePTCg">
+</div>
+<div class="absolute bottom-4 right-4">
+<button class="bg-white px-4 py-2 rounded-full shadow-lg text-primary text-label-md font-label-md flex items-center gap-2 hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-[18px]">directions</span>
+                                    CHỈ ĐƯỜNG
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Organization Info -->
+<div class="bg-inverse-surface text-on-primary-container p-8 rounded-xl">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-lg bg-white p-2">
+<img class="w-full h-full object-contain" data-alt="A sophisticated minimalist logo for an event organization named 'Lumina Events'. The logo uses sharp geometric shapes in royal blue and slate gray, evoking a sense of corporate reliability and high-end production quality. The background of the logo is a clean white, and it is framed within a rounded square container." src="https://lh3.googleusercontent.com/aida-public/AB6AXuClZOESf3F9oaa5VutsNfmtUg2I6DAnoA99cdJtjP0bKEeOblOhW_7qMcyF23sh4ff_cXRPyNEVt2vtcp5tJ6XmdqV9GEGzQrhzr8ccXjm2FJ-iQBW61OpKGO-uOErhMs_uPi3pNMyAW4U0P3CoLORarGyFPiv0BKzXTqPmJFH-I5KXIHskkTp2W4cSInqc8XUsuurEhA4Fyxyc3deZ8_HsAN2BI6-uSLCyn0BC2fnIQukHQ-RMc49bzg">
+</div>
+<div>
+<p class="text-label-md font-label-md opacity-80 uppercase">Tổ chức bởi</p>
+<p class="text-body-lg font-bold">Lumina Events Co.</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center py-2 border-b border-white/10">
+<span class="text-body-sm opacity-80">Mã đơn hàng</span>
+<span class="font-mono-sm text-mono-sm">#EVT-2024-9981</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-white/10">
+<span class="text-body-sm opacity-80">Ngày đặt</span>
+<span class="text-body-sm">15/11/2023</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-body-sm opacity-80">Phương thức</span>
+<span class="text-body-sm">Thanh toán VNPay</span>
+</div>
+</div>
+</div>
+<!-- Quick Actions -->
+<div class="flex flex-col gap-3">
+<button class="w-full flex items-center justify-center gap-3 py-4 bg-surface-container-high hover:bg-surface-container-highest rounded-xl text-on-surface font-semibold transition-all">
+<span class="material-symbols-outlined">share</span>
+                        Chia sẻ vé
+                    </button>
+<button class="w-full flex items-center justify-center gap-3 py-4 border border-error/30 text-error hover:bg-error-container/10 rounded-xl font-semibold transition-all">
+<span class="material-symbols-outlined">cancel</span>
+                        Yêu cầu hoàn tiền
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Simple Footer -->
+<footer class="max-w-container-max mx-auto px-margin-desktop py-12 border-t border-outline-variant mt-12">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="text-headline-sm font-bold text-outline">EventAZ</span>
+<span class="text-body-sm text-outline">© 2024 Nền tảng quản lý sự kiện chuyên nghiệp.</span>
+</div>
+<div class="flex gap-8">
+<a class="text-label-md font-label-md text-outline hover:text-primary" href="#">ĐIỀU KHOẢN</a>
+<a class="text-label-md font-label-md text-outline hover:text-primary" href="#">BẢO MẬT</a>
+<a class="text-label-md font-label-md text-outline hover:text-primary" href="#">LIÊN HỆ</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for the Download button
+        document.querySelector('button:has(.material-symbols-outlined:contains("download"))')?.addEventListener('click', function() {
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+                alert('Bản PDF của vé đang được tạo và sẽ tải xuống trong giây lát.');
+            }, 200);
+        });
+
+        // Add visual feedback to interactive elements
+        const buttons = document.querySelectorAll('button, a');
+        buttons.forEach(btn => {
+            btn.addEventListener('mousedown', () => btn.classList.add('opacity-80'));
+            btn.addEventListener('mouseup', () => btn.classList.remove('opacity-80'));
+            btn.addEventListener('mouseleave', () => btn.classList.remove('opacity-80'));
+        });
+    </script>
+
+<!-- Quick Navigator Injection -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Ensure Material Symbols CSS is loaded
+    if (!document.querySelector('link[href*="Material+Symbols+Outlined"]')) {
+        const link = document.createElement('link');
+        link.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined';
+        link.rel = 'stylesheet';
+        document.head.appendChild(link);
+    }
+
+    // 2. Create elements
+    const navContainer = document.createElement('div');
+    navContainer.id = 'quick-navigator';
+    navContainer.className = 'fixed bottom-6 right-6 z-[9999] font-body-md text-on-surface';
+    navContainer.style.fontFamily = "'Inter', sans-serif";
+
+    // Inject styles dynamically
+    const style = document.createElement('style');
+    style.innerHTML = `
+        #qn-panel .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        #qn-panel .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        #qn-panel .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    `;
+    document.head.appendChild(style);
+
+    navContainer.innerHTML = `
+      <!-- Trigger Button -->
+      <button id="qn-trigger" class="flex items-center justify-center w-14 h-14 rounded-full bg-primary text-on-primary shadow-xl hover:bg-primary-container active:scale-95 transition-all focus:outline-none" style="background-color: #00288e; color: #ffffff; box-shadow: 0 10px 25px -5px rgba(0, 40, 142, 0.4); border: none; cursor: pointer; width: 3.5rem; height: 3.5rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center;">
+        <span class="material-symbols-outlined" id="qn-icon" style="font-size: 28px; font-variation-settings: 'FILL' 0, 'wght' 400; color: #ffffff;">explore</span>
+      </button>
+      
+      <!-- Panel -->
+      <div id="qn-panel" class="hidden absolute bottom-16 right-0 w-80 bg-white shadow-2xl rounded-2xl border border-outline-variant/60 p-5 transition-all duration-300 flex flex-col" style="background-color: rgba(255, 255, 255, 0.96); backdrop-filter: blur(12px); border-radius: 1rem; border: 1px solid rgba(196, 197, 213, 0.6); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); max-height: 85vh; display: none;">
+        <div class="flex items-center justify-between border-b border-outline-variant/40 pb-3 mb-4" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(196, 197, 213, 0.4); padding-bottom: 0.75rem; margin-bottom: 1rem; width: 100%;">
+          <div>
+            <h3 class="font-bold text-primary text-headline-sm flex items-center gap-2" style="margin: 0; color: #00288e; font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+              <span class="material-symbols-outlined" style="color: #00288e;">route</span> Navigator
+            </h3>
+            <p class="text-[11px] text-on-surface-variant uppercase tracking-wider font-label-md mt-0.5" style="margin: 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #444653; font-weight: 600;">Prototype Screens</p>
+          </div>
+          <button id="qn-close" class="text-on-surface-variant hover:bg-surface-container rounded-full p-1 transition-colors" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; padding: 0.25rem; border-radius: 9999px; color: #444653;">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        
+        <div class="flex-grow overflow-y-auto pr-1 space-y-4 custom-scrollbar" style="overflow-y: auto; max-height: 50vh; display: flex; flex-direction: column; gap: 1rem;">
+          <!-- Group 1 -->
+          <div>
+            <h4 class="font-bold text-[11px] text-on-surface-variant uppercase tracking-widest mb-2 flex items-center gap-1.5" style="font-size: 11px; color: #444653; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.5rem 0; font-weight: 700; display: flex; align-items: center; gap: 0.375rem;">
+              <span class="material-symbols-outlined" style="font-size: 14px;">person</span> Attendee Booking Flow
+            </h4>
+            <div class="space-y-1 pl-2 border-l border-outline-variant/40" style="display: flex; flex-direction: column; gap: 0.25rem; padding-left: 0.5rem; border-left: 1px solid rgba(196, 197, 213, 0.4);">
+              <a href="index.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="index.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Landing Page</a>
+              <a href="book-ticket.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="book-ticket.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">1. Select Tickets</a>
+              <a href="choose-addons.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="choose-addons.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">2. Choose Add-ons</a>
+              <a href="payment.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="payment.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">3. Payment Checkout</a>
+              <a href="booking-success.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="booking-success.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">4. Booking Success</a>
+              <a href="my-tickets.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="my-tickets.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">5. My Tickets</a>
+              <a href="ticket-details.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="ticket-details.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">6. Ticket Details QR</a>
+            </div>
+          </div>
+          
+          <!-- Group 2 -->
+          <div>
+            <h4 class="font-bold text-[11px] text-on-surface-variant uppercase tracking-widest mb-2 flex items-center gap-1.5" style="font-size: 11px; color: #444653; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.5rem 0; font-weight: 700; display: flex; align-items: center; gap: 0.375rem;">
+              <span class="material-symbols-outlined" style="font-size: 14px;">lock</span> Portals & Authentication
+            </h4>
+            <div class="space-y-1 pl-2 border-l border-outline-variant/40" style="display: flex; flex-direction: column; gap: 0.25rem; padding-left: 0.5rem; border-left: 1px solid rgba(196, 197, 213, 0.4);">
+              <a href="login.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="login.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Login Portal</a>
+              <a href="register.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="register.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Register Account</a>
+              <a href="forgot-password.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="forgot-password.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Forgot Password</a>
+            </div>
+          </div>
+          
+          <!-- Group 3 -->
+          <div>
+            <h4 class="font-bold text-[11px] text-on-surface-variant uppercase tracking-widest mb-2 flex items-center gap-1.5" style="font-size: 11px; color: #444653; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.5rem 0; font-weight: 700; display: flex; align-items: center; gap: 0.375rem;">
+              <span class="material-symbols-outlined" style="font-size: 14px;">space_dashboard</span> Management Dashboards
+            </h4>
+            <div class="space-y-1 pl-2 border-l border-outline-variant/40" style="display: flex; flex-direction: column; gap: 0.25rem; padding-left: 0.5rem; border-left: 1px solid rgba(196, 197, 213, 0.4);">
+              <a href="organizer-dashboard.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="organizer-dashboard.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Organizer Dashboard</a>
+              <a href="sponsor-portal.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="sponsor-portal.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">Sponsor Portal</a>
+              <a href="admin-dashboard.html" class="qn-link block py-1.5 px-2 rounded-md hover:bg-surface-container-low text-body-sm transition-colors" data-page="admin-dashboard.html" style="text-decoration: none; color: inherit; padding: 0.375rem 0.5rem; border-radius: 0.375rem; font-size: 14px;">System Admin Dashboard</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(navContainer);
+
+    // 3. Setup event listeners
+    const trigger = document.getElementById('qn-trigger');
+    const panel = document.getElementById('qn-panel');
+    const icon = document.getElementById('qn-icon');
+    const closeBtn = document.getElementById('qn-close');
+
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        panel.classList.toggle('hidden');
+        if (panel.classList.contains('hidden')) {
+            panel.style.display = 'none';
+            icon.textContent = 'explore';
+        } else {
+            panel.style.display = 'flex';
+            icon.textContent = 'close';
+        }
+    });
+
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        panel.classList.add('hidden');
+        panel.style.display = 'none';
+        icon.textContent = 'explore';
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!navContainer.contains(e.target)) {
+            panel.classList.add('hidden');
+            panel.style.display = 'none';
+            icon.textContent = 'explore';
+        }
+    });
+
+    // Highlight current page
+    const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+    const links = document.querySelectorAll('.qn-link');
+    links.forEach(link => {
+        // Handle active page styling
+        if (link.getAttribute('data-page') === currentFile) {
+            link.style.backgroundColor = 'rgba(0, 40, 142, 0.1)';
+            link.style.color = '#00288e';
+            link.style.fontWeight = '700';
+        }
+        
+        // Add hover effects via JS since inline hover is tricky
+        link.addEventListener('mouseenter', () => {
+            if (link.getAttribute('data-page') !== currentFile) {
+                link.style.backgroundColor = '#eff4ff';
+            }
+        });
+        link.addEventListener('mouseleave', () => {
+            if (link.getAttribute('data-page') !== currentFile) {
+                link.style.backgroundColor = 'transparent';
+            }
+        });
+    });
+});
+</script>
+
+</body></html>

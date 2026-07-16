@@ -1,0 +1,459 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>EventAZ | Tech Vision 2024</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at 20% 30%, rgba(0, 40, 142, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(113, 42, 226, 0.08) 0%, transparent 50%);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating { animation: float 6s ease-in-out infinite; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed": "#89f5e7",
+                      "on-secondary-container": "#fffbff",
+                      "secondary-fixed": "#eaddff",
+                      "on-secondary-fixed": "#25005a",
+                      "tertiary-fixed-dim": "#6bd8cb",
+                      "primary": "#00288e",
+                      "surface-bright": "#f8f9ff",
+                      "on-primary": "#ffffff",
+                      "on-surface-variant": "#444653",
+                      "surface-tint": "#3755c3",
+                      "primary-fixed-dim": "#b8c4ff",
+                      "outline": "#757684",
+                      "inverse-surface": "#213145",
+                      "surface-container-high": "#dce9ff",
+                      "on-secondary-fixed-variant": "#5a00c6",
+                      "secondary-fixed-dim": "#d2bbff",
+                      "primary-fixed": "#dde1ff",
+                      "on-secondary": "#ffffff",
+                      "background": "#f8f9ff",
+                      "on-surface": "#0b1c30",
+                      "surface-container-lowest": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "surface-container-low": "#eff4ff",
+                      "surface-container": "#e5eeff",
+                      "tertiary": "#003c36",
+                      "on-primary-fixed-variant": "#173bab",
+                      "primary-container": "#1e40af",
+                      "surface": "#f8f9ff",
+                      "on-tertiary": "#ffffff",
+                      "secondary-container": "#8a4cfc",
+                      "secondary": "#712ae2",
+                      "tertiary-container": "#00554e",
+                      "on-tertiary-container": "#5fcdbf",
+                      "error": "#ba1a1a",
+                      "on-primary-container": "#a8b8ff",
+                      "inverse-primary": "#b8c4ff",
+                      "outline-variant": "#c4c5d5",
+                      "on-background": "#0b1c30",
+                      "surface-dim": "#cbdbf5",
+                      "on-tertiary-fixed": "#00201d",
+                      "surface-variant": "#d3e4fe",
+                      "inverse-on-surface": "#eaf1ff",
+                      "on-tertiary-fixed-variant": "#005049",
+                      "surface-container-highest": "#d3e4fe",
+                      "on-error": "#ffffff",
+                      "on-primary-fixed": "#001453",
+                      "on-error-container": "#93000a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "40px",
+                      "container-max": "1440px",
+                      "margin-mobile": "16px",
+                      "gutter": "24px",
+                      "base": "8px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Inter"],
+                      "label-md": ["Inter"],
+                      "display-lg-mobile": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-sm": ["Inter"],
+                      "body-md": ["Inter"],
+                      "display-lg": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "mono-sm": ["JetBrains Mono"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "mono-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface-container-lowest border-b border-outline-variant">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-primary">EventAZ</span>
+<nav class="hidden md:flex gap-6">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md" href="#hero">Home</a>
+<a class="text-on-surface-variant font-medium hover:bg-surface-container-low transition-colors px-2 py-1 rounded font-body-md text-body-md" href="#schedule">Schedule</a>
+<a class="text-on-surface-variant font-medium hover:bg-surface-container-low transition-colors px-2 py-1 rounded font-body-md text-body-md" href="#speakers">Speakers</a>
+<a class="text-on-surface-variant font-medium hover:bg-surface-container-low transition-colors px-2 py-1 rounded font-body-md text-body-md" href="#location">Venue</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer active:opacity-80 transition-all p-2 rounded-full hover:bg-surface-container-low">notifications</span>
+<span class="material-symbols-outlined text-primary cursor-pointer active:opacity-80 transition-all p-2 rounded-full hover:bg-surface-container-low">settings</span>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-bold font-body-md text-body-md shadow-sm active:scale-95 transition-transform">Get Tickets</button>
+</div>
+</header>
+<main class="pt-16">
+<!-- Hero Section -->
+<section class="relative min-h-[921px] flex items-center overflow-hidden hero-gradient" id="hero">
+<div class="absolute inset-0 z-0">
+
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+<div class="space-y-8">
+<div class="inline-flex items-center gap-2 bg-secondary-container text-on-secondary-container px-4 py-1 rounded-full font-label-md text-label-md uppercase tracking-wider">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                        Annual Global Summit
+                    </div>
+<h1 class="font-display-lg text-display-lg text-primary leading-tight">
+                        Redefining the <br><span class="text-secondary">Digital Frontier</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
+                        Join 5,000+ industry leaders, innovators, and creators for three days of high-octane insights at Tech Vision 2024.
+                    </p>
+<div class="flex flex-wrap gap-4 items-center">
+<div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-outline-variant shadow-sm">
+<span class="material-symbols-outlined text-primary bg-primary-fixed p-2 rounded-lg">calendar_month</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant">DATE</p>
+<p class="font-body-md text-body-md font-bold">Oct 14-16, 2024</p>
+</div>
+</div>
+<div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-outline-variant shadow-sm">
+<span class="material-symbols-outlined text-primary bg-primary-fixed p-2 rounded-lg">location_on</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant">LOCATION</p>
+<p class="font-body-md text-body-md font-bold">Grand Tech Hall, NYC</p>
+</div>
+</div>
+</div>
+<div class="pt-4">
+<button class="bg-primary text-on-primary text-body-lg font-bold py-4 px-10 rounded-xl hover:shadow-lg transition-all active:scale-95 flex items-center gap-3">
+                            Buy Tickets Now
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="relative hidden md:block">
+<div class="relative z-20 rounded-3xl overflow-hidden shadow-2xl border-4 border-white floating h-[500px]">
+<img class="w-full h-full object-cover" data-alt="A high-tech, futuristic event hall filled with soft blue and purple neon lighting. Attendees are seen in soft focus, holding glowing mobile devices. A massive holographic display of a 3D geometric globe floats on a stage in the background, conveying a sense of global connectivity and innovation in a light-mode architectural space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaBEzVeDTlNuT6Mdz8hu-q8-yLPEWI38gCr4lbj0VMwjWEEfhq3Z8XSh5v7jqsTgPFPMUIKirHxrX4UJr5834ldvt5d3LFayMjsGOicoGbWgOjMzIUt3j10ptvDSqwzByyWL7dJxA2-YQD1-iCDlHb8Y7EHHxPMIJZOUlEMZXZ7fNeyJohUbqc9NAeBEcm-N2Z99smAyA1xJKnJwSG66qSRYfsUoCNUymRWYTp3FbIv0Ec7AJHwDMpWA">
+</div>
+<!-- Decorative Elements -->
+<div class="absolute -top-6 -right-6 w-32 h-32 bg-secondary rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+<div class="absolute -bottom-10 -left-10 w-48 h-48 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+</div>
+</div>
+</section>
+<!-- Stats Grid (Bento) -->
+<section class="py-24 bg-surface-container-low">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="md:col-span-2 glass-card p-8 rounded-3xl flex flex-col justify-between">
+<h3 class="font-headline-md text-headline-md text-primary mb-4">Why Tech Vision?</h3>
+<p class="text-on-surface-variant font-body-md mb-8">We bring together the most influential minds to discuss the future of AI, Quantum Computing, and Sustainable Engineering.</p>
+<div class="flex -space-x-4">
+<img class="w-12 h-12 rounded-full border-2 border-white object-cover" data-alt="Close up portrait of a professional female tech executive with a confident smile, modern glasses, high-key studio lighting, corporate professional style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTYygQxmy96gfSEFOwO08x1dSC3rrpdirbJYAjZLexC8mb665syieWEFpmCla9R0xVh6VhXS9ForFdL3rfjIvC2PRkVBl3tQJmxrPQLg_GG0ySngdw7h-1uzt6eaNkniQyDvW9n4cjxtnk2NGsbDqt79TyPBDdy6SRQkS1Pf5WYcSf1FOqhSRE1iSa96rRdcDeEIVWWp9zGirK4JDncj0wLlCyEPCJWJjpWaKIfpBWKG8vmDCmdcqcjA">
+<img class="w-12 h-12 rounded-full border-2 border-white object-cover" data-alt="Close up portrait of a young male software engineer in a stylish hoodie, looking towards the camera, bright clean office background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfs734zyhK_UuPjvYjNc14J1ovyE3TsSj3PmGYRDxN6uzRFdhWcvzHLDi2dKt4AE4V3P28Q-8snJVSBOt3zweNhABYkpNIIyUT3eQDS_ohXoUMXyimtRIel_PBKaE5HMIwKIw_3v_dYHagVta6ofAtBOa__qQzl2yWMQaH97cGGd7vHL0oUFuriHOBAOwAU88NFjUAYiUqQH0JOz3sXEKarf_LdyJStyWb1mePq2Oge1jPpDJLEzJYbA">
+<img class="w-12 h-12 rounded-full border-2 border-white object-cover" data-alt="Close up portrait of an elderly distinguished professor with white hair and beard, academic setting, warm natural lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzyKFVqs0de-AiS_G4nMd-kqEkaIZLMtJKvZw5OrXRM1zbZDQPRcEjIbh2L_wSGlpu8ti4J8Eo-pRbmOE8JCC31Omxhd3uI6cflJMH5KkhJgFC8dbcX1HDWdG8qtNE8m0Be2APmpS3Owcht1zsK-8Gw_v9pG6AxumS-smK4yxlBfoTJFLuzUOYuMfiqYZYIOLLyADjrqAHu78CmoeGXuNg7IqiMGZ8mnEG9e4kpGyf9IgjVeVCmin8Hg">
+<div class="w-12 h-12 rounded-full border-2 border-white bg-primary text-white flex items-center justify-center font-bold text-sm">+5k</div>
+</div>
+</div>
+<div class="bg-primary text-on-primary p-8 rounded-3xl flex flex-col items-center justify-center text-center">
+<span class="text-4xl font-black mb-2">50+</span>
+<span class="font-label-md uppercase opacity-80 tracking-widest">Keynote Speakers</span>
+</div>
+<div class="bg-secondary text-on-secondary p-8 rounded-3xl flex flex-col items-center justify-center text-center">
+<span class="text-4xl font-black mb-2">12</span>
+<span class="font-label-md uppercase opacity-80 tracking-widest">Workshops</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Schedule Section -->
+<section class="py-24 bg-white" id="schedule">
+<div class="max-w-4xl mx-auto px-margin-desktop">
+<div class="text-center mb-16">
+<h2 class="font-display-lg text-display-lg text-primary mb-4">Event Schedule</h2>
+<p class="text-on-surface-variant">A curated journey through the future of technology.</p>
+</div>
+<div class="space-y-12 relative">
+<!-- Timeline Line -->
+<div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-outline-variant transform md:-translate-x-1/2"></div>
+<!-- Item 1 -->
+<div class="relative flex flex-col md:flex-row items-center justify-between w-full">
+<div class="md:w-5/12 text-left md:text-right mb-4 md:mb-0">
+<span class="text-primary font-mono-sm bg-primary-fixed px-3 py-1 rounded-full">09:00 AM</span>
+<h4 class="font-headline-sm text-headline-sm mt-2">Opening Ceremony</h4>
+<p class="text-on-surface-variant font-body-sm">Kickoff with Global Events Corp CEO and a special holographic presentation.</p>
+</div>
+<div class="absolute left-[-4px] md:left-1/2 w-3 h-3 bg-primary rounded-full transform md:-translate-x-1/2 z-10 border-4 border-white ring-2 ring-primary"></div>
+<div class="md:w-5/12"></div>
+</div>
+<!-- Item 2 -->
+<div class="relative flex flex-col md:flex-row-reverse items-center justify-between w-full">
+<div class="md:w-5/12 text-left mb-4 md:mb-0">
+<span class="text-secondary font-mono-sm bg-secondary-fixed px-3 py-1 rounded-full">11:30 AM</span>
+<h4 class="font-headline-sm text-headline-sm mt-2">AI Ethics Roundtable</h4>
+<p class="text-on-surface-variant font-body-sm">A deep dive into the governance of large language models with industry experts.</p>
+</div>
+<div class="absolute left-[-4px] md:left-1/2 w-3 h-3 bg-secondary rounded-full transform md:-translate-x-1/2 z-10 border-4 border-white ring-2 ring-secondary"></div>
+<div class="md:w-5/12"></div>
+</div>
+<!-- Item 3 -->
+<div class="relative flex flex-col md:flex-row items-center justify-between w-full">
+<div class="md:w-5/12 text-left md:text-right mb-4 md:mb-0">
+<span class="text-tertiary font-mono-sm bg-tertiary-fixed px-3 py-1 rounded-full">02:00 PM</span>
+<h4 class="font-headline-sm text-headline-sm mt-2">Interactive Networking</h4>
+<p class="text-on-surface-variant font-body-sm">Connect with sponsors and speakers in the Innovation Hub.</p>
+</div>
+<div class="absolute left-[-4px] md:left-1/2 w-3 h-3 bg-tertiary rounded-full transform md:-translate-x-1/2 z-10 border-4 border-white ring-2 ring-tertiary"></div>
+<div class="md:w-5/12"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Speakers & Sponsor Logo Grid -->
+<section class="py-24 bg-surface-container-low" id="speakers">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="flex justify-between items-end mb-12">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Featured Speakers</h2>
+<p class="text-on-surface-variant">The minds leading the global transition.</p>
+</div>
+<button class="text-primary font-bold flex items-center gap-2 hover:underline">
+                        View All Speakers <span class="material-symbols-outlined">keyboard_arrow_right</span>
+</button>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+<!-- Speaker Card 1 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-square rounded-2xl overflow-hidden mb-4 border border-outline-variant">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Portrait of Sarah Jenkins, a leading researcher in Quantum Computing, set against a minimalist architectural background with cool daylight. She wears a professional charcoal blazer. High-end editorial photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfO4aZnYGIbfJ5CB26u_-OjIl-10absN1TlQMOi6tRZSzy7J41NsRUqhQRWkHUiHgZ6krfx6JrRdUTT_du2SG5yx5ORsposlXPoI_QvEWTO2as76-_VOM7s_0GE-M17jqB-ReA39CLfzcMz8aMc94ASttmxWuRphaSVrzY5GFqIX0U3eOZX-nFw-SzgQJkruoLJG4J2No1nfABZfCug5rYHsNLYRuHAnS4gXP1Uin3D8UjuDRpT35Izg">
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent text-white opacity-0 group-hover:opacity-100 transition-opacity">
+<p class="text-xs font-bold uppercase tracking-widest">Quantum Computing</p>
+</div>
+</div>
+<h4 class="font-bold text-primary">Sarah Jenkins</h4>
+<p class="text-on-surface-variant text-sm">Lead Scientist, NeuralLink</p>
+</div>
+<!-- Speaker Card 2 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-square rounded-2xl overflow-hidden mb-4 border border-outline-variant">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A portrait of David Chen, a visionary urban architect, smiling slightly in a bright, modern studio. Soft natural light illuminates his face. Behind him is a blur of architectural models. Clean, sophisticated corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRAfXftr4UIzGj9VJnZZfVfuZK7zWbUtmxoNYn3En6HBaIbc4Ip2dOR_Zq3JCFHZunkW7rp2K-2umP4qJaU2ZlJI8hV0yFz_tPJCgeJCo9BeaedYbFCiMw9UY7jL-4UCt1qRGqS4BX1bOhd0kUHBDOKyjS2aRHMn81E9KxUCYj1f-JQZg_f_JIa8zC0AEnra7ROV0tTQPxI-x4FVcYi-yXWY8_7k0IcG0dyJkjTjMShTzgqIcMcPtaeg">
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent text-white opacity-0 group-hover:opacity-100 transition-opacity">
+<p class="text-xs font-bold uppercase tracking-widest">Smart Cities</p>
+</div>
+</div>
+<h4 class="font-bold text-primary">David Chen</h4>
+<p class="text-on-surface-variant text-sm">Founder, Urbis Dynamics</p>
+</div>
+<!-- Speaker Card 3 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-square rounded-2xl overflow-hidden mb-4 border border-outline-variant">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Professional portrait of Elena Rodriguez, a renewable energy consultant, standing in front of a white wall with a green plant in the background. Bright, high-key lighting creates a vibrant and fresh modern look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCt37TDyQbWy-AdrMPfQJN-hbZleqDM9LbAlfWm9WugPvXzBSy3wQUopaT0rLDnkzZRES_0f6NpsX8JNe4EjBJpZm_lUJkrKm2VvxJAbW8ixfXwmkIzNAeC6D-AuMZNUlX6RA-7OeVL-7oeuPp6I20BSCo57o-BCYMCYJh0kyIRC8SEhuOdwj1PfPWNWuuw97UQSCnpa1deStR37x0yknrlTRhmh2pjK2RXDdts1wh1J4d8ejo0sW4sOg">
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent text-white opacity-0 group-hover:opacity-100 transition-opacity">
+<p class="text-xs font-bold uppercase tracking-widest">Sustainability</p>
+</div>
+</div>
+<h4 class="font-bold text-primary">Elena Rodriguez</h4>
+<p class="text-on-surface-variant text-sm">VP Innovation, EcoVolt</p>
+</div>
+<!-- Speaker Card 4 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-square rounded-2xl overflow-hidden mb-4 border border-outline-variant">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A portrait of Marcus Thorne, a cybersecurity expert, wearing a dark turtleneck against a deep blue background with subtle digital light patterns. Professional, intense, and high-tech corporate lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_5jA9tBTl_2gknzZ-J3QjX6mitnof8Ss5qwLkxwABPj9I0ae3sQ-HK4VgIeL_1wkZP3q6hMjdPDxcQ4tY_KHPehtRziHKCmlR5IvRFXNZVW19DynUeZyt_GysmCw-0fw3uCQE8W8oj2AJsauNuz-ouuKYtTMlB-uzDo-Rb9WmqHD6Yxrh-lQnCQGRfq-1cXdISCMA-Rs_4farJ1daoYw8nyCZ2NhSyPRhOBD7xKalW2bzmapGF9xMcw">
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent text-white opacity-0 group-hover:opacity-100 transition-opacity">
+<p class="text-xs font-bold uppercase tracking-widest">Cybersecurity</p>
+</div>
+</div>
+<h4 class="font-bold text-primary">Marcus Thorne</h4>
+<p class="text-on-surface-variant text-sm">CTO, ShieldCore</p>
+</div>
+</div>
+<!-- Sponsor Grid -->
+<div class="mt-24 pt-12 border-t border-outline-variant text-center">
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mb-12">Proudly Supported By</p>
+<div class="flex flex-wrap justify-center items-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-300">
+<div class="h-8 flex items-center font-bold text-2xl text-on-surface">CloudBase</div>
+<div class="h-8 flex items-center font-bold text-2xl text-on-surface">DataPulse</div>
+<div class="h-8 flex items-center font-bold text-2xl text-on-surface">NextGen</div>
+<div class="h-8 flex items-center font-bold text-2xl text-on-surface">AetherOS</div>
+<div class="h-8 flex items-center font-bold text-2xl text-on-surface">LogicGate</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Location & Map -->
+<section class="py-24 bg-white" id="location">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div>
+<h2 class="font-display-lg text-display-lg text-primary mb-6">Venue &amp; Travel</h2>
+<div class="space-y-8">
+<div class="flex gap-4">
+<div class="bg-primary-fixed p-3 h-12 w-12 rounded-xl flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary">apartment</span>
+</div>
+<div>
+<h4 class="font-bold text-lg">Grand Tech Hall</h4>
+<p class="text-on-surface-variant">450 Innovation Way, Hudson Yards, New York, NY 10001</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="bg-secondary-fixed p-3 h-12 w-12 rounded-xl flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary">train</span>
+</div>
+<div>
+<h4 class="font-bold text-lg">Public Transport</h4>
+<p class="text-on-surface-variant">Easily accessible via the 7 Subway line (34 St - Hudson Yards Station) and Penn Station.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="bg-tertiary-fixed p-3 h-12 w-12 rounded-xl flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary">hotel</span>
+</div>
+<div>
+<h4 class="font-bold text-lg">Accommodation</h4>
+<p class="text-on-surface-variant">Special attendee rates available at The Equinox Hotel and Courtyard by Marriott.</p>
+</div>
+</div>
+</div>
+<button class="mt-10 border-2 border-primary text-primary font-bold py-3 px-8 rounded-xl hover:bg-primary-fixed transition-colors">Get Directions</button>
+</div>
+<div class="rounded-3xl overflow-hidden h-[500px] border border-outline-variant shadow-xl relative">
+<img class="w-full h-full object-cover" data-location="New York City" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDezwLGovlrA6KAupVFJUjllafHfKGI4GU6cKy48hWqhkbSnjpfUZWSc87tcPeUNiSHNr0IelA4qbAPUv2z_Xtz1AVYka95sBvG5NVGXYDcaZiKCNPG5X_Vd8myEtkCepb8_-8bMQ3J4xpcJ9Tk3mlHKH5D3Jwqhb_Ejqu3F7_VKXS4LFIQ6G4FpkoD3YC4gy0wSDjLbWM7EJFLo2G3omGSTDdbDp875mIdmCmpWngdJ17Ei7pD-B-THw">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+<div class="bg-primary text-on-primary p-3 rounded-full shadow-2xl animate-bounce">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-24 bg-primary relative overflow-hidden">
+<div class="absolute inset-0">
+
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop text-center relative z-10">
+<h2 class="text-display-lg text-white font-black mb-8">Ready to Shape the Future?</h2>
+<p class="text-on-primary-container font-body-lg mb-12 max-w-2xl mx-auto">Early Bird tickets are 40% off until August 31st. Secure your spot at the defining tech event of the year.</p>
+<div class="flex flex-col md:flex-row gap-6 justify-center">
+<button class="bg-white text-primary font-bold py-5 px-12 rounded-2xl text-xl shadow-2xl hover:scale-105 transition-transform">Register as Attendee</button>
+<button class="bg-transparent border-2 border-white text-white font-bold py-5 px-12 rounded-2xl text-xl hover:bg-white/10 transition-colors">Sponsor the Event</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 px-margin-desktop mt-auto bg-surface-container-highest border-t border-outline-variant">
+<div class="max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<div class="md:col-span-2">
+<span class="font-headline-sm text-headline-sm font-bold text-primary mb-6 block">EventAZ</span>
+<p class="text-on-surface-variant max-w-sm">The world's leading multi-tenant event management platform. Empowering organizations to create unforgettable experiences.</p>
+</div>
+<div>
+<h5 class="font-bold text-on-surface mb-4">Event Info</h5>
+<ul class="space-y-2 text-on-surface-variant text-body-sm">
+<li><a class="hover:text-primary transition-colors cursor-pointer" href="#">Event Schedule</a></li>
+<li><a class="hover:text-primary transition-colors cursor-pointer" href="#">Speakers List</a></li>
+<li><a class="hover:text-primary transition-colors cursor-pointer" href="#">Venue Gallery</a></li>
+<li><a class="hover:text-primary transition-colors cursor-pointer" href="#">FAQ</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-bold text-on-surface mb-4">Support</h5>
+<ul class="space-y-2 text-on-surface-variant text-body-sm">
+<li><a class="hover:text-primary transition-colors cursor-pointer" href="#">Contact Support</a></li>
+<li><a class="hover:text-primary transition-colors cursor-pointer" href="#">Privacy Policy</a></li>
+<li><a class="hover:text-primary transition-colors cursor-pointer" href="#">Terms of Service</a></li>
+<li><a class="hover:text-primary transition-colors cursor-pointer" href="#">Cookie Settings</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 EventAZ Multi-Tenant Systems. All rights reserved.</p>
+<div class="flex gap-6">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors">public</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors">share</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors">mail</span>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Simple scroll behavior for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 64,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add scrolled class to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md');
+                header.classList.remove('border-b');
+            } else {
+                header.classList.remove('shadow-md');
+                header.classList.add('border-b');
+            }
+        });
+    </script>
+</body></html>

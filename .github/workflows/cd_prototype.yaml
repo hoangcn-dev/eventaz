@@ -18,7 +18,7 @@ jobs:
         uses: appleboy/scp-action@v0.1.7
         with:
           host: prototype.eventaz.space
-          username: "root"
+          username: root
           key: ${{ secrets.SSH_KEY }}
           source: "prototype/static/*"
           target: "/var/www/eventaz-prototype"

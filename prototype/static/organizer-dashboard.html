@@ -1,12 +1,21 @@
-<!DOCTYPE html><html class="light" lang="en" style=""><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>EventAZ Organizer Dashboard</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<script id="tailwind-config">
+<!DOCTYPE html>
+<html class="light" lang="en" style="">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>EventAZ Organizer Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -85,383 +94,852 @@
                         "mono-sm": ["JetBrains Mono"]
                     },
                     "fontSize": {
-                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
-                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                        "mono-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "mono-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }]
                     }
                 },
             },
         }
     </script>
-<style>
+    <style>
         body {
             background-color: #f8f9ff;
             color: #0b1c30;
         }
+
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+
         .custom-scrollbar::-webkit-scrollbar {
             width: 4px;
             height: 4px;
         }
+
         .custom-scrollbar::-webkit-scrollbar-track {
             background: transparent;
         }
+
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: #c4c5d5;
             border-radius: 10px;
         }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
         .glass-card {
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(8px);
             border: 1px solid #E2E8F0;
         }
+
         .sidebar-active {
             background-color: #1e40af;
             color: #a8b8ff;
         }
     </style>
 </head>
+
 <body class="font-body-md text-body-md overflow-x-hidden">
-<!-- TopNavBar Shell -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-10 h-16 bg-surface-container-lowest border-b border-outline-variant">
-<div class="flex items-center gap-8">
-<span onclick="window.location.href='index.html'" class="font-headline-md text-headline-md font-bold text-primary cursor-pointer">EventAZ</span>
-<div class="hidden md:flex items-center gap-6">
-<nav class="flex gap-6 text-on-surface-variant font-medium">
-<a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Dashboard</a>
-<a class="hover:bg-surface-container-low transition-colors px-2 py-1 rounded" href="#">Live Monitor</a>
-<a class="hover:bg-surface-container-low transition-colors px-2 py-1 rounded" href="#">Analytics</a>
-</nav>
-</div>
-</div>
-<div class="flex items-center gap-4">
-<div class="relative flex items-center bg-surface-container-low rounded-full px-4 py-2 border border-outline-variant w-64">
-<span class="material-symbols-outlined text-outline text-[20px]">search</span>
-<input class="bg-transparent border-none focus:ring-0 text-body-sm w-full" placeholder="Search events..." type="text">
-</div>
-<button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-all">notifications</button>
-<button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-all">settings</button>
-<div class="w-8 h-8 rounded-full bg-primary-fixed-dim overflow-hidden cursor-pointer active:scale-95 transition-transform">
-<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a high-level corporate event manager in business attire. The background is a clean, neutral office environment with soft bokeh and modern blue and white tones, reflecting a sophisticated corporate identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDddcZSHLiw9boxv_dMtvz-r7_VwNc4IYdVc2V-U200lWcyl5WsbcFzz4-nXD2eEO1WMmCc9TTRW1JCN3bZf2jzd93dDMoGlmqQ5dDciN5jZTTfahEmp0l7xrvYcDZNV1pEfDvF5ijC3cu9t7cEvmVErh6VVx30kFIXAROwbGCoyIH_HtihJTEKXZ05kIFHqJ-5bYF-Lgn2S2wzTfOtoloW3bwqxQS7Da8CsMFz5zSEhqnvQuTs9zDJwA">
-</div>
-</div>
-</header>
-<!-- SideNavBar Shell -->
-<aside class="fixed left-0 top-0 h-full w-[280px] z-40 bg-inverse-surface flex flex-col pt-20 pb-8 px-4 shadow-sm">
-<div class="mb-8 px-4">
-<div class="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
-<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">corporate_fare</span>
-</div>
-<div>
-<h3 class="font-label-md text-label-md text-on-primary-fixed font-black">Global Events Corp</h3>
-<p class="text-[10px] text-on-primary-fixed-variant opacity-70 uppercase tracking-widest">Tenant Switcher</p>
-</div>
-<span class="material-symbols-outlined ml-auto text-on-primary-fixed-variant">unfold_more</span>
-</div>
-</div>
-<nav class="flex-1 space-y-1">
-<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold transition-transform duration-200 active:scale-95" href="#">
-<span class="material-symbols-outlined">dashboard</span>
-<span class="font-label-md">Overview</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all active:scale-95 text-white" href="#"><span class="material-symbols-outlined">groups</span><span class="font-label-md">Personnel</span></a>
-<a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all active:scale-95 text-white" href="#"><span class="material-symbols-outlined">groups</span><span class="font-label-md">Personnel</span></a>
-<a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all active:scale-95 text-white" href="#"><span class="material-symbols-outlined">groups</span><span class="font-label-md">Personnel</span></a>
-<a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all active:scale-95 text-white" href="#"><span class="material-symbols-outlined">groups</span><span class="font-label-md">Personnel</span></a>
-<a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all active:scale-95 text-white" href="#"><span class="material-symbols-outlined">groups</span><span class="font-label-md">Personnel</span></a>
-</nav>
-<button class="mt-6 mx-4 py-3 px-6 bg-secondary text-white rounded-lg font-bold shadow-lg hover:shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2">
-<span class="material-symbols-outlined">add_circle</span>
-            Create Event
+    <!-- TopNavBar Shell -->
+    <header
+        class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-10 h-16 bg-surface-container-lowest border-b border-outline-variant">
+        <div class="flex items-center gap-8">
+            <span onclick="window.location.href='index.html'"
+                class="font-headline-md text-headline-md font-bold text-primary cursor-pointer">EventAZ</span>
+            <div class="hidden md:flex items-center gap-6">
+                <nav class="flex gap-6 text-on-surface-variant font-medium">
+                    <a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Dashboard</a>
+                    <a class="hover:bg-surface-container-low transition-colors px-2 py-1 rounded" href="#">Live
+                        Monitor</a>
+                    <a class="hover:bg-surface-container-low transition-colors px-2 py-1 rounded" href="#">Analytics</a>
+                </nav>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <div
+                class="relative flex items-center bg-surface-container-low rounded-full px-4 py-2 border border-outline-variant w-64">
+                <span class="material-symbols-outlined text-outline text-[20px]">search</span>
+                <input class="bg-transparent border-none focus:ring-0 text-body-sm w-full"
+                    placeholder="Search events..." type="text">
+            </div>
+            <button
+                class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-all">notifications</button>
+            <button
+                class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-all">settings</button>
+            <div
+                class="w-8 h-8 rounded-full bg-primary-fixed-dim overflow-hidden cursor-pointer active:scale-95 transition-transform">
+                <img class="w-full h-full object-cover"
+                    data-alt="A professional studio portrait of a high-level corporate event manager in business attire. The background is a clean, neutral office environment with soft bokeh and modern blue and white tones, reflecting a sophisticated corporate identity."
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDddcZSHLiw9boxv_dMtvz-r7_VwNc4IYdVc2V-U200lWcyl5WsbcFzz4-nXD2eEO1WMmCc9TTRW1JCN3bZf2jzd93dDMoGlmqQ5dDciN5jZTTfahEmp0l7xrvYcDZNV1pEfDvF5ijC3cu9t7cEvmVErh6VVx30kFIXAROwbGCoyIH_HtihJTEKXZ05kIFHqJ-5bYF-Lgn2S2wzTfOtoloW3bwqxQS7Da8CsMFz5zSEhqnvQuTs9zDJwA">
+            </div>
+        </div>
+    </header>
+    <!-- SideNavBar Shell -->
+    <aside id="sidebar-aside" class="fixed left-0 top-0 h-full w-[280px] z-40 bg-inverse-surface flex flex-col pt-20 pb-8 px-4 shadow-sm transition-all duration-300 transform">
+        <!-- Nút chuyển trạng thái Sidebar ở giữa lề phải (Hình chữ nhật nhỏ, opacity, hover đậm, transformX 50%) -->
+        <button id="sidebar-toggle-btn"
+            class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-50 w-5 h-10 bg-slate-800 text-white rounded-r-md border border-l-0 border-white/20 shadow-lg flex items-center justify-center opacity-60 hover:opacity-100 hover:bg-primary transition-all duration-200 cursor-pointer focus:outline-none"
+            title="Ẩn/Hiện Sidebar">
+            <span class="material-symbols-outlined text-[16px]">chevron_left</span>
         </button>
-<div class="mt-auto border-t border-white/10 pt-6 space-y-1">
-<a class="flex items-center gap-3 px-4 py-2 hover:text-on-primary transition-colors text-white" href="#">
-<span class="material-symbols-outlined">monitoring</span>
-<span class="font-label-md">System Monitor</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-2 hover:text-on-primary transition-colors text-white" href="#">
-<span class="material-symbols-outlined">manage_accounts</span>
-<span class="font-label-md">User Mgmt</span>
-</a>
-</div>
-</aside>
-<!-- Main Content Canvas -->
-<main class="ml-[280px] pt-16 min-h-screen">
-<div class="p-margin-desktop max-w-[1600px] mx-auto">
-<!-- Header Section -->
-<div class="flex justify-between items-end mb-8">
-<div>
-<div class="flex items-center gap-2 mb-2">
-<span class="px-2 py-0.5 bg-secondary-container/10 text-secondary-container text-[10px] font-bold rounded uppercase tracking-tighter">Live Event</span>
-<span class="text-on-surface-variant font-mono-sm text-mono-sm">ID: E-2024-99X</span>
-</div>
-<h1 class="font-display-lg text-display-lg text-on-surface">Tech Summit Asia 2024</h1>
-<p class="text-on-surface-variant flex items-center gap-2">
-<span class="material-symbols-outlined text-[18px]">calendar_today</span>
-                        Nov 12 - Nov 15, 2024 • Marina Bay Sands, Singapore
-                    </p>
-</div>
-<div class="flex gap-3">
-<button class="px-4 py-2 border border-outline-variant rounded-lg font-medium hover:bg-surface-container transition-colors flex items-center gap-2">
-<span class="material-symbols-outlined text-[20px]">share</span>
-                        Public Link
-                    </button>
-<button class="px-6 py-2 bg-primary text-white rounded-lg font-bold shadow-md hover:shadow-lg active:scale-95 transition-all flex items-center gap-2">
-<span class="material-symbols-outlined text-[20px]">download</span>
-                        Export Report
-                    </button>
-</div>
-</div>
-<!-- Bento Grid Summary Cards -->
-<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-8">
-<div class="glass-card p-6 rounded-xl flex flex-col justify-between hover:shadow-md transition-shadow">
-<div class="flex justify-between items-start">
-<div class="p-2 bg-primary/5 rounded-lg">
-<span class="material-symbols-outlined text-primary">payments</span>
-</div>
-<span class="text-teal-600 font-bold text-label-md flex items-center gap-1">+12.5% <span class="material-symbols-outlined text-[14px]">trending_up</span></span>
-</div>
-<div class="mt-4">
-<p class="text-on-surface-variant font-label-md uppercase tracking-wider">Total Revenue</p>
-<h2 class="text-headline-md font-bold">$1,248,500</h2>
-</div>
-</div>
-<div class="glass-card p-6 rounded-xl flex flex-col justify-between hover:shadow-md transition-shadow">
-<div class="flex justify-between items-start">
-<div class="p-2 bg-secondary/5 rounded-lg">
-<span class="material-symbols-outlined text-secondary">confirmation_number</span>
-</div>
-<p class="text-on-surface-variant font-label-md">85% Sold</p>
-</div>
-<div class="mt-4">
-<p class="text-on-surface-variant font-label-md uppercase tracking-wider">Tickets Sold</p>
-<h2 class="text-headline-md font-bold">4,250 / 5,000</h2>
-</div>
-</div>
-<div class="glass-card p-6 rounded-xl flex flex-col justify-between hover:shadow-md transition-shadow">
-<div class="flex justify-between items-start">
-<div class="p-2 bg-tertiary-container/10 rounded-lg">
-<span class="material-symbols-outlined text-tertiary-container">badge</span>
-</div>
-<span class="px-2 py-0.5 bg-success-container/10 text-teal-600 text-[10px] font-bold rounded">Full Roster</span>
-</div>
-<div class="mt-4">
-<p class="text-on-surface-variant font-label-md uppercase tracking-wider">Personnel Assigned</p>
-<h2 class="text-headline-md font-bold">128 Staff</h2>
-</div>
-</div>
-<div class="glass-card p-6 rounded-xl flex flex-col justify-between hover:shadow-md transition-shadow">
-<div class="flex justify-between items-start">
-<div class="p-2 bg-error-container/10 rounded-lg">
-<span class="material-symbols-outlined text-error">local_shipping</span>
-</div>
-<span class="px-2 py-0.5 bg-error-container text-error text-[10px] font-bold rounded">2 Delayed</span>
-</div>
-<div class="mt-4">
-<p class="text-on-surface-variant font-label-md uppercase tracking-wider">Logistics Status</p>
-<h2 class="text-headline-md font-bold">92% On-Site</h2>
-</div>
-</div>
-</div>
-<!-- Main Layout: Timeline & Activity -->
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter items-start">
-<!-- Left: Event Timeline (Gantt-style) -->
-<div class="lg:col-span-2 glass-card rounded-xl overflow-hidden shadow-sm">
-<div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low/50">
-<h3 class="font-headline-sm text-headline-sm flex items-center gap-2">
-<span class="material-symbols-outlined">timeline</span> Event Roadmap
+        <div class="mb-6">
+            <button id="create-event-btn"
+                class="w-full py-3 px-4 bg-secondary text-white rounded-lg font-bold shadow-lg hover:shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined">add_circle</span>
+                <span>Tạo sự kiện</span>
+            </button>
+        </div>
+        <nav class="flex-1 space-y-1">
+            <a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold transition-transform duration-200 active:scale-95"
+                href="#">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-label-md">Overview</span>
+            </a>
+            <a id="event-tab-toggle" class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all active:scale-95 text-white cursor-pointer select-none"
+                href="javascript:void(0)">
+                <span class="material-symbols-outlined">event</span>
+                <span class="font-label-md">Sự kiện</span>
+                <span id="event-tab-arrow" class="material-symbols-outlined ml-auto transition-transform duration-200">expand_more</span>
+            </a>
+            <div id="event-subtabs-container" class="space-y-1 overflow-hidden transition-all duration-300 ease-in-out max-h-96 opacity-100">
+                <a href="#" class="flex items-center gap-2 px-4 py-2.5 text-[13px] text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors truncate font-medium border-l-2 border-primary bg-white/5">
+                    <span class="material-symbols-outlined text-[16px] text-primary-fixed">radio_button_checked</span>
+                    <span class="truncate">Tech Summit Asia 2024</span>
+                </a>
+            </div>
+            <a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all active:scale-95 text-white"
+                href="#"><span class="material-symbols-outlined">groups</span><span
+                    class="font-label-md">Personnel</span></a>
+            <a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all active:scale-95 text-white"
+                href="#"><span class="material-symbols-outlined">groups</span><span
+                    class="font-label-md">Personnel</span></a>
+            <a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all active:scale-95 text-white"
+                href="#"><span class="material-symbols-outlined">groups</span><span
+                    class="font-label-md">Personnel</span></a>
+            <a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all active:scale-95 text-white"
+                href="#"><span class="material-symbols-outlined">groups</span><span
+                    class="font-label-md">Personnel</span></a>
+        </nav>
+        <div class="mt-auto border-t border-white/10 pt-6 space-y-1">
+            <a class="flex items-center gap-3 px-4 py-2 hover:text-on-primary transition-colors text-white" href="#">
+                <span class="material-symbols-outlined">monitoring</span>
+                <span class="font-label-md">System Monitor</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 hover:text-on-primary transition-colors text-white" href="#">
+                <span class="material-symbols-outlined">manage_accounts</span>
+                <span class="font-label-md">User Mgmt</span>
+            </a>
+        </div>
+    </aside>
+    <!-- Main Content Canvas -->
+    <main id="main-content" class="ml-[280px] pt-16 min-h-screen transition-all duration-300">
+        <!-- Horizontal Top Navigation Tab Bar (Sát biên: Trên là header, Trái là sidebar, Phải là mép màn hình, Không bo góc, Không margin, Không padding wrapper, Áp dụng no-scrollbar) -->
+        <div id="event-top-tabs-bar" class="sticky top-16 z-30 w-full bg-surface-container-lowest border-b border-outline-variant m-0 p-0 rounded-none overflow-x-auto no-scrollbar shadow-sm">
+            <nav class="flex m-0 p-0">
+                <button data-tab="tab-overview" class="event-nav-tab active-event-tab px-6 py-3.5 rounded-none font-bold text-body-sm flex items-center gap-2 transition-all bg-primary text-white shrink-0 whitespace-nowrap border-r border-outline-variant/30">
+                    <span class="material-symbols-outlined text-[18px]">dashboard</span>
+                    <span>Tổng quan</span>
+                </button>
+                <button data-tab="tab-info" class="event-nav-tab px-6 py-3.5 rounded-none font-medium text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low flex items-center gap-2 transition-all shrink-0 whitespace-nowrap border-r border-outline-variant/30">
+                    <span class="material-symbols-outlined text-[18px]">info</span>
+                    <span>Thông tin sự kiện</span>
+                </button>
+                <button data-tab="tab-tickets" class="event-nav-tab px-6 py-3.5 rounded-none font-medium text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low flex items-center gap-2 transition-all shrink-0 whitespace-nowrap border-r border-outline-variant/30">
+                    <span class="material-symbols-outlined text-[18px]">confirmation_number</span>
+                    <span>Vé, chỗ ngồi & Địa điểm</span>
+                </button>
+                <button data-tab="tab-guests" class="event-nav-tab px-6 py-3.5 rounded-none font-medium text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low flex items-center gap-2 transition-all shrink-0 whitespace-nowrap border-r border-outline-variant/30">
+                    <span class="material-symbols-outlined text-[18px]">star</span>
+                    <span>Khách mời</span>
+                </button>
+                <button data-tab="tab-documents" class="event-nav-tab px-6 py-3.5 rounded-none font-medium text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low flex items-center gap-2 transition-all shrink-0 whitespace-nowrap border-r border-outline-variant/30">
+                    <span class="material-symbols-outlined text-[18px]">folder_open</span>
+                    <span>Tài liệu</span>
+                </button>
+                <button data-tab="tab-personnel" class="event-nav-tab px-6 py-3.5 rounded-none font-medium text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low flex items-center gap-2 transition-all shrink-0 whitespace-nowrap border-r border-outline-variant/30">
+                    <span class="material-symbols-outlined text-[18px]">badge</span>
+                    <span>Nhân sự</span>
+                </button>
+                <button data-tab="tab-equipment" class="event-nav-tab px-6 py-3.5 rounded-none font-medium text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low flex items-center gap-2 transition-all shrink-0 whitespace-nowrap border-r border-outline-variant/30">
+                    <span class="material-symbols-outlined text-[18px]">inventory_2</span>
+                    <span>Thiết bị & Vật tư</span>
+                </button>
+                <button data-tab="tab-tasks" class="event-nav-tab px-6 py-3.5 rounded-none font-medium text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low flex items-center gap-2 transition-all shrink-0 whitespace-nowrap border-r border-outline-variant/30">
+                    <span class="material-symbols-outlined text-[18px]">task_alt</span>
+                    <span>Tiến độ & Công việc</span>
+                </button>
+            </nav>
+        </div>
+
+        <div class="p-margin-desktop max-w-[1600px] mx-auto pt-6">
+
+            <!-- Tab Panel 1: Tổng quan -->
+            <div id="tab-overview" class="event-tab-panel space-y-8 animate-in fade-in">
+                <!-- Header Section (Thông tin tên sự kiện - Chỉ hiển thị ở Tab Tổng quan) -->
+                <div class="flex justify-between items-end mb-6">
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span
+                                class="px-2 py-0.5 bg-secondary-container/10 text-secondary-container text-[10px] font-bold rounded uppercase tracking-tighter">Live
+                                Event</span>
+                            <span class="text-on-surface-variant font-mono-sm text-mono-sm">ID: E-2024-99X</span>
+                        </div>
+                        <h1 class="font-display-lg text-display-lg text-on-surface">Tech Summit Asia 2024</h1>
+                        <p class="text-on-surface-variant flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                            Nov 12 - Nov 15, 2024 • Marina Bay Sands, Singapore
+                        </p>
+                    </div>
+                    <div class="flex gap-3">
+                        <button
+                            class="px-4 py-2 border border-outline-variant rounded-lg font-medium hover:bg-surface-container transition-colors flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[20px]">share</span>
+                            Public Link
+                        </button>
+                        <button
+                            class="px-6 py-2 bg-primary text-white rounded-lg font-bold shadow-md hover:shadow-lg active:scale-95 transition-all flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[20px]">download</span>
+                            Export Report
+                        </button>
+                    </div>
+                </div>
+                <!-- Bento Grid Summary Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+                    <div class="glass-card p-6 rounded-xl flex flex-col justify-between hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start">
+                            <div class="p-2 bg-primary/5 rounded-lg">
+                                <span class="material-symbols-outlined text-primary">payments</span>
+                            </div>
+                            <span class="text-teal-600 font-bold text-label-md flex items-center gap-1">+12.5% <span
+                                    class="material-symbols-outlined text-[14px]">trending_up</span></span>
+                        </div>
+                        <div class="mt-4">
+                            <p class="text-on-surface-variant font-label-md uppercase tracking-wider">Total Revenue</p>
+                            <h2 class="text-headline-md font-bold">$1,248,500</h2>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl flex flex-col justify-between hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start">
+                            <div class="p-2 bg-secondary/5 rounded-lg">
+                                <span class="material-symbols-outlined text-secondary">confirmation_number</span>
+                            </div>
+                            <p class="text-on-surface-variant font-label-md">85% Sold</p>
+                        </div>
+                        <div class="mt-4">
+                            <p class="text-on-surface-variant font-label-md uppercase tracking-wider">Tickets Sold</p>
+                            <h2 class="text-headline-md font-bold">4,250 / 5,000</h2>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl flex flex-col justify-between hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start">
+                            <div class="p-2 bg-tertiary-container/10 rounded-lg">
+                                <span class="material-symbols-outlined text-tertiary-container">badge</span>
+                            </div>
+                            <span
+                                class="px-2 py-0.5 bg-success-container/10 text-teal-600 text-[10px] font-bold rounded">Full
+                                Roster</span>
+                        </div>
+                        <div class="mt-4">
+                            <p class="text-on-surface-variant font-label-md uppercase tracking-wider">Personnel Assigned</p>
+                            <h2 class="text-headline-md font-bold">128 Staff</h2>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl flex flex-col justify-between hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start">
+                            <div class="p-2 bg-error-container/10 rounded-lg">
+                                <span class="material-symbols-outlined text-error">local_shipping</span>
+                            </div>
+                            <span class="px-2 py-0.5 bg-error-container text-error text-[10px] font-bold rounded">2
+                                Delayed</span>
+                        </div>
+                        <div class="mt-4">
+                            <p class="text-on-surface-variant font-label-md uppercase tracking-wider">Logistics Status</p>
+                            <h2 class="text-headline-md font-bold">92% On-Site</h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- Main Layout: Timeline & Activity -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter items-start">
+                    <!-- Left: Event Timeline (Gantt-style) -->
+                    <div class="lg:col-span-2 glass-card rounded-xl overflow-hidden shadow-sm">
+                        <div
+                            class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low/50">
+                            <h3 class="font-headline-sm text-headline-sm flex items-center gap-2">
+                                <span class="material-symbols-outlined">timeline</span> Event Roadmap
+                            </h3>
+                            <div class="flex gap-2">
+                                <button class="p-1.5 hover:bg-white rounded border border-outline-variant"><span
+                                        class="material-symbols-outlined text-[20px]">chevron_left</span></button>
+                                <button class="p-1.5 hover:bg-white rounded border border-outline-variant"><span
+                                        class="material-symbols-outlined text-[20px]">chevron_right</span></button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="relative overflow-x-auto custom-scrollbar">
+                                <div class="min-w-[800px]">
+                                    <!-- Timeline Header -->
+                                    <div class="flex border-b border-outline-variant mb-4">
+                                        <div class="w-1/4 p-2 font-label-md text-on-surface-variant">Task Phase</div>
+                                        <div class="flex-1 flex justify-between px-2 font-label-md text-on-surface-variant">
+                                            <span class="">Oct 28</span>
+                                            <span class="">Nov 04</span>
+                                            <span class="">Nov 11</span>
+                                            <span class="">Nov 18</span>
+                                        </div>
+                                    </div>
+                                    <!-- Timeline Rows -->
+                                    <div class="space-y-4">
+                                        <div class="flex items-center">
+                                            <div class="w-1/4 pr-4">
+                                                <p class="font-medium text-body-sm">Venue Preparation</p>
+                                            </div>
+                                            <div class="flex-1 h-6 bg-surface-container-low rounded-full relative">
+                                                <div
+                                                    class="absolute left-0 top-0 h-full w-2/3 bg-primary rounded-full flex items-center px-3">
+                                                    <span class="text-[10px] text-white font-bold">COMPLETED</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <div class="w-1/4 pr-4">
+                                                <p class="font-medium text-body-sm">Tech Setup &amp; QA</p>
+                                            </div>
+                                            <div class="flex-1 h-6 bg-surface-container-low rounded-full relative">
+                                                <div
+                                                    class="absolute left-[50%] top-0 h-full w-[30%] bg-secondary rounded-full flex items-center px-3">
+                                                    <span class="text-[10px] text-white font-bold">IN PROGRESS</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <div class="w-1/4 pr-4">
+                                                <p class="font-medium text-body-sm">Speaker Arrivals</p>
+                                            </div>
+                                            <div class="flex-1 h-6 bg-surface-container-low rounded-full relative">
+                                                <div
+                                                    class="absolute left-[75%] top-0 h-full w-[10%] bg-tertiary-container rounded-full flex items-center px-3 border border-outline">
+                                                    <span
+                                                        class="text-[10px] text-on-tertiary-container font-bold">PENDING</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <div class="w-1/4 pr-4">
+                                                <p class="font-medium text-body-sm">Main Event Days</p>
+                                            </div>
+                                            <div class="flex-1 h-6 bg-surface-container-low rounded-full relative">
+                                                <div
+                                                    class="absolute left-[85%] top-0 h-full w-[15%] bg-primary-container rounded-full flex items-center justify-center">
+                                                    <span
+                                                        class="material-symbols-outlined text-white text-[16px]">stars</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Right: Recent Activity / Tasks -->
+                    <div class="glass-card rounded-xl shadow-sm h-full flex flex-col">
+                        <div class="p-6 border-b border-outline-variant flex justify-between items-center">
+                            <h3 class="font-headline-sm text-headline-sm">Activity Feed</h3>
+                            <span class="px-2 py-1 bg-surface-container-highest rounded text-[10px] font-bold">Live</span>
+                        </div>
+                        <div class="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar max-h-[500px]">
+                            <div class="flex gap-4">
+                                <div class="flex flex-col items-center">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-success-container/20 text-teal-600 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-[18px]"
+                                            style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                    </div>
+                                    <div class="w-0.5 flex-1 bg-outline-variant/30 my-1"></div>
+                                </div>
+                                <div>
+                                    <p class="text-body-sm font-bold">Sponsor Logo Approval</p>
+                                    <p class="text-body-sm text-on-surface-variant">Admin approved Google's exhibition booth
+                                        design.</p>
+                                    <p class="text-[10px] text-outline mt-1 font-mono-sm">12 mins ago • by Marcus J.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="flex flex-col items-center">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-secondary-container/20 text-secondary flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-[18px]">confirmation_number</span>
+                                    </div>
+                                    <div class="w-0.5 flex-1 bg-outline-variant/30 my-1"></div>
+                                </div>
+                                <div>
+                                    <p class="text-body-sm font-bold">Ticket Threshold Reached</p>
+                                    <p class="text-body-sm text-on-surface-variant">Early bird tickets are now 100% sold
+                                        out. Auto-switched to Tier 2 pricing.</p>
+                                    <p class="text-[10px] text-outline mt-1 font-mono-sm">45 mins ago • System</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="flex flex-col items-center">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-error-container/20 text-error flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-[18px]">warning</span>
+                                    </div>
+                                    <div class="w-0.5 flex-1 bg-outline-variant/30 my-1"></div>
+                                </div>
+                                <div>
+                                    <p class="text-body-sm font-bold text-error">Delayed Shipment</p>
+                                    <p class="text-body-sm text-on-surface-variant">AV equipment from vendor 'ProAudio'
+                                        delayed by 4 hours due to weather.</p>
+                                    <p class="text-[10px] text-outline mt-1 font-mono-sm">2 hours ago • Logistics Bot</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="flex flex-col items-center">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-[18px]">mail</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-body-sm font-bold">Newsletter Dispatched</p>
+                                    <p class="text-body-sm text-on-surface-variant">Pre-event guide sent to 4,250 registered
+                                        attendees.</p>
+                                    <p class="text-[10px] text-outline mt-1 font-mono-sm">3 hours ago • Marketing</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Bottom Section: Quick Links & Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+                    <div class="glass-card p-6 rounded-xl relative overflow-hidden group">
+                        <div
+                            class="absolute right-[-20px] top-[-20px] opacity-10 group-hover:rotate-12 transition-transform">
+                            <span class="material-symbols-outlined text-[120px]">groups</span>
+                        </div>
+                        <h4 class="font-headline-sm mb-4">Personnel Breakdown</h4>
+                        <div class="space-y-3 relative z-10">
+                            <div class="flex justify-between items-center text-body-sm">
+                                <span class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full bg-primary"></div> Security
+                                </span>
+                                <span class="font-bold">24</span>
+                            </div>
+                            <div class="flex justify-between items-center text-body-sm">
+                                <span class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full bg-secondary"></div> Technical
+                                </span>
+                                <span class="font-bold">48</span>
+                            </div>
+                            <div class="flex justify-between items-center text-body-sm">
+                                <span class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></div> Hospitality
+                                </span>
+                                <span class="font-bold">56</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-headline-sm mb-2">Exhibition Map</h4>
+                            <p class="text-body-sm text-on-surface-variant mb-4">Real-time occupancy and heat mapping.</p>
+                        </div>
+                        <div class="h-32 bg-surface-container-high rounded-lg overflow-hidden cursor-pointer">
+                            <div class="w-full h-full"
+                                data-alt="A clean, minimalist 2D architectural blueprint or vector floor plan of a convention center hall. The map uses a light-mode color scheme of soft grays and blues, with highlighted booth spaces in primary blue. The layout looks professional and technical, typical of high-end event management software dashboards."
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAPiBJcFnke28nNlbHaVy-Fpbh5-MEnbrfRlb4wr--McriNSBK5EOTdSlSAFKKNRKXIwiFSvbBm6mfsYqZfhhixn7w4IPd20Hgs-IjxUvnxSOtDihlcqS309vfXl9QXqzKY6w4L3dE6z546Y555eKkOgwm6qRrldzKvaBHwGsqMsthLhgpb93TPGSyI10uJBYo5ru_NzAER3BcLlzisFt96dO8AYT5HZvtJQ0dETF3in0YmXbctSfKr6A')">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center">
+                        <div class="w-16 h-16 rounded-full border-4 border-primary border-t-transparent animate-spin mb-4">
+                        </div>
+                        <p class="font-headline-sm">Live Engagement</p>
+                        <p class="text-body-sm text-on-surface-variant">682 active mobile app sessions</p>
+                        <button class="mt-4 text-primary font-bold text-body-sm hover:underline">View Live Feed →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Panel 2: Thông tin sự kiện -->
+            <div id="tab-info" class="event-tab-panel hidden space-y-6 animate-in fade-in">
+                <div class="glass-card p-8 rounded-xl space-y-6">
+                    <h3 class="font-headline-sm text-headline-sm font-bold flex items-center gap-2 border-b border-outline-variant pb-4">
+                        <span class="material-symbols-outlined text-primary">info</span> Thông tin chi tiết sự kiện
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Field 1: Tên sự kiện -->
+                        <div>
+                            <label for="info-event-name" class="block font-label-md text-on-surface font-bold mb-2">Tên sự kiện <span class="text-error">*</span></label>
+                            <textarea id="info-event-name" rows="1" placeholder="Nhập tên sự kiện..."
+                                class="w-full px-4 py-3 rounded-xl border border-outline-variant bg-surface-container-lowest text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-bold resize-none overflow-hidden min-h-[48px] block">Tech Summit Asia 2024</textarea>
+                            <div class="flex justify-between items-center mt-1 text-[12px]">
+                                <span id="info-name-error-msg" class="text-error font-medium hidden flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[14px]">error</span>
+                                    Tên sự kiện không được vượt quá 200 ký tự
+                                </span>
+                                <div id="info-name-counter-container" class="ml-auto font-mono-sm text-on-surface-variant transition-colors">
+                                    <span id="info-name-char-count">21</span>/200
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Field 2: Loại sự kiện -->
+                        <div>
+                            <label class="block font-label-md text-on-surface font-bold mb-2">Loại sự kiện <span class="text-error">*</span></label>
+                            <select class="w-full px-4 py-3 rounded-xl border border-outline-variant bg-surface-container-lowest font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all min-h-[48px]">
+                                <option selected>Offline (Trực tiếp tại hội trường)</option>
+                                <option>Online (Hội thảo trực tuyến)</option>
+                            </select>
+                        </div>
+
+                        <!-- Field 3: Địa điểm tổ chức -->
+                        <div>
+                            <label for="info-event-location" class="block font-label-md text-on-surface font-bold mb-2">Địa điểm tổ chức <span class="text-error">*</span></label>
+                            <textarea id="info-event-location" rows="1" placeholder="Nhập địa điểm tổ chức..."
+                                class="w-full px-4 py-3 rounded-xl border border-outline-variant bg-surface-container-lowest text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-body-md resize-none overflow-hidden min-h-[48px] block">Marina Bay Sands, Singapore</textarea>
+                            <div class="flex justify-between items-center mt-1 text-[12px]">
+                                <span id="info-location-error-msg" class="text-error font-medium hidden flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[14px]">error</span>
+                                    Địa điểm không được vượt quá 200 ký tự
+                                </span>
+                                <div id="info-location-counter-container" class="ml-auto font-mono-sm text-on-surface-variant transition-colors">
+                                    <span id="info-location-char-count">26</span>/200
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Field 4: Thời gian diễn ra -->
+                        <div>
+                            <label class="block font-label-md text-on-surface font-bold mb-2">Thời gian diễn ra <span class="text-error">*</span></label>
+                            <input type="text" value="Nov 12 - Nov 15, 2024" class="w-full px-4 py-3 rounded-xl border border-outline-variant bg-surface-container-lowest font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all min-h-[48px]" />
+                        </div>
+                    </div>
+
+                    <!-- Field 5: Mô tả sự kiện -->
+                    <div>
+                        <label for="info-event-desc" class="block font-label-md text-on-surface font-bold mb-2">Mô tả sự kiện</label>
+                        <textarea id="info-event-desc" rows="3" placeholder="Nhập mô tả sự kiện..."
+                            class="w-full px-4 py-3 rounded-xl border border-outline-variant bg-surface-container-lowest text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-body-md resize-none overflow-hidden min-h-[96px] block">Hội nghị công nghệ thường niên lớn nhất khu vực Đông Nam Á quy tụ hơn 5,000 chuyên gia, diễn giả hàng đầu và các tập đoàn công nghệ lớn.</textarea>
+                        <div class="flex justify-between items-center mt-1 text-[12px]">
+                            <span id="info-desc-error-msg" class="text-error font-medium hidden flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">error</span>
+                                Mô tả sự kiện không được vượt quá 1000 ký tự
+                            </span>
+                            <div id="info-desc-counter-container" class="ml-auto font-mono-sm text-on-surface-variant transition-colors">
+                                <span id="info-desc-char-count">139</span>/1000
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-end gap-3 pt-4">
+                        <button class="px-6 py-2.5 rounded-xl bg-primary text-white font-bold shadow hover:bg-primary/90 transition-all">Lưu thay đổi</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Panel 3: Vé, chỗ ngồi & Địa điểm -->
+            <div id="tab-tickets" class="event-tab-panel hidden space-y-6 animate-in fade-in">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 glass-card p-6 rounded-xl space-y-4">
+                        <h3 class="font-headline-sm text-headline-sm font-bold flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">confirmation_number</span> Các hạng vé sự kiện
                         </h3>
-<div class="flex gap-2">
-<button class="p-1.5 hover:bg-white rounded border border-outline-variant"><span class="material-symbols-outlined text-[20px]">chevron_left</span></button>
-<button class="p-1.5 hover:bg-white rounded border border-outline-variant"><span class="material-symbols-outlined text-[20px]">chevron_right</span></button>
-</div>
-</div>
-<div class="p-6">
-<div class="relative overflow-x-auto custom-scrollbar">
-<div class="min-w-[800px]">
-<!-- Timeline Header -->
-<div class="flex border-b border-outline-variant mb-4">
-<div class="w-1/4 p-2 font-label-md text-on-surface-variant">Task Phase</div>
-<div class="flex-1 flex justify-between px-2 font-label-md text-on-surface-variant">
-<span class="">Oct 28</span>
-<span class="">Nov 04</span>
-<span class="">Nov 11</span>
-<span class="">Nov 18</span>
-</div>
-</div>
-<!-- Timeline Rows -->
-<div class="space-y-4">
-<div class="flex items-center">
-<div class="w-1/4 pr-4">
-<p class="font-medium text-body-sm">Venue Preparation</p>
-</div>
-<div class="flex-1 h-6 bg-surface-container-low rounded-full relative">
-<div class="absolute left-0 top-0 h-full w-2/3 bg-primary rounded-full flex items-center px-3">
-<span class="text-[10px] text-white font-bold">COMPLETED</span>
-</div>
-</div>
-</div>
-<div class="flex items-center">
-<div class="w-1/4 pr-4">
-<p class="font-medium text-body-sm">Tech Setup &amp; QA</p>
-</div>
-<div class="flex-1 h-6 bg-surface-container-low rounded-full relative">
-<div class="absolute left-[50%] top-0 h-full w-[30%] bg-secondary rounded-full flex items-center px-3">
-<span class="text-[10px] text-white font-bold">IN PROGRESS</span>
-</div>
-</div>
-</div>
-<div class="flex items-center">
-<div class="w-1/4 pr-4">
-<p class="font-medium text-body-sm">Speaker Arrivals</p>
-</div>
-<div class="flex-1 h-6 bg-surface-container-low rounded-full relative">
-<div class="absolute left-[75%] top-0 h-full w-[10%] bg-tertiary-container rounded-full flex items-center px-3 border border-outline">
-<span class="text-[10px] text-on-tertiary-container font-bold">PENDING</span>
-</div>
-</div>
-</div>
-<div class="flex items-center">
-<div class="w-1/4 pr-4">
-<p class="font-medium text-body-sm">Main Event Days</p>
-</div>
-<div class="flex-1 h-6 bg-surface-container-low rounded-full relative">
-<div class="absolute left-[85%] top-0 h-full w-[15%] bg-primary-container rounded-full flex items-center justify-center">
-<span class="material-symbols-outlined text-white text-[16px]">stars</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Right: Recent Activity / Tasks -->
-<div class="glass-card rounded-xl shadow-sm h-full flex flex-col">
-<div class="p-6 border-b border-outline-variant flex justify-between items-center">
-<h3 class="font-headline-sm text-headline-sm">Activity Feed</h3>
-<span class="px-2 py-1 bg-surface-container-highest rounded text-[10px] font-bold">Live</span>
-</div>
-<div class="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar max-h-[500px]">
-<div class="flex gap-4">
-<div class="flex flex-col items-center">
-<div class="w-8 h-8 rounded-full bg-success-container/20 text-teal-600 flex items-center justify-center">
-<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-</div>
-<div class="w-0.5 flex-1 bg-outline-variant/30 my-1"></div>
-</div>
-<div>
-<p class="text-body-sm font-bold">Sponsor Logo Approval</p>
-<p class="text-body-sm text-on-surface-variant">Admin approved Google's exhibition booth design.</p>
-<p class="text-[10px] text-outline mt-1 font-mono-sm">12 mins ago • by Marcus J.</p>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="flex flex-col items-center">
-<div class="w-8 h-8 rounded-full bg-secondary-container/20 text-secondary flex items-center justify-center">
-<span class="material-symbols-outlined text-[18px]">confirmation_number</span>
-</div>
-<div class="w-0.5 flex-1 bg-outline-variant/30 my-1"></div>
-</div>
-<div>
-<p class="text-body-sm font-bold">Ticket Threshold Reached</p>
-<p class="text-body-sm text-on-surface-variant">Early bird tickets are now 100% sold out. Auto-switched to Tier 2 pricing.</p>
-<p class="text-[10px] text-outline mt-1 font-mono-sm">45 mins ago • System</p>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="flex flex-col items-center">
-<div class="w-8 h-8 rounded-full bg-error-container/20 text-error flex items-center justify-center">
-<span class="material-symbols-outlined text-[18px]">warning</span>
-</div>
-<div class="w-0.5 flex-1 bg-outline-variant/30 my-1"></div>
-</div>
-<div>
-<p class="text-body-sm font-bold text-error">Delayed Shipment</p>
-<p class="text-body-sm text-on-surface-variant">AV equipment from vendor 'ProAudio' delayed by 4 hours due to weather.</p>
-<p class="text-[10px] text-outline mt-1 font-mono-sm">2 hours ago • Logistics Bot</p>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="flex flex-col items-center">
-<div class="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center">
-<span class="material-symbols-outlined text-[18px]">mail</span>
-</div>
-</div>
-<div>
-<p class="text-body-sm font-bold">Newsletter Dispatched</p>
-<p class="text-body-sm text-on-surface-variant">Pre-event guide sent to 4,250 registered attendees.</p>
-<p class="text-[10px] text-outline mt-1 font-mono-sm">3 hours ago • Marketing</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Bottom Section: Quick Links & Stats -->
-<div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
-<div class="glass-card p-6 rounded-xl relative overflow-hidden group">
-<div class="absolute right-[-20px] top-[-20px] opacity-10 group-hover:rotate-12 transition-transform">
-<span class="material-symbols-outlined text-[120px]">groups</span>
-</div>
-<h4 class="font-headline-sm mb-4">Personnel Breakdown</h4>
-<div class="space-y-3 relative z-10">
-<div class="flex justify-between items-center text-body-sm">
-<span class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-primary"></div> Security</span>
-<span class="font-bold">24</span>
-</div>
-<div class="flex justify-between items-center text-body-sm">
-<span class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-secondary"></div> Technical</span>
-<span class="font-bold">48</span>
-</div>
-<div class="flex justify-between items-center text-body-sm">
-<span class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></div> Hospitality</span>
-<span class="font-bold">56</span>
-</div>
-</div>
-</div>
-<div class="glass-card p-6 rounded-xl flex flex-col justify-between">
-<div>
-<h4 class="font-headline-sm mb-2">Exhibition Map</h4>
-<p class="text-body-sm text-on-surface-variant mb-4">Real-time occupancy and heat mapping.</p>
-</div>
-<div class="h-32 bg-surface-container-high rounded-lg overflow-hidden cursor-pointer">
-<div class="w-full h-full" data-alt="A clean, minimalist 2D architectural blueprint or vector floor plan of a convention center hall. The map uses a light-mode color scheme of soft grays and blues, with highlighted booth spaces in primary blue. The layout looks professional and technical, typical of high-end event management software dashboards." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAPiBJcFnke28nNlbHaVy-Fpbh5-MEnbrfRlb4wr--McriNSBK5EOTdSlSAFKKNRKXIwiFSvbBm6mfsYqZfhhixn7w4IPd20Hgs-IjxUvnxSOtDihlcqS309vfXl9QXqzKY6w4L3dE6z546Y555eKkOgwm6qRrldzKvaBHwGsqMsthLhgpb93TPGSyI10uJBYo5ru_NzAER3BcLlzisFt96dO8AYT5HZvtJQ0dETF3in0YmXbctSfKr6A')"></div>
-</div>
-</div>
-<div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center">
-<div class="w-16 h-16 rounded-full border-4 border-primary border-t-transparent animate-spin mb-4"></div>
-<p class="font-headline-sm">Live Engagement</p>
-<p class="text-body-sm text-on-surface-variant">682 active mobile app sessions</p>
-<button class="mt-4 text-primary font-bold text-body-sm hover:underline">View Live Feed →</button>
-</div>
-</div>
-</div>
-<!-- Footer -->
-<footer class="w-full py-12 px-margin-desktop mt-12 bg-surface-container-highest border-t border-outline-variant">
-<div class="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-<div>
-<span class="font-headline-sm text-headline-sm font-bold text-primary">EventAZ</span>
-<p class="text-on-surface-variant text-body-sm mt-2">© 2024 EventAZ Multi-Tenant Systems. All rights reserved.</p>
-</div>
-<div class="flex gap-8">
-<a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm" href="#">Privacy Policy</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm" href="#">Terms of Service</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm" href="#">Contact Support</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm" href="#">Event Schedule</a>
-</div>
-</div>
-</footer>
-</main>
-<script>
+                        <div class="divide-y divide-outline-variant">
+                            <div class="py-4 flex justify-between items-center">
+                                <div>
+                                    <p class="font-bold text-body-lg">Vé VIP Pass</p>
+                                    <p class="text-body-sm text-on-surface-variant">Bao gồm lối đi riêng, phòng chờ VIP và Tiệc tối</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-primary text-headline-sm">$499</p>
+                                    <p class="text-[12px] text-teal-600 font-bold">Đã bán 850/1000</p>
+                                </div>
+                            </div>
+                            <div class="py-4 flex justify-between items-center">
+                                <div>
+                                    <p class="font-bold text-body-lg">Vé Standard Pass</p>
+                                    <p class="text-body-sm text-on-surface-variant">Tham gia tất cả các phiên thảo luận toàn thể</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-primary text-headline-sm">$199</p>
+                                    <p class="text-[12px] text-teal-600 font-bold">Đã bán 3,400/4000</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl flex flex-col justify-between">
+                        <h3 class="font-headline-sm font-bold flex items-center gap-2 mb-4">
+                            <span class="material-symbols-outlined text-primary">map</span> Sơ đồ chỗ ngồi
+                        </h3>
+                        <div class="h-48 bg-surface-container-high rounded-xl overflow-hidden flex items-center justify-center border border-outline-variant">
+                            <span class="material-symbols-outlined text-[64px] text-outline opacity-40">chair</span>
+                        </div>
+            </div>
+
+            <!-- Tab Panel 4: Khách mời -->
+            <div id="tab-guests" class="event-tab-panel hidden space-y-6 animate-in fade-in">
+                <div class="glass-card p-6 rounded-xl space-y-6">
+                    <div class="flex justify-between items-center flex-wrap gap-4 border-b border-outline-variant pb-4">
+                        <div>
+                            <h3 class="font-headline-sm text-headline-sm font-bold flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">star</span> Danh sách Diễn giả & Khách mời VIP
+                            </h3>
+                            <p class="text-body-sm text-on-surface-variant">Quản lý danh sách diễn giả chính, khách mời đặc biệt và lịch phát biểu.</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <button class="px-4 py-2 border border-outline-variant text-body-sm font-bold rounded-lg hover:bg-surface-container flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[18px]">download</span> Xuất danh sách VIP
+                            </button>
+                            <button class="px-4 py-2 bg-primary text-white text-body-sm font-bold rounded-lg shadow hover:bg-primary/90 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[18px]">person_add</span> + Thêm khách mời / Diễn giả
+                            </button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="p-5 border border-outline-variant/60 rounded-xl bg-surface-container-lowest flex flex-col justify-between hover:shadow-md transition-shadow">
+                            <div>
+                                <div class="flex items-center gap-3 mb-3">
+                                    <div class="w-12 h-12 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center text-headline-sm">AR</div>
+                                    <div>
+                                        <p class="font-bold text-body-lg text-on-surface">Dr. Alex Rivera</p>
+                                        <p class="text-body-sm text-on-surface-variant">VP of AI Tech, Google</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-1 text-body-sm mb-4">
+                                    <p class="text-on-surface-variant flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-primary">mic</span> Keynote Speaker</p>
+                                    <p class="text-on-surface-variant flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-primary">schedule</span> 09:30 AM - Nov 12 (Hall A)</p>
+                                </div>
+                            </div>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 font-bold text-[11px] rounded-full w-fit">Đã xác nhận tham dự</span>
+                        </div>
+                        <div class="p-5 border border-outline-variant/60 rounded-xl bg-surface-container-lowest flex flex-col justify-between hover:shadow-md transition-shadow">
+                            <div>
+                                <div class="flex items-center gap-3 mb-3">
+                                    <div class="w-12 h-12 rounded-full bg-secondary/10 text-secondary font-bold flex items-center justify-center text-headline-sm">SJ</div>
+                                    <div>
+                                        <p class="font-bold text-body-lg text-on-surface">Sarah Jenkins</p>
+                                        <p class="text-body-sm text-on-surface-variant">CEO, TechInnovate</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-1 text-body-sm mb-4">
+                                    <p class="text-on-surface-variant flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-secondary">forum</span> Panel Discussion Host</p>
+                                    <p class="text-on-surface-variant flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-secondary">schedule</span> 11:00 AM - Nov 13 (Hall B)</p>
+                                </div>
+                            </div>
+                            <span class="px-3 py-1 bg-amber-100 text-amber-700 font-bold text-[11px] rounded-full w-fit">Đang chờ phản hồi</span>
+                        </div>
+                        <div class="p-5 border border-outline-variant/60 rounded-xl bg-surface-container-lowest flex flex-col justify-between hover:shadow-md transition-shadow">
+                            <div>
+                                <div class="flex items-center gap-3 mb-3">
+                                    <div class="w-12 h-12 rounded-full bg-teal-500/10 text-teal-600 font-bold flex items-center justify-center text-headline-sm">MC</div>
+                                    <div>
+                                        <p class="font-bold text-body-lg text-on-surface">Michael Chen</p>
+                                        <p class="text-body-sm text-on-surface-variant">Founder, CloudFlow System</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-1 text-body-sm mb-4">
+                                    <p class="text-on-surface-variant flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-teal-600">workspace_premium</span> VIP Guest</p>
+                                    <p class="text-on-surface-variant flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-teal-600">badge</span> Thẻ VIP Special Access</p>
+                                </div>
+                            </div>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 font-bold text-[11px] rounded-full w-fit">Đã cấp thẻ VIP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Panel 5: Tài liệu -->
+            <div id="tab-documents" class="event-tab-panel hidden space-y-6 animate-in fade-in">
+                <div class="glass-card p-6 rounded-xl space-y-6">
+                    <div class="flex justify-between items-center flex-wrap gap-4 border-b border-outline-variant pb-4">
+                        <div>
+                            <h3 class="font-headline-sm text-headline-sm font-bold flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">folder_open</span> Hồ sơ & Tài liệu sự kiện
+                            </h3>
+                            <p class="text-body-sm text-on-surface-variant">Lưu trữ tài liệu kịch bản, bản vẽ sơ đồ, hợp đồng vendor và bộ truyền thông.</p>
+                        </div>
+                        <button class="px-4 py-2 bg-primary text-white text-body-sm font-bold rounded-lg shadow hover:bg-primary/90 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[18px]">upload_file</span> Tải lên tài liệu mới
+                        </button>
+                    </div>
+                    <div class="divide-y divide-outline-variant/50">
+                        <div class="py-4 flex justify-between items-center hover:bg-surface-container-low/50 px-3 rounded-lg transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="p-3 bg-red-100 text-red-600 rounded-xl"><span class="material-symbols-outlined">picture_as_pdf</span></div>
+                                <div>
+                                    <p class="font-bold text-body-lg text-on-surface">Kich_ban_tong_duyet_TechSummit2024.pdf</p>
+                                    <p class="text-body-sm text-on-surface-variant">PDF Document • 2.4 MB • Cập nhật 2 giờ trước</p>
+                                </div>
+                            </div>
+                            <button class="p-2 text-primary font-bold hover:bg-primary/10 rounded-lg transition-colors flex items-center gap-1 text-body-sm">
+                                <span class="material-symbols-outlined text-[18px]">download</span> Tải xuống
+                            </button>
+                        </div>
+                        <div class="py-4 flex justify-between items-center hover:bg-surface-container-low/50 px-3 rounded-lg transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="p-3 bg-blue-100 text-blue-600 rounded-xl"><span class="material-symbols-outlined">architecture</span></div>
+                                <div>
+                                    <p class="font-bold text-body-lg text-on-surface">So_do_chi_tiet_booth_trien_lam_v3.dwg</p>
+                                    <p class="text-body-sm text-on-surface-variant">CAD Blueprint • 14.8 MB • Cập nhật ngày hôm qua</p>
+                                </div>
+                            </div>
+                            <button class="p-2 text-primary font-bold hover:bg-primary/10 rounded-lg transition-colors flex items-center gap-1 text-body-sm">
+                                <span class="material-symbols-outlined text-[18px]">download</span> Tải xuống
+                            </button>
+                        </div>
+                        <div class="py-4 flex justify-between items-center hover:bg-surface-container-low/50 px-3 rounded-lg transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="p-3 bg-green-100 text-green-600 rounded-xl"><span class="material-symbols-outlined">table_chart</span></div>
+                                <div>
+                                    <p class="font-bold text-body-lg text-on-surface">Danh_sach_nha_tai_tro_va_hop_dong.xlsx</p>
+                                    <p class="text-body-sm text-on-surface-variant">Excel Spreadsheet • 850 KB • Cập nhật 3 ngày trước</p>
+                                </div>
+                            </div>
+                            <button class="p-2 text-primary font-bold hover:bg-primary/10 rounded-lg transition-colors flex items-center gap-1 text-body-sm">
+                                <span class="material-symbols-outlined text-[18px]">download</span> Tải xuống
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Panel 4: Nhân sự -->
+            <div id="tab-personnel" class="event-tab-panel hidden space-y-6 animate-in fade-in">
+                <div class="glass-card p-6 rounded-xl space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-headline-sm text-headline-sm font-bold flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">badge</span> Phân công nhân sự sự kiện
+                        </h3>
+                        <button class="px-4 py-2 bg-primary text-white text-body-sm font-bold rounded-lg">+ Phân công nhân sự</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-surface-container font-label-md text-on-surface">
+                                <tr>
+                                    <th class="px-4 py-3">Nhân sự</th>
+                                    <th class="px-4 py-3">Vai trò</th>
+                                    <th class="px-4 py-3">Khu vực phụ trách</th>
+                                    <th class="px-4 py-3">Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-outline-variant text-body-sm">
+                                <tr>
+                                    <td class="px-4 py-3 font-bold">Nguyen Van A</td>
+                                    <td class="px-4 py-3">Truyền thông & Check-in</td>
+                                    <td class="px-4 py-3">Cổng chính A1</td>
+                                    <td class="px-4 py-3"><span class="px-2 py-1 bg-green-100 text-green-700 font-bold text-[11px] rounded">Đang làm việc</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 font-bold">Tran Thi B</td>
+                                    <td class="px-4 py-3">Kỹ thuật Âm thanh</td>
+                                    <td class="px-4 py-3">Sân khấu chính H1</td>
+                                    <td class="px-4 py-3"><span class="px-2 py-1 bg-green-100 text-green-700 font-bold text-[11px] rounded">Đang làm việc</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Panel 5: Thiết bị & Vật tư -->
+            <div id="tab-equipment" class="event-tab-panel hidden space-y-6 animate-in fade-in">
+                <div class="glass-card p-6 rounded-xl space-y-4">
+                    <h3 class="font-headline-sm text-headline-sm font-bold flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">inventory_2</span> Danh mục thiết bị & Vật tư
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-4 border border-outline-variant rounded-xl bg-surface-container-lowest">
+                            <span class="material-symbols-outlined text-primary text-[32px] mb-2">mic</span>
+                            <p class="font-bold text-body-lg">Hệ thống Micro không dây</p>
+                            <p class="text-body-sm text-on-surface-variant mt-1">Số lượng: 24 bộ • Đã kiểm tra QA 100%</p>
+                        </div>
+                        <div class="p-4 border border-outline-variant rounded-xl bg-surface-container-lowest">
+                            <span class="material-symbols-outlined text-primary text-[32px] mb-2">tv</span>
+                            <p class="font-bold text-body-lg">Màn hình LED Sân khấu</p>
+                            <p class="text-body-sm text-on-surface-variant mt-1">Kích thước 12m x 5m • Đang lắp đặt</p>
+                        </div>
+                        <div class="p-4 border border-outline-variant rounded-xl bg-surface-container-lowest">
+                            <span class="material-symbols-outlined text-primary text-[32px] mb-2">wifi</span>
+                            <p class="font-bold text-body-lg">Bộ phát Wi-Fi vệ tinh</p>
+                            <p class="text-body-sm text-on-surface-variant mt-1">8 Trạm băng thông cao • Sẵn sàng</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Panel 6: Tiến độ & Công việc -->
+            <div id="tab-tasks" class="event-tab-panel hidden space-y-6 animate-in fade-in">
+                <div class="glass-card p-6 rounded-xl space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-headline-sm text-headline-sm font-bold flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">task_alt</span> Tiến độ & Danh sách công việc
+                        </h3>
+                        <span class="px-3 py-1 bg-primary/10 text-primary font-bold text-body-sm rounded-full">Hoàn thành 75%</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="p-3 border border-outline-variant rounded-lg flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" checked class="w-4 h-4 text-primary rounded" />
+                                <span class="font-medium line-through text-on-surface-variant">Lắp đặt khung sân khấu và âm thanh ánh sáng</span>
+                            </div>
+                            <span class="text-[12px] font-bold text-teal-600">Đã xong</span>
+                        </div>
+                        <div class="p-3 border border-outline-variant rounded-lg flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" checked class="w-4 h-4 text-primary rounded" />
+                                <span class="font-medium line-through text-on-surface-variant">Tổng duyệt kịch bản chương trình với diễn giả</span>
+                            </div>
+                            <span class="text-[12px] font-bold text-teal-600">Đã xong</span>
+                        </div>
+                        <div class="p-3 border border-outline-variant rounded-lg flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" class="w-4 h-4 text-primary rounded" />
+                                <span class="font-medium text-on-surface">Đón tiếp đại biểu VIP và kiểm tra mã QR vé</span>
+                            </div>
+                            <span class="text-[12px] font-bold text-amber-600">Đang thực hiện</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer
+            class="w-full py-12 px-margin-desktop mt-12 bg-surface-container-highest border-t border-outline-variant">
+            <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+                <div>
+                    <span class="font-headline-sm text-headline-sm font-bold text-primary">EventAZ</span>
+                    <p class="text-on-surface-variant text-body-sm mt-2">© 2024 EventAZ Multi-Tenant Systems. All rights
+                        reserved.</p>
+                </div>
+                <div class="flex gap-8">
+                    <a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm"
+                        href="#">Privacy Policy</a>
+                    <a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm" href="#">Terms
+                        of Service</a>
+                    <a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm"
+                        href="#">Contact Support</a>
+                    <a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm" href="#">Event
+                        Schedule</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <script>
         // Simple interaction for cards and navigation
         document.querySelectorAll('.glass-card').forEach(card => {
             card.addEventListener('mouseenter', () => {
@@ -477,33 +955,33 @@
 
 
 
-<!-- Quick Navigator Injection -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    // 1. Ensure Material Symbols CSS is loaded
-    if (!document.querySelector('link[href*="Material+Symbols+Outlined"]')) {
-        const link = document.createElement('link');
-        link.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined';
-        link.rel = 'stylesheet';
-        document.head.appendChild(link);
-    }
+    <!-- Quick Navigator Injection -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Ensure Material Symbols CSS is loaded
+            if (!document.querySelector('link[href*="Material+Symbols+Outlined"]')) {
+                const link = document.createElement('link');
+                link.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined';
+                link.rel = 'stylesheet';
+                document.head.appendChild(link);
+            }
 
-    // 2. Create elements
-    const navContainer = document.createElement('div');
-    navContainer.id = 'quick-navigator';
-    navContainer.className = 'fixed bottom-6 right-6 z-[9999] font-body-md text-on-surface';
-    navContainer.style.fontFamily = "'Inter', sans-serif";
+            // 2. Create elements
+            const navContainer = document.createElement('div');
+            navContainer.id = 'quick-navigator';
+            navContainer.className = 'fixed bottom-6 right-6 z-[9999] font-body-md text-on-surface';
+            navContainer.style.fontFamily = "'Inter', sans-serif";
 
-    // Inject styles dynamically
-    const style = document.createElement('style');
-    style.innerHTML = `
+            // Inject styles dynamically
+            const style = document.createElement('style');
+            style.innerHTML = `
         #qn-panel .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         #qn-panel .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         #qn-panel .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     `;
-    document.head.appendChild(style);
+            document.head.appendChild(style);
 
-    navContainer.innerHTML = `
+            navContainer.innerHTML = `
       <!-- Trigger Button -->
       <button id="qn-trigger" class="flex items-center justify-center w-14 h-14 rounded-full bg-primary text-on-primary shadow-xl hover:bg-primary-container active:scale-95 transition-all focus:outline-none" style="background-color: #00288e; color: #ffffff; box-shadow: 0 10px 25px -5px rgba(0, 40, 142, 0.4); border: none; cursor: pointer; width: 3.5rem; height: 3.5rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center;">
         <span class="material-symbols-outlined" id="qn-icon" style="font-size: 28px; font-variation-settings: 'FILL' 0, 'wght' 400; color: #ffffff;">explore</span>
@@ -567,65 +1045,472 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
-    document.body.appendChild(navContainer);
+            document.body.appendChild(navContainer);
 
-    // 3. Setup event listeners
-    const trigger = document.getElementById('qn-trigger');
-    const panel = document.getElementById('qn-panel');
-    const icon = document.getElementById('qn-icon');
-    const closeBtn = document.getElementById('qn-close');
+            // 3. Setup event listeners
+            const trigger = document.getElementById('qn-trigger');
+            const panel = document.getElementById('qn-panel');
+            const icon = document.getElementById('qn-icon');
+            const closeBtn = document.getElementById('qn-close');
 
-    trigger.addEventListener('click', (e) => {
-        e.stopPropagation();
-        panel.classList.toggle('hidden');
-        if (panel.classList.contains('hidden')) {
-            panel.style.display = 'none';
-            icon.textContent = 'explore';
-        } else {
-            panel.style.display = 'flex';
-            icon.textContent = 'close';
-        }
-    });
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                panel.classList.toggle('hidden');
+                if (panel.classList.contains('hidden')) {
+                    panel.style.display = 'none';
+                    icon.textContent = 'explore';
+                } else {
+                    panel.style.display = 'flex';
+                    icon.textContent = 'close';
+                }
+            });
 
-    closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        panel.classList.add('hidden');
-        panel.style.display = 'none';
-        icon.textContent = 'explore';
-    });
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                panel.classList.add('hidden');
+                panel.style.display = 'none';
+                icon.textContent = 'explore';
+            });
 
-    document.addEventListener('click', (e) => {
-        if (!navContainer.contains(e.target)) {
-            panel.classList.add('hidden');
-            panel.style.display = 'none';
-            icon.textContent = 'explore';
-        }
-    });
+            document.addEventListener('click', (e) => {
+                if (!navContainer.contains(e.target)) {
+                    panel.classList.add('hidden');
+                    panel.style.display = 'none';
+                    icon.textContent = 'explore';
+                }
+            });
 
-    // Highlight current page
-    const currentFile = window.location.pathname.split('/').pop() || 'index.html';
-    const links = document.querySelectorAll('.qn-link');
-    links.forEach(link => {
-        // Handle active page styling
-        if (link.getAttribute('data-page') === currentFile) {
-            link.style.backgroundColor = 'rgba(0, 40, 142, 0.1)';
-            link.style.color = '#00288e';
-            link.style.fontWeight = '700';
-        }
-        
-        // Add hover effects via JS since inline hover is tricky
-        link.addEventListener('mouseenter', () => {
-            if (link.getAttribute('data-page') !== currentFile) {
-                link.style.backgroundColor = '#eff4ff';
-            }
+            // Highlight current page
+            const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+            const links = document.querySelectorAll('.qn-link');
+            links.forEach(link => {
+                // Handle active page styling
+                if (link.getAttribute('data-page') === currentFile) {
+                    link.style.backgroundColor = 'rgba(0, 40, 142, 0.1)';
+                    link.style.color = '#00288e';
+                    link.style.fontWeight = '700';
+                }
+
+                // Add hover effects via JS since inline hover is tricky
+                link.addEventListener('mouseenter', () => {
+                    if (link.getAttribute('data-page') !== currentFile) {
+                        link.style.backgroundColor = '#eff4ff';
+                    }
+                });
+                link.addEventListener('mouseleave', () => {
+                    if (link.getAttribute('data-page') !== currentFile) {
+                        link.style.backgroundColor = 'transparent';
+                    }
+                });
+            });
         });
-        link.addEventListener('mouseleave', () => {
-            if (link.getAttribute('data-page') !== currentFile) {
-                link.style.backgroundColor = 'transparent';
-            }
-        });
-    });
-});
-</script>
+    </script>
 
-</body></html>
+    <!-- Modal Popup Thêm mới sự kiện -->
+    <div id="create-event-modal" class="fixed inset-0 z-[10000] hidden flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl max-h-[80vh] flex flex-col overflow-hidden border border-outline-variant transform transition-all my-auto">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-outline-variant bg-surface-container-lowest shrink-0">
+                <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Thêm mới sự kiện</h3>
+                <button type="button" id="close-modal-x" class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container transition-colors text-on-surface-variant focus:outline-none">
+                    <span class="material-symbols-outlined text-[20px]">close</span>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <form id="create-event-form" class="p-6 space-y-2 overflow-y-auto flex-1 custom-scrollbar">
+                <!-- Field 1: Tên sự kiện -->
+                <div>
+                    <label for="event-name" class="block font-label-md text-on-surface font-bold mb-2">Tên sự kiện <span class="text-error">*</span></label>
+                    <div class="relative">
+                        <textarea id="event-name" rows="1" placeholder="Nhập tên sự kiện..."
+                            class="w-full px-4 py-3 rounded-xl border border-outline-variant bg-surface-container-lowest text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-body-md resize-none overflow-hidden min-h-[48px] block"></textarea>
+                    </div>
+                    <div class="flex justify-between items-center mt-1 text-[12px]">
+                        <span id="name-error-msg" class="text-error font-medium hidden flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[14px]">error</span>
+                            Tên sự kiện không được vượt quá 200 ký tự
+                        </span>
+                        <div id="char-counter-container" class="ml-auto font-mono-sm text-on-surface-variant transition-colors">
+                            <span id="char-count">0</span>/200
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Field 2: Loại sự kiện (Radio) -->
+                <div>
+                    <label class="block font-label-md text-on-surface font-bold mb-2">Loại sự kiện <span class="text-error">*</span></label>
+                    <div class="flex items-center gap-6">
+                        <label class="flex items-center gap-2 cursor-pointer group">
+                            <input type="radio" name="event-type" value="offline" checked
+                                class="w-4 h-4 text-primary border-outline focus:ring-primary focus:ring-offset-0 cursor-pointer" />
+                            <span class="font-body-md text-on-surface group-hover:text-primary transition-colors flex items-center gap-1.5">
+                                <span class="material-symbols-outlined text-[18px]">location_on</span> Offline
+                            </span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer group">
+                            <input type="radio" name="event-type" value="online"
+                                class="w-4 h-4 text-primary border-outline focus:ring-primary focus:ring-offset-0 cursor-pointer" />
+                            <span class="font-body-md text-on-surface group-hover:text-primary transition-colors flex items-center gap-1.5">
+                                <span class="material-symbols-outlined text-[18px]">videocam</span> Online
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Field 3: Quy mô sự kiện (Grid Cards với Radiocheckbox ở góc trên bên trái) -->
+                <div>
+                    <label class="block font-label-md text-on-surface font-bold mb-2">Quy mô sự kiện <span class="text-error">*</span></label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <!-- Card 1 -->
+                        <label class="scale-card-option relative border rounded-xl p-4 cursor-pointer hover:border-primary hover:bg-primary/5 transition-all flex flex-col justify-between border-primary bg-primary/5">
+                            <div class="flex items-start justify-between mb-2">
+                                <input type="radio" name="event-scale" value="small" checked
+                                    class="scale-radio w-4 h-4 text-primary border-outline focus:ring-primary focus:ring-offset-0 cursor-pointer mt-0.5" />
+                                <span class="material-symbols-outlined text-primary text-[20px]">group</span>
+                            </div>
+                            <div>
+                                <p class="font-bold text-on-surface text-body-md">Vừa và nhỏ</p>
+                                <p class="text-[12px] text-on-surface-variant mt-0.5">&lt; 100 người</p>
+                            </div>
+                        </label>
+
+                        <!-- Card 2 -->
+                        <label class="scale-card-option relative border border-outline-variant rounded-xl p-4 cursor-pointer hover:border-primary hover:bg-primary/5 transition-all flex flex-col justify-between">
+                            <div class="flex items-start justify-between mb-2">
+                                <input type="radio" name="event-scale" value="medium"
+                                    class="scale-radio w-4 h-4 text-primary border-outline focus:ring-primary focus:ring-offset-0 cursor-pointer mt-0.5" />
+                                <span class="material-symbols-outlined text-outline text-[20px]">groups</span>
+                            </div>
+                            <div>
+                                <p class="font-bold text-on-surface text-body-md">Trung bình</p>
+                                <p class="text-[12px] text-on-surface-variant mt-0.5">100 - 500 người</p>
+                            </div>
+                        </label>
+
+                        <!-- Card 3 -->
+                        <label class="scale-card-option relative border border-outline-variant rounded-xl p-4 cursor-pointer hover:border-primary hover:bg-primary/5 transition-all flex flex-col justify-between">
+                            <div class="flex items-start justify-between mb-2">
+                                <input type="radio" name="event-scale" value="large"
+                                    class="scale-radio w-4 h-4 text-primary border-outline focus:ring-primary focus:ring-offset-0 cursor-pointer mt-0.5" />
+                                <span class="material-symbols-outlined text-outline text-[20px]">diversity_3</span>
+                            </div>
+                            <div>
+                                <p class="font-bold text-on-surface text-body-md">Lớn</p>
+                                <p class="text-[12px] text-on-surface-variant mt-0.5">500 - 1000 người</p>
+                            </div>
+                        </label>
+
+                        <!-- Card 4 -->
+                        <label class="scale-card-option relative border border-outline-variant rounded-xl p-4 cursor-pointer hover:border-primary hover:bg-primary/5 transition-all flex flex-col justify-between">
+                            <div class="flex items-start justify-between mb-2">
+                                <input type="radio" name="event-scale" value="xlarge"
+                                    class="scale-radio w-4 h-4 text-primary border-outline focus:ring-primary focus:ring-offset-0 cursor-pointer mt-0.5" />
+                                <span class="material-symbols-outlined text-outline text-[20px]">stadium</span>
+                            </div>
+                            <div>
+                                <p class="font-bold text-on-surface text-body-md">Rất lớn</p>
+                                <p class="text-[12px] text-on-surface-variant mt-0.5">&gt; 1000 người</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Modal Footer -->
+            <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-outline-variant bg-surface-container-lowest shrink-0">
+                <button type="button" id="close-modal-btn" class="px-5 py-2.5 rounded-xl border border-outline-variant font-bold text-on-surface hover:bg-surface-container transition-colors">
+                    Hủy
+                </button>
+                <button type="submit" form="create-event-form" class="px-6 py-2.5 rounded-xl bg-primary text-white font-bold shadow-md hover:shadow-lg active:scale-95 transition-all">
+                    Tạo sự kiện
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script tương tác Modal Create Event -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const createBtn = document.getElementById("create-event-btn");
+            const modal = document.getElementById("create-event-modal");
+            const closeX = document.getElementById("close-modal-x");
+            const closeBtn = document.getElementById("close-modal-btn");
+            const eventNameInput = document.getElementById("event-name");
+            const charCount = document.getElementById("char-count");
+            const createForm = document.getElementById("create-event-form");
+
+            function openModal() {
+                if (!modal) return;
+                modal.classList.remove("hidden");
+                document.body.style.overflow = "hidden";
+                if (eventNameInput) eventNameInput.focus();
+            }
+
+            function closeModal() {
+                if (!modal) return;
+                modal.classList.add("hidden");
+                document.body.style.overflow = "";
+            }
+
+            if (createBtn) createBtn.addEventListener("click", openModal);
+            if (closeX) closeX.addEventListener("click", closeModal);
+            if (closeBtn) closeBtn.addEventListener("click", closeModal);
+
+            if (modal) {
+                modal.addEventListener("click", (e) => {
+                    if (e.target === modal) closeModal();
+                });
+            }
+
+            // Đếm ký tự tên sự kiện 0/200 & hiển thị thông báo lỗi màu đỏ khi vượt 200 ký tự
+            const errorMsg = document.getElementById("name-error-msg");
+            const counterContainer = document.getElementById("char-counter-container");
+
+            if (eventNameInput && charCount) {
+                const updateHeightAndCount = () => {
+                    eventNameInput.style.height = "auto";
+                    eventNameInput.style.height = Math.max(48, eventNameInput.scrollHeight) + "px";
+                    const len = eventNameInput.value.length;
+                    charCount.textContent = len;
+
+                    if (len > 200) {
+                        if (errorMsg) errorMsg.classList.remove("hidden");
+                        if (counterContainer) {
+                            counterContainer.classList.remove("text-on-surface-variant");
+                            counterContainer.classList.add("text-error", "font-bold");
+                        }
+                        eventNameInput.classList.add("border-error");
+                        eventNameInput.classList.remove("border-outline-variant");
+                    } else {
+                        if (errorMsg) errorMsg.classList.add("hidden");
+                        if (counterContainer) {
+                            counterContainer.classList.add("text-on-surface-variant");
+                            counterContainer.classList.remove("text-error", "font-bold");
+                        }
+                        eventNameInput.classList.remove("border-error");
+                        eventNameInput.classList.add("border-outline-variant");
+                    }
+                };
+                eventNameInput.addEventListener("input", updateHeightAndCount);
+            }
+
+            // Style thẻ Quy mô khi được chọn
+            const scaleCards = document.querySelectorAll(".scale-card-option");
+            scaleCards.forEach(card => {
+                const radio = card.querySelector('.scale-radio');
+                card.addEventListener("click", () => {
+                    scaleCards.forEach(c => {
+                        c.classList.remove("border-primary", "bg-primary/5");
+                        c.classList.add("border-outline-variant");
+                        const icon = c.querySelector(".material-symbols-outlined");
+                        if (icon) {
+                            icon.classList.remove("text-primary");
+                            icon.classList.add("text-outline");
+                        }
+                    });
+                    card.classList.add("border-primary", "bg-primary/5");
+                    card.classList.remove("border-outline-variant");
+                    const icon = card.querySelector(".material-symbols-outlined");
+                    if (icon) {
+                        icon.classList.remove("text-outline");
+                        icon.classList.add("text-primary");
+                    }
+                    if (radio) radio.checked = true;
+                });
+            });
+
+            // Toggle Ẩn / Hiện subtab của "Sự kiện" mượt mà (Accordion effect)
+            const eventTabToggle = document.getElementById("event-tab-toggle");
+            const eventSubtabsContainer = document.getElementById("event-subtabs-container");
+            const eventTabArrow = document.getElementById("event-tab-arrow");
+
+            if (eventTabToggle && eventSubtabsContainer) {
+                eventTabToggle.addEventListener("click", () => {
+                    const isCollapsed = eventSubtabsContainer.classList.contains("max-h-0");
+                    if (isCollapsed) {
+                        eventSubtabsContainer.classList.remove("max-h-0", "opacity-0", "pointer-events-none");
+                        eventSubtabsContainer.classList.add("max-h-96", "opacity-100");
+                        if (eventTabArrow) eventTabArrow.classList.add("rotate-180");
+                    } else {
+                        eventSubtabsContainer.classList.remove("max-h-96", "opacity-100");
+                        eventSubtabsContainer.classList.add("max-h-0", "opacity-0", "pointer-events-none");
+                        if (eventTabArrow) eventTabArrow.classList.remove("rotate-180");
+                    }
+                });
+            }
+
+            // Form Submit: Tạo mới 1 sự kiện => Bổ sung 1 subtab mới không thụt lề và tự động dãn mở mượt mà
+            if (createForm) {
+                createForm.addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    const name = eventNameInput ? eventNameInput.value.trim() : "";
+                    if (!name || name.length > 200) return;
+
+                    // Thêm subtab sự kiện mới không thụt lề
+                    if (eventSubtabsContainer) {
+                        const newSubtab = document.createElement("a");
+                        newSubtab.href = "#";
+                        newSubtab.className = "flex items-center gap-2 px-4 py-2.5 text-[13px] text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors truncate font-medium border-l-2 border-secondary bg-white/5 animate-in fade-in";
+                        newSubtab.innerHTML = `
+                            <span class="material-symbols-outlined text-[16px] text-secondary">stars</span>
+                            <span class="truncate">${name}</span>
+                        `;
+                        eventSubtabsContainer.appendChild(newSubtab);
+
+                        // Tự động mở danh sách mượt nếu đang thu gọn
+                        eventSubtabsContainer.classList.remove("max-h-0", "opacity-0", "pointer-events-none");
+                        eventSubtabsContainer.classList.add("max-h-96", "opacity-100");
+                        if (eventTabArrow) eventTabArrow.classList.add("rotate-180");
+                    }
+
+                    closeModal();
+                    createForm.reset();
+                    if (charCount) charCount.textContent = "0";
+                    if (eventNameInput) eventNameInput.style.height = "48px";
+                });
+            }
+
+            // Xử lý chuyển đổi mượt giữa 6 tab menu ngang phẳng sát biên
+            const navTabs = document.querySelectorAll(".event-nav-tab");
+            const tabPanels = document.querySelectorAll(".event-tab-panel");
+
+            navTabs.forEach(tab => {
+                tab.addEventListener("click", () => {
+                    const targetTab = tab.getAttribute("data-tab");
+
+                    navTabs.forEach(t => {
+                        t.className = "event-nav-tab px-6 py-3.5 rounded-none font-medium text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low flex items-center gap-2 transition-all shrink-0 whitespace-nowrap border-r border-outline-variant/30";
+                    });
+                    tab.className = "event-nav-tab active-event-tab px-6 py-3.5 rounded-none font-bold text-body-sm flex items-center gap-2 transition-all bg-primary text-white shrink-0 whitespace-nowrap border-r border-outline-variant/30";
+
+                    tabPanels.forEach(panel => {
+                        if (panel.id === targetTab) {
+                            panel.classList.remove("hidden");
+                        } else {
+                            panel.classList.add("hidden");
+                        }
+                    });
+                });
+            });
+
+            // Tự động chuyển cuộn chuột (Mouse Wheel) thành cuộn ngang khi di chuột vào khu vực thanh Tab
+            const topTabsBar = document.getElementById("event-top-tabs-bar");
+            if (topTabsBar) {
+                topTabsBar.addEventListener("wheel", (e) => {
+                    if (e.deltaY !== 0) {
+                        e.preventDefault();
+                        topTabsBar.scrollLeft += e.deltaY;
+                    }
+                }, { passive: false });
+            }
+
+            // Khi click vào bất kỳ subtab sự kiện nào ở Sidebar -> Đổi tiêu đề sự kiện & mặc định chọn tab "Tổng quan"
+            document.addEventListener("click", (e) => {
+                const subtab = e.target.closest("#event-subtabs-container a");
+                if (subtab) {
+                    e.preventDefault();
+                    const eventTitleEl = document.querySelector("h1.font-display-lg");
+                    const eventNameSpan = subtab.querySelector(".truncate");
+                    if (eventTitleEl && eventNameSpan) {
+                        eventTitleEl.textContent = eventNameSpan.textContent;
+                    }
+
+                    // Highlight subtab được chọn
+                    document.querySelectorAll("#event-subtabs-container a").forEach(a => {
+                        a.classList.remove("border-secondary", "bg-white/10", "text-white");
+                        a.classList.add("border-primary", "bg-white/5", "text-slate-300");
+                    });
+                    subtab.classList.remove("border-primary", "text-slate-300");
+                    subtab.classList.add("border-secondary", "bg-white/10", "text-white");
+
+                    // Tự động chọn tab "Tổng quan"
+                    const overviewTabBtn = document.querySelector('.event-nav-tab[data-tab="tab-overview"]');
+                    if (overviewTabBtn) overviewTabBtn.click();
+                }
+            });
+
+            // Nút Toggle Ẩn / Hiện Sidebar (Dạng hình chữ nhật nhỏ nằm giữa lề phải Sidebar)
+            const sidebarToggleBtn = document.getElementById("sidebar-toggle-btn");
+            const sidebarAside = document.getElementById("sidebar-aside");
+            const mainContent = document.getElementById("main-content");
+            const sidebarIcon = sidebarToggleBtn ? sidebarToggleBtn.querySelector(".material-symbols-outlined") : null;
+
+            if (sidebarToggleBtn && sidebarAside && mainContent) {
+                sidebarToggleBtn.addEventListener("click", () => {
+                    const isCollapsed = sidebarAside.classList.contains("-translate-x-full");
+                    if (isCollapsed) {
+                        // Hiển thị Sidebar -> Nút đè 50% lề phải
+                        sidebarAside.classList.remove("-translate-x-full");
+                        mainContent.classList.remove("ml-0");
+                        mainContent.classList.add("ml-[280px]");
+                        if (sidebarToggleBtn) {
+                            sidebarToggleBtn.classList.remove("translate-x-full");
+                            sidebarToggleBtn.classList.add("translate-x-1/2");
+                        }
+                        if (sidebarIcon) sidebarIcon.textContent = "chevron_left";
+                    } else {
+                        // Ẩn Sidebar -> Nút nhô hẳn 100% ra lề ẩn (transformX 100%)
+                        sidebarAside.classList.add("-translate-x-full");
+                        mainContent.classList.remove("ml-[280px]");
+                        mainContent.classList.add("ml-0");
+                        if (sidebarToggleBtn) {
+                            sidebarToggleBtn.classList.remove("translate-x-1/2");
+                            sidebarToggleBtn.classList.add("translate-x-full");
+                        }
+                        if (sidebarIcon) sidebarIcon.textContent = "chevron_right";
+                    }
+                });
+            }
+
+            // Helper setup tự động xuống dòng mượt mượt (auto-expanding) & đếm n/kí tự tối đa kèm thông báo lỗi space-between
+            function setupCharLimitTextarea(textareaId, counterId, errorMsgId, counterContainerId, maxLimit) {
+                const textarea = document.getElementById(textareaId);
+                const counter = document.getElementById(counterId);
+                const errorMsg = document.getElementById(errorMsgId);
+                const counterContainer = document.getElementById(counterContainerId);
+
+                if (!textarea) return;
+
+                const update = () => {
+                    // Auto-expand height
+                    textarea.style.height = "auto";
+                    textarea.style.height = textarea.scrollHeight + "px";
+
+                    const length = textarea.value.length;
+                    if (counter) counter.textContent = length;
+
+                    if (length > maxLimit) {
+                        if (errorMsg) errorMsg.classList.remove("hidden");
+                        if (counterContainer) {
+                            counterContainer.classList.add("text-error", "font-bold");
+                            counterContainer.classList.remove("text-on-surface-variant");
+                        }
+                        textarea.classList.add("border-error", "ring-2", "ring-error/20");
+                        textarea.classList.remove("border-outline-variant", "focus:border-primary", "focus:ring-primary/20");
+                    } else {
+                        if (errorMsg) errorMsg.classList.add("hidden");
+                        if (counterContainer) {
+                            counterContainer.classList.remove("text-error", "font-bold");
+                            counterContainer.classList.add("text-on-surface-variant");
+                        }
+                        textarea.classList.remove("border-error", "ring-2", "ring-error/20");
+                        textarea.classList.add("border-outline-variant", "focus:border-primary", "focus:ring-primary/20");
+                    }
+                };
+
+                textarea.addEventListener("input", update);
+                // Khởi tạo ban đầu
+                update();
+            }
+
+            // Kích hoạt đếm ký tự & auto-expanding cho các trường trong Tab Thông tin sự kiện
+            setupCharLimitTextarea("info-event-name", "info-name-char-count", "info-name-error-msg", "info-name-counter-container", 200);
+            setupCharLimitTextarea("info-event-location", "info-location-char-count", "info-location-error-msg", "info-location-counter-container", 200);
+            setupCharLimitTextarea("info-event-desc", "info-desc-char-count", "info-desc-error-msg", "info-desc-counter-container", 1000);
+        });
+    </script>
+
+</body>
+
+</html>

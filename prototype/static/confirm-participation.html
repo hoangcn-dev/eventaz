@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>EventAZ | Xác nhận tham dự sự kiện</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;955&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%);
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 232, 240, 0.6);
+        }
+        .hero-pattern {
+            background-image: radial-gradient(circle at 10% 20%, rgba(0, 40, 142, 0.04) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(113, 42, 226, 0.05) 0%, transparent 40%);
+        }
+    </style>
+</head>
+<body class="hero-pattern flex items-center justify-center p-4 md:p-8">
+
+    <div class="glass-card w-full max-w-lg rounded-3xl shadow-2xl p-6 md:p-10 text-center space-y-8 animate-in zoom-in-95 duration-300">
+        
+        <!-- Header Brand -->
+        <div class="flex flex-col items-center gap-2">
+            <span class="text-3xl font-black text-[#00288e] tracking-tight">EventAZ</span>
+            <div class="h-1 w-12 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+        </div>
+
+        <!-- Event Banner Card -->
+        <div class="bg-gradient-to-r from-[#00288e] to-[#712ae2] rounded-2xl p-6 text-white text-left space-y-3 relative overflow-hidden shadow-lg">
+            <div class="absolute right-0 bottom-0 translate-x-4 translate-y-4 opacity-10">
+                <span class="material-symbols-outlined text-[120px]">event_available</span>
+            </div>
+            <span class="bg-white/20 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full inline-block">Thư mời sự kiện</span>
+            <h2 class="text-xl md:text-2xl font-extrabold tracking-tight">Tech Summit Asia 2024</h2>
+            <div class="flex items-center gap-2 text-xs text-white/80">
+                <span class="material-symbols-outlined text-[16px]">calendar_month</span>
+                <span>15 - 16 Tháng 10, 2024</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-white/80">
+                <span class="material-symbols-outlined text-[16px]">pin_drop</span>
+                <span>Marina Bay Sands, Singapore</span>
+            </div>
+        </div>
+
+        <!-- Main Confirmation Form Area -->
+        <div id="confirm-form-panel" class="space-y-6">
+            <div class="space-y-2">
+                <p class="text-body-sm text-gray-500 uppercase tracking-widest font-bold">Kính gửi Khách mời</p>
+                <h1 id="guest-name-display" class="text-2xl font-black text-gray-800">Đang tìm dữ liệu khách mời...</h1>
+                <p id="guest-title-display" class="text-sm text-gray-500 font-medium">...</p>
+            </div>
+            
+            <p class="text-sm text-gray-600 leading-relaxed max-w-md mx-auto">
+                Chúng tôi rất hân hạnh được kính mời ông/bà tham gia sự kiện <strong class="text-primary">Tech Summit Asia 2024</strong> với vai trò khách mời danh dự. Vui lòng xác nhận sự tham dự của ông/bà để Ban tổ chức chuẩn bị đón tiếp một cách chu đáo nhất.
+            </p>
+
+            <!-- Buttons -->
+            <div class="flex flex-col sm:flex-row gap-3 justify-center pt-4">
+                <button id="btn-decline" class="px-6 py-3 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 text-sm font-bold transition-all active:scale-95">
+                    Từ chối tham dự
+                </button>
+                <button id="btn-accept" class="px-8 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold shadow-md hover:shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1.5">
+                    <span class="material-symbols-outlined text-[18px]">check_circle</span> Xác nhận tham dự
+                </button>
+            </div>
+        </div>
+
+        <!-- Success Panel (Hidden by default) -->
+        <div id="success-panel" class="hidden space-y-6 animate-in fade-in duration-300">
+            <div class="flex justify-center">
+                <div class="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 animate-bounce">
+                    <span class="material-symbols-outlined text-[40px]">check_circle</span>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <h1 class="text-2xl font-black text-gray-800">Xác nhận thành công!</h1>
+                <p class="text-sm text-gray-600 leading-relaxed max-w-md mx-auto">
+                    Cảm ơn bạn đã phản hồi. Trạng thái của bạn đã được cập nhật thành công trên trang quản trị sự kiện của Ban tổ chức. Thư mời chính thức kèm mã QR Check-in sẽ được gửi tới email của bạn trong thời gian sớm nhất.
+                </p>
+            </div>
+            <div class="pt-4">
+                <p class="text-xs text-gray-400">Bạn có thể đóng tab này an toàn.</p>
+            </div>
+        </div>
+
+        <!-- Decline Panel (Hidden by default) -->
+        <div id="decline-panel" class="hidden space-y-6 animate-in fade-in duration-300">
+            <div class="flex justify-center">
+                <div class="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center text-red-600">
+                    <span class="material-symbols-outlined text-[40px]">cancel</span>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <h1 class="text-2xl font-black text-gray-800">Đã ghi nhận phản hồi</h1>
+                <p class="text-sm text-gray-600 leading-relaxed max-w-md mx-auto">
+                    Cảm ơn bạn đã dành thời gian phản hồi cho Ban tổ chức. Rất tiếc vì sự vắng mặt của bạn lần này, hẹn gặp lại bạn ở các sự kiện tiếp theo của EventAZ.
+                </p>
+            </div>
+            <div class="pt-4">
+                <p class="text-xs text-gray-400">Bạn có thể đóng tab này.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Get guestId from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const guestId = urlParams.get('guestId');
+
+            // Default guest mapping in case localStorage is empty
+            const defaultGuests = {
+                "guest-1": { name: "Dr. Alex Rivera", title: "VP of AI Tech @ Google" },
+                "guest-2": { name: "Sarah Jenkins", title: "CEO @ TechInnovate" },
+                "guest-3": { name: "Michael Chen", title: "Founder @ CloudFlow System" },
+                "guest-4": { name: "Jane Doe", title: "Director of Product @ Microsoft" },
+                "guest-5": { name: "John Smith", title: "Chief Architect @ Amazon" }
+            };
+
+            let currentGuest = null;
+
+            if (guestId) {
+                // Try to load from localStorage first (in case event lists have been modified)
+                const storedGuests = localStorage.getItem("eventaz_guests");
+                if (storedGuests) {
+                    try {
+                        const parsed = JSON.parse(storedGuests);
+                        currentGuest = parsed.find(g => g.id === guestId);
+                    } catch(e) {}
+                }
+                
+                // Fallback to default
+                if (!currentGuest) {
+                    currentGuest = defaultGuests[guestId];
+                }
+            }
+
+            const guestNameDisplay = document.getElementById("guest-name-display");
+            const guestTitleDisplay = document.getElementById("guest-title-display");
+
+            if (currentGuest) {
+                guestNameDisplay.textContent = currentGuest.name;
+                guestTitleDisplay.textContent = currentGuest.title || (currentGuest.company ? `${currentGuest.title} @ ${currentGuest.company}` : "");
+            } else {
+                guestNameDisplay.textContent = "Kính gửi Quý Khách mời";
+                guestTitleDisplay.textContent = "Khách mời danh dự của sự kiện";
+            }
+
+            const formPanel = document.getElementById("confirm-form-panel");
+            const successPanel = document.getElementById("success-panel");
+            const declinePanel = document.getElementById("decline-panel");
+
+            const btnAccept = document.getElementById("btn-accept");
+            const btnDecline = document.getElementById("btn-decline");
+
+            if (btnAccept && guestId) {
+                btnAccept.addEventListener("click", () => {
+                    // Update localStorage to trigger storage event on dashboard page
+                    localStorage.setItem(`guest_status_${guestId}`, "confirmed");
+                    
+                    // Also update in global guests array if exist
+                    const storedGuests = localStorage.getItem("eventaz_guests");
+                    if (storedGuests) {
+                        try {
+                            const parsed = JSON.parse(storedGuests);
+                            const idx = parsed.findIndex(g => g.id === guestId);
+                            if (idx !== -1) {
+                                parsed[idx].isParticipating = true;
+                                parsed[idx].status = "Đã xác nhận";
+                                localStorage.setItem("eventaz_guests", JSON.stringify(parsed));
+                            }
+                        } catch(e) {}
+                    }
+
+                    formPanel.classList.add("hidden");
+                    successPanel.classList.remove("hidden");
+                });
+            }
+
+            if (btnDecline && guestId) {
+                btnDecline.addEventListener("click", () => {
+                    localStorage.setItem(`guest_status_${guestId}`, "declined");
+                    
+                    formPanel.classList.add("hidden");
+                    declinePanel.classList.remove("hidden");
+                });
+            }
+        });
+    </script>
+</body>
+</html>

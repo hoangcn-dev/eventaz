@@ -1,0 +1,203 @@
+/**
+ * EventAZ Mock Data - Guests, Speakers & Partners (Module 05: FR-05.1 -> FR-05.5)
+ */
+
+const GUESTS_STORAGE_KEY = "eventaz_mock_guests_v1";
+
+export const GUEST_ROLES = {
+    "Speaker": { code: "Speaker", nameVi: "Diễn giả VIP", color: "bg-purple-100 text-purple-800 border-purple-300" },
+    "Sponsor": { code: "Sponsor", nameVi: "Nhà tài trợ", color: "bg-amber-100 text-amber-800 border-amber-300" },
+    "VIP": { code: "VIP", nameVi: "Khách mời danh dự", color: "bg-blue-100 text-blue-800 border-blue-300" },
+    "Media": { code: "Media", nameVi: "Báo chí & Truyền thông", color: "bg-emerald-100 text-emerald-800 border-emerald-300" },
+    "Attendee": { code: "Attendee", nameVi: "Khách tham quan", color: "bg-gray-100 text-gray-800 border-gray-300" }
+};
+
+export const RSVP_STATUSES = {
+    "Confirmed": { code: "Confirmed", nameVi: "Đã xác nhận", color: "bg-emerald-100 text-emerald-800 border-emerald-300" },
+    "Sent": { code: "Sent", nameVi: "Chờ phản hồi", color: "bg-blue-100 text-blue-800 border-blue-300" },
+    "Declined": { code: "Declined", nameVi: "Từ chối tham dự", color: "bg-red-100 text-red-800 border-red-300" }
+};
+
+export const defaultGuests = [
+    {
+        id: "GST-001",
+        eventId: "E-2024-99X",
+        name: "Dr. Alexander Wright",
+        organization: "TechCorp Global (Hoa Kỳ)",
+        position: "VP of AI Research & Development",
+        role: "Speaker",
+        topic: "Kỷ nguyên AI Agentic & Tương lai phần mềm quản trị sự kiện 2026",
+        email: "alexander.wright@techcorp.us",
+        phone: "+1 415 555 0199",
+        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+        rsvpStatus: "Confirmed",
+        qrCode: "QR-GUEST-001-ALEX",
+        hospitality: {
+            flight: "Vietnam Airlines VN-035 (28/08)",
+            hotel: "Khách sạn JW Marriott Hanoi (Phòng 802)",
+            notes: "Yêu cầu xe đưa đón riêng tại sân bay Nội Bài."
+        }
+    },
+    {
+        id: "GST-002",
+        eventId: "E-2024-99X",
+        name: "Bà Nguyễn Thu Hà",
+        organization: "Tập đoàn Truyền thông V-Media",
+        position: "Giám đốc Sáng tạo & Brand Strategy",
+        role: "Speaker",
+        topic: "Chiến lược Truyền thông Đa kênh & Trải nghiệm khách tham dự quy mô lớn",
+        email: "ha.nguyen@vmedia.vn",
+        phone: "0912 888 999",
+        avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+        rsvpStatus: "Confirmed",
+        qrCode: "QR-GUEST-002-HA",
+        hospitality: {
+            flight: "Không yêu cầu",
+            hotel: "Không yêu cầu",
+            notes: "Đăng ký xe riêng vào cổng VIP NCC."
+        }
+    },
+    {
+        id: "GST-003",
+        eventId: "E-2024-99X",
+        name: "Ông Trần Minh Tâm",
+        organization: "Quỹ Đầu tư Innovation Capital",
+        position: "Founding Managing Partner",
+        role: "Sponsor",
+        topic: "Nhà tài trợ Kim Cương — Đơn vị Bảo trợ Tài chính Sự kiện",
+        email: "tam.tran@innovation.vc",
+        phone: "0903 444 555",
+        avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&auto=format&fit=crop&q=80",
+        rsvpStatus: "Confirmed",
+        qrCode: "QR-GUEST-003-TAM",
+        hospitality: {
+            flight: "Không yêu cầu",
+            hotel: "Không yêu cầu",
+            notes: "Phân công 2 Lễ tân đón tiếp tại sảnh VIP."
+        }
+    },
+    {
+        id: "GST-004",
+        eventId: "E-2024-99X",
+        name: "Bà Hoàng Phương Linh",
+        organization: "Báo Điện tử VnExpress",
+        position: "Trưởng Ban Công Nghệ & Truyền Thông",
+        role: "Media",
+        topic: "Đơn vị Bảo trợ Truyền thông Chính thức",
+        email: "linh.hoang@vnexpress.net",
+        phone: "0988 123 789",
+        avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80",
+        rsvpStatus: "Confirmed",
+        qrCode: "QR-GUEST-004-LINH",
+        hospitality: {
+            flight: "Không yêu cầu",
+            hotel: "Không yêu cầu",
+            notes: "Cấp 5 Thẻ Báo chí vào phòng Press Booth."
+        }
+    },
+    {
+        id: "GST-005",
+        eventId: "E-2024-99X",
+        name: "Dr. Kenji Takahashi",
+        organization: "Viện Nghiên cứu Đổi mới Sáng tạo Tokyo",
+        position: "Chief Technology Advisor",
+        role: "Speaker",
+        topic: "Ứng dụng IoT & Mạng cảm biến trong Hạ tầng Sự kiện Thông minh",
+        email: "takahashi.k@tokyo-innovation.jp",
+        phone: "+81 3 5555 0142",
+        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+        rsvpStatus: "Sent",
+        qrCode: "QR-GUEST-005-TAKAHASHI",
+        hospitality: {
+            flight: "ANA Japan Airlines JL-751 (29/08)",
+            hotel: "Khách sạn Lotte Center Hanoi",
+            notes: "Đang chờ xác nhận lịch trình chuyến bay."
+        }
+    },
+    {
+        id: "GST-006",
+        eventId: "E-2024-99X",
+        name: "Ông Phạm Quốc Bảo",
+        organization: "Tổng Công ty Giải pháp Phần mềm CloudSE",
+        position: "Tổng Giám Đốc (CEO)",
+        role: "VIP",
+        topic: "Khách mời Danh dự Khai mạc Sự kiện",
+        email: "bao.pham@cloudse.vn",
+        phone: "0933 777 888",
+        avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80",
+        rsvpStatus: "Declined",
+        qrCode: "QR-GUEST-006-BAO",
+        hospitality: {
+            flight: "Không yêu cầu",
+            hotel: "Không yêu cầu",
+            notes: "Bận công tác đột xuất, cử Phó Giám đốc dự thay."
+        }
+    }
+];
+
+export function getGuests(eventId) {
+    try {
+        const raw = localStorage.getItem(GUESTS_STORAGE_KEY);
+        if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+                if (eventId) return parsed.filter(g => g.eventId === eventId);
+                return parsed;
+            }
+        }
+    } catch (e) {
+        console.error("Error reading guests data", e);
+    }
+    localStorage.setItem(GUESTS_STORAGE_KEY, JSON.stringify(defaultGuests));
+    return defaultGuests;
+}
+
+export function saveGuest(guestData) {
+    const guests = getGuests();
+    const index = guests.findIndex(g => g.id === guestData.id);
+    if (index !== -1) {
+        guests[index] = guestData;
+    } else {
+        guests.unshift(guestData);
+    }
+    localStorage.setItem(GUESTS_STORAGE_KEY, JSON.stringify(guests));
+    return guestData;
+}
+
+export function deleteGuest(guestId) {
+    let guests = getGuests();
+    guests = guests.filter(g => g.id !== guestId);
+    localStorage.setItem(GUESTS_STORAGE_KEY, JSON.stringify(guests));
+}
+
+export function changeRsvpStatus(guestId, newStatus) {
+    const guests = getGuests();
+    const guest = guests.find(g => g.id === guestId);
+    if (guest) {
+        guest.rsvpStatus = newStatus;
+        localStorage.setItem(GUESTS_STORAGE_KEY, JSON.stringify(guests));
+    }
+    return guest;
+}
+
+export function calculateGuestSummary(eventId) {
+    const guests = getGuests(eventId);
+    const total = guests.length;
+    const confirmed = guests.filter(g => g.rsvpStatus === "Confirmed").length;
+    const sent = guests.filter(g => g.rsvpStatus === "Sent").length;
+    const declined = guests.filter(g => g.rsvpStatus === "Declined").length;
+
+    const speakers = guests.filter(g => g.role === "Speaker").length;
+    const sponsors = guests.filter(g => g.role === "Sponsor").length;
+    const rsvpRate = total > 0 ? Math.round((confirmed / total) * 100) : 0;
+
+    return {
+        total,
+        confirmed,
+        sent,
+        declined,
+        speakers,
+        sponsors,
+        rsvpRate
+    };
+}

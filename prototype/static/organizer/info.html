@@ -215,16 +215,16 @@
             <span onclick="window.location.href='../index.html'" class="font-headline-md text-headline-md font-bold text-primary cursor-pointer">EventAZ</span>
             <div class="hidden md:flex items-center gap-6">
                 <nav class="flex gap-6 text-on-surface-variant font-medium">
-                    <a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Dashboard</a>
-                    <a class="hover:bg-surface-container-low transition-colors px-2 py-1 rounded" href="#">Live Monitor</a>
-                    <a class="hover:bg-surface-container-low transition-colors px-2 py-1 rounded" href="#">Analytics</a>
+                    <a class="text-primary font-bold border-b-2 border-primary pb-1" href="overview.html">Bảng điều khiển</a>
+                    <a class="hover:bg-surface-container-low transition-colors px-2 py-1 rounded" href="#">Theo dõi trực tiếp</a>
+                    <a class="hover:bg-surface-container-low transition-colors px-2 py-1 rounded" href="#">Thống kê & Báo cáo</a>
                 </nav>
             </div>
         </div>
         <div class="flex items-center gap-4">
             <div class="relative flex items-center bg-surface-container-low rounded-full px-4 py-2 border border-outline-variant w-64">
                 <span class="material-symbols-outlined text-outline text-[20px]">search</span>
-                <input class="bg-transparent border-none focus:ring-0 text-body-sm w-full" placeholder="Search events..." type="text">
+                <input class="bg-transparent border-none focus:ring-0 text-body-sm w-full" placeholder="Tìm kiếm sự kiện..." type="text">
             </div>
             <button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-all">notifications</button>
             <button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-all">settings</button>
@@ -246,31 +246,38 @@
             </button>
         </div>
         <nav class="flex-1 space-y-1">
-            <a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all active:scale-95 text-white" href="../index.html">
+            <a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all text-white" href="dashboard.html">
                 <span class="material-symbols-outlined">dashboard</span>
-                <span class="font-label-md">Overview</span>
+                <span class="font-label-md">Tổng quan tổ chức</span>
             </a>
-            <a id="event-tab-toggle" class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all active:scale-95 text-white cursor-pointer select-none" href="javascript:void(0)">
+            <a id="event-tab-toggle" class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold transition-all text-white cursor-pointer select-none" href="javascript:void(0)">
                 <span class="material-symbols-outlined">event</span>
                 <span class="font-label-md">Sự kiện</span>
                 <span id="event-tab-arrow" class="material-symbols-outlined ml-auto transition-transform duration-200">expand_more</span>
             </a>
             <div id="event-subtabs-container" class="space-y-1 overflow-hidden transition-all duration-300 ease-in-out max-h-96 opacity-100">
-                <a href="#" class="flex items-center gap-2 px-4 py-2.5 text-[13px] text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors truncate font-medium border-l-2 border-primary bg-white/5">
+                <a href="overview.html" class="flex items-center gap-2 px-4 py-2.5 text-[13px] text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors truncate font-medium border-l-2 border-primary bg-white/5">
                     <span class="material-symbols-outlined text-[16px] text-primary-fixed">radio_button_checked</span>
-                    <span class="truncate">Tech Summit Asia 2024</span>
+                    <span class="truncate" id="sidebar-current-event-name">Tech Summit Asia 2024</span>
                 </a>
             </div>
-            <a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all active:scale-95 text-white" href="#"><span class="material-symbols-outlined">groups</span><span class="font-label-md">Personnel</span></a>
+            <a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all text-white" href="templates.html">
+                <span class="material-symbols-outlined">folder_special</span>
+                <span class="font-label-md">Thư viện Template</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all text-white" href="org-personnel.html">
+                <span class="material-symbols-outlined">groups</span>
+                <span class="font-label-md">Nhân sự tổ chức</span>
+            </a>
         </nav>
         <div class="mt-auto border-t border-white/10 pt-6 space-y-1">
             <a class="flex items-center gap-3 px-4 py-2 hover:text-on-primary transition-colors text-white" href="#">
                 <span class="material-symbols-outlined">monitoring</span>
-                <span class="font-label-md">System Monitor</span>
+                <span class="font-label-md">Giám sát hệ thống</span>
             </a>
             <a class="flex items-center gap-3 px-4 py-2 hover:text-on-primary transition-colors text-white" href="#">
                 <span class="material-symbols-outlined">manage_accounts</span>
-                <span class="font-label-md">User Mgmt</span>
+                <span class="font-label-md">Quản lý người dùng</span>
             </a>
         </div>
     </aside>
@@ -282,15 +289,19 @@
             <nav class="flex m-0 p-0">
                 <button onclick="window.location.href='overview.html'" class="event-nav-tab px-6 py-3.5 rounded-none font-medium text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low flex items-center gap-2 transition-all shrink-0 whitespace-nowrap border-r border-outline-variant/30">
                     <span class="material-symbols-outlined text-[18px]">dashboard</span>
-                    <span>Tổng quan</span>
+                    <span>Tổng quan sự kiện</span>
                 </button>
                 <button onclick="window.location.href='info.html'" class="event-nav-tab active-event-tab px-6 py-3.5 rounded-none font-bold text-body-sm flex items-center gap-2 transition-all bg-primary text-white shrink-0 whitespace-nowrap border-r border-outline-variant/30">
                     <span class="material-symbols-outlined text-[18px]">info</span>
                     <span>Thông tin sự kiện</span>
                 </button>
+                <button onclick="window.location.href='wbs.html'" class="event-nav-tab px-6 py-3.5 rounded-none font-medium text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low flex items-center gap-2 transition-all shrink-0 whitespace-nowrap border-r border-outline-variant/30">
+                    <span class="material-symbols-outlined text-[18px]">account_tree</span>
+                    <span>Cấu trúc WBS</span>
+                </button>
                 <button onclick="window.location.href='tickets.html'" class="event-nav-tab px-6 py-3.5 rounded-none font-medium text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low flex items-center gap-2 transition-all shrink-0 whitespace-nowrap border-r border-outline-variant/30">
                     <span class="material-symbols-outlined text-[18px]">confirmation_number</span>
-                    <span>Vé, chỗ ngồi & Địa điểm</span>
+                    <span>Vé & Địa điểm</span>
                 </button>
                 <button onclick="window.location.href='guests.html'" class="event-nav-tab px-6 py-3.5 rounded-none font-medium text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low flex items-center gap-2 transition-all shrink-0 whitespace-nowrap border-r border-outline-variant/30">
                     <span class="material-symbols-outlined text-[18px]">star</span>
@@ -302,7 +313,7 @@
                 </button>
                 <button onclick="window.location.href='personnel.html'" class="event-nav-tab px-6 py-3.5 rounded-none font-medium text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low flex items-center gap-2 transition-all shrink-0 whitespace-nowrap border-r border-outline-variant/30">
                     <span class="material-symbols-outlined text-[18px]">badge</span>
-                    <span>Nhân sự</span>
+                    <span>Nhân sự sự kiện</span>
                 </button>
                 <button onclick="window.location.href='equipment.html'" class="event-nav-tab px-6 py-3.5 rounded-none font-medium text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low flex items-center gap-2 transition-all shrink-0 whitespace-nowrap border-r border-outline-variant/30">
                     <span class="material-symbols-outlined text-[18px]">inventory_2</span>
@@ -312,12 +323,68 @@
                     <span class="material-symbols-outlined text-[18px]">task_alt</span>
                     <span>Tiến độ & Công việc</span>
                 </button>
+                <button onclick="window.location.href='templates.html'" class="event-nav-tab px-6 py-3.5 rounded-none font-medium text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low flex items-center gap-2 transition-all shrink-0 whitespace-nowrap border-r border-outline-variant/30">
+                    <span class="material-symbols-outlined text-[18px]">folder_special</span>
+                    <span>Thư viện Mẫu</span>
+                </button>
             </nav>
         </div>
 
         <div class="p-margin-desktop max-w-[1600px] mx-auto pt-6 pb-24">
             <!-- Tab Panel 2: Thông tin sự kiện -->
             <div id="tab-info" class="event-tab-panel space-y-6 animate-in fade-in">
+                <!-- WIDGET QUẢN LÝ TRẠNG THÁI VÒNG ĐỜI (FR-01.4) & LƯU TEMPLATE (FR-01.5) -->
+                <div class="glass-card p-6 rounded-xl bg-surface-container-lowest shadow-sm border border-outline-variant">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4 pb-4 border-b border-outline-variant">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="px-2 py-0.5 bg-primary/10 text-primary font-bold text-[11px] rounded uppercase">Chức năng FR-01.4 & FR-01.5</span>
+                                <span id="lifecycle-event-id-badge" class="font-mono-sm text-body-sm text-on-surface-variant">E-2024-99X</span>
+                            </div>
+                            <h3 class="font-bold text-headline-sm text-on-surface flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">published_with_changes</span>
+                                <span>Quản lý Trạng thái Vòng đời Sự kiện</span>
+                            </h3>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button id="open-save-template-btn" class="px-4 py-2 border border-primary text-primary hover:bg-primary/5 rounded-lg text-body-sm font-bold transition-all flex items-center gap-1.5 bg-white">
+                                <span class="material-symbols-outlined text-[18px]">save_as</span>
+                                <span>Lưu thành Template</span>
+                            </button>
+                            <button id="open-audit-log-btn" class="px-4 py-2 border border-outline-variant hover:bg-surface-container rounded-lg text-body-sm font-medium transition-all flex items-center gap-1.5 bg-white">
+                                <span class="material-symbols-outlined text-[18px]">history</span>
+                                <span>Nhật ký Hoạt động</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tiến trình Vòng đời 6 Bước -->
+                    <div class="mb-6">
+                        <div class="grid grid-cols-2 md:grid-cols-6 gap-2 text-center" id="lifecycle-steps-container">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Hành động chuyển trạng thái -->
+                    <div class="p-4 bg-surface-container-low rounded-xl flex flex-col md:flex-row justify-between items-center gap-4 border border-outline-variant/60">
+                        <div class="flex items-center gap-3">
+                            <span class="text-body-sm font-bold text-on-surface">Trạng thái hiện tại:</span>
+                            <span id="current-lifecycle-badge" class="px-3 py-1 bg-emerald-600 text-white font-bold text-body-sm rounded-full shadow-sm">
+                                Đang diễn ra
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button id="rollback-status-btn" class="px-3.5 py-2 border border-amber-500 text-amber-700 hover:bg-amber-50 rounded-lg text-body-sm font-bold transition-colors flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[18px]">undo</span>
+                                <span>Hoàn tác (Lùi 1 bước)</span>
+                            </button>
+                            <button id="advance-status-btn" class="px-5 py-2 bg-primary text-white rounded-lg text-body-sm font-bold shadow hover:shadow-md transition-all flex items-center gap-1.5">
+                                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                                <span id="advance-status-text">Chuyển sang Đã kết thúc</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <div class="glass-card p-6 rounded-xl space-y-6 bg-white/70">
                     <div class="border-b border-outline-variant pb-4">
                         <h3 class="font-headline-sm text-headline-sm font-bold flex items-center gap-2">
@@ -854,5 +921,219 @@
             }
         });
     </script>
+
+    <!-- Modal Lưu thành Template (FR-01.5) -->
+    <div id="save-template-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 hidden">
+        <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full p-6 animate-in fade-in zoom-in duration-200">
+            <div class="flex justify-between items-center border-b border-outline-variant pb-3 mb-4">
+                <h3 class="font-bold text-headline-sm text-primary flex items-center gap-2">
+                    <span class="material-symbols-outlined">save_as</span>
+                    <span>Lưu sự kiện thành Template</span>
+                </h3>
+                <button id="close-save-template-modal" class="text-outline hover:text-on-surface p-1 rounded-full"><span class="material-symbols-outlined">close</span></button>
+            </div>
+            <form id="save-template-form" class="space-y-4">
+                <div>
+                    <label class="block text-body-sm font-bold mb-1">Tên Template mẫu <span class="text-error">*</span></label>
+                    <input type="text" id="tpl-input-name" required placeholder="VD: Mẫu Hội nghị Công nghệ 2024" class="w-full px-3 py-2 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-body-sm">
+                </div>
+                <div>
+                    <label class="block text-body-sm font-bold mb-1">Phạm vi chia sẻ mẫu <span class="text-error">*</span></label>
+                    <select id="tpl-select-scope" class="w-full px-3 py-2 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-body-sm">
+                        <option value="organization">Toàn tổ chức (Tất cả thành viên trong công ty có thể dùng)</option>
+                        <option value="private">Chỉ mình tôi (Mẫu cá nhân)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-body-sm font-bold mb-1">Mô tả ngắn gọn về mẫu này</label>
+                    <textarea id="tpl-input-desc" rows="3" placeholder="Mô tả cấu trúc WBS và kịch bản áp dụng..." class="w-full px-3 py-2 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-body-sm resize-none"></textarea>
+                </div>
+                <div class="flex justify-end gap-3 pt-4 border-t border-outline-variant">
+                    <button type="button" id="cancel-save-template-btn" class="px-4 py-2 border border-outline-variant rounded-lg text-body-sm font-medium hover:bg-surface-container">Hủy</button>
+                    <button type="submit" class="px-5 py-2 bg-primary text-white rounded-lg text-body-sm font-bold shadow hover:shadow-md">Lưu vào Thư viện</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Drawer Xem Nhật ký Hoạt động Audit Log (FR-01.4) -->
+    <div id="audit-log-drawer" class="fixed inset-0 z-50 bg-black/50 hidden flex justify-end">
+        <div class="bg-white w-full max-w-md h-full p-6 shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
+            <div class="flex justify-between items-center border-b border-outline-variant pb-4 mb-4">
+                <h3 class="font-bold text-headline-sm text-on-surface flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">history</span>
+                    <span>Nhật ký Hoạt động (Audit Log)</span>
+                </h3>
+                <button id="close-audit-log-drawer" class="p-1 hover:bg-surface-container rounded-full text-outline hover:text-on-surface">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <p class="text-body-sm text-on-surface-variant mb-4">Nhật ký hệ thống ghi lại toàn bộ các lần thay đổi trạng thái sự kiện (Immutable Audit Trail).</p>
+            
+            <div class="flex-1 overflow-y-auto space-y-4 pr-1" id="audit-log-timeline">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts Mock Data -->
+    <script src="../mock/users.js"></script>
+    <script src="../mock/templates.js"></script>
+    <script src="../mock/events.js"></script>
+
+    <script>
+        // Module 01 Logic cho info.html (FR-01.4 & FR-01.5)
+        let currentEvent = window.EventAZMockData.getCurrentEvent();
+
+        function renderLifecycleWidget() {
+            document.getElementById("sidebar-current-event-name").innerText = currentEvent.name;
+            document.getElementById("lifecycle-event-id-badge").innerText = "ID: " + currentEvent.id;
+
+            const states = window.EventAZMockData.LIFECYCLE_STATES;
+            const container = document.getElementById("lifecycle-steps-container");
+            container.innerHTML = "";
+
+            const currOrder = states[currentEvent.status] ? states[currentEvent.status].stepOrder : 1;
+
+            Object.keys(states).forEach(key => {
+                const st = states[key];
+                const isActive = st.code === currentEvent.status;
+                const isPassed = st.stepOrder < currOrder;
+
+                const stepDiv = document.createElement("div");
+                stepDiv.className = `p-2.5 rounded-lg border text-center transition-all ${
+                    isActive 
+                        ? 'border-primary bg-primary/10 shadow-sm font-bold' 
+                        : isPassed 
+                            ? 'border-emerald-300 bg-emerald-50 text-emerald-700' 
+                            : 'border-outline-variant/60 bg-surface-container-low opacity-60'
+                }`;
+                stepDiv.innerHTML = `
+                    <div class="text-[11px] uppercase font-mono-sm tracking-tighter mb-0.5">Bước ${st.stepOrder}</div>
+                    <div class="text-body-sm font-bold">${st.nameVi}</div>
+                `;
+                container.appendChild(stepDiv);
+            });
+
+            // Status badge text
+            const badge = document.getElementById("current-lifecycle-badge");
+            const stInfo = states[currentEvent.status] || { nameVi: currentEvent.status, color: "bg-primary" };
+            badge.innerText = stInfo.nameVi;
+            badge.className = `px-3 py-1 text-white font-bold text-body-sm rounded-full shadow-sm ${stInfo.color}`;
+
+            // Next step text
+            const nextMap = { "Draft": "Planning", "Planning": "Preparing", "Preparing": "Ongoing", "Ongoing": "Closed", "Closed": "Archived" };
+            const nextKey = nextMap[currentEvent.status];
+            const advBtn = document.getElementById("advance-status-btn");
+            const advText = document.getElementById("advance-status-text");
+
+            if (nextKey && states[nextKey]) {
+                advText.innerText = "Chuyển sang: " + states[nextKey].nameVi;
+                advBtn.disabled = false;
+                advBtn.classList.remove("opacity-50", "cursor-not-allowed");
+            } else {
+                advText.innerText = "Đã ở trạng thái cao nhất";
+                advBtn.disabled = true;
+                advBtn.classList.add("opacity-50", "cursor-not-allowed");
+            }
+        }
+
+        // Advance Status button
+        document.getElementById("advance-status-btn").onclick = function() {
+            const nextMap = { "Draft": "Planning", "Planning": "Preparing", "Preparing": "Ongoing", "Ongoing": "Closed", "Closed": "Archived" };
+            const nextKey = nextMap[currentEvent.status];
+            if (!nextKey) return;
+
+            const res = window.EventAZMockData.changeEventStatus(currentEvent.id, nextKey);
+            if (!res.success) {
+                alert("Không thể chuyển trạng thái!\n" + res.error);
+            } else {
+                currentEvent = res.event;
+                renderLifecycleWidget();
+                alert(`Đã cập nhật trạng thái sự kiện sang: ${window.EventAZMockData.LIFECYCLE_STATES[nextKey].nameVi}`);
+            }
+        };
+
+        // Rollback status button (24h rule)
+        document.getElementById("rollback-status-btn").onclick = function() {
+            const prevMap = { "Planning": "Draft", "Preparing": "Planning", "Ongoing": "Preparing", "Closed": "Ongoing" };
+            const prevKey = prevMap[currentEvent.status];
+            if (!prevKey) {
+                alert("Không thể lùi trạng thái từ bước hiện tại.");
+                return;
+            }
+            const reason = prompt("Quy định FR-01.4: Cho phép lùi 1 bước trong vòng 24h. Vui lòng nhập lý do lùi trạng thái:");
+            if (reason) {
+                const res = window.EventAZMockData.changeEventStatus(currentEvent.id, prevKey, "Hoàn tác 24h - " + reason);
+                if (res.success) {
+                    currentEvent = res.event;
+                    renderLifecycleWidget();
+                    alert("Đã hoàn tác lùi 1 bước trạng thái!");
+                }
+            }
+        };
+
+        // Save Template Modal logic (FR-01.5)
+        document.getElementById("open-save-template-btn").onclick = function() {
+            document.getElementById("tpl-input-name").value = "Mẫu " + currentEvent.name;
+            document.getElementById("save-template-modal").classList.remove("hidden");
+        };
+
+        document.getElementById("close-save-template-modal").onclick =
+        document.getElementById("cancel-save-template-btn").onclick = function() {
+            document.getElementById("save-template-modal").classList.add("hidden");
+        };
+
+        document.getElementById("save-template-form").onsubmit = function(e) {
+            e.preventDefault();
+            const tplName = document.getElementById("tpl-input-name").value;
+            const scope = document.getElementById("tpl-select-scope").value;
+            const desc = document.getElementById("tpl-input-desc").value;
+
+            const newTpl = window.EventAZMockData.addTemplate({
+                name: tplName,
+                scope: scope,
+                description: desc,
+                category: currentEvent.category,
+                wbsGroups: (currentEvent.wbs || []).map(w => ({
+                    name: w.name,
+                    leadId: w.leadId,
+                    leadName: w.leadName
+                }))
+            });
+
+            alert(`Lưu thành công Template [${newTpl.name}] vào Thư viện Mẫu!`);
+            document.getElementById("save-template-modal").classList.add("hidden");
+        };
+
+        // Audit Log Drawer logic (FR-01.4)
+        document.getElementById("open-audit-log-btn").onclick = function() {
+            const timeline = document.getElementById("audit-log-timeline");
+            timeline.innerHTML = "";
+            const logs = currentEvent.auditLogs || [];
+
+            logs.forEach(log => {
+                const item = document.createElement("div");
+                item.className = "p-3 rounded-lg border border-outline-variant/60 bg-surface-container-lowest shadow-sm space-y-1";
+                item.innerHTML = `
+                    <div class="flex justify-between items-center text-[12px] text-on-surface-variant font-mono-sm">
+                        <span class="font-bold text-primary">${log.user}</span>
+                        <span>${log.timestamp}</span>
+                    </div>
+                    <div class="text-body-sm font-medium text-on-surface">${log.action}</div>
+                `;
+                timeline.appendChild(item);
+            });
+
+            document.getElementById("audit-log-drawer").classList.remove("hidden");
+        };
+
+        document.getElementById("close-audit-log-drawer").onclick = function() {
+            document.getElementById("audit-log-drawer").classList.add("hidden");
+        };
+
+        document.addEventListener("DOMContentLoaded", renderLifecycleWidget);
+    </script>
 </body>
 </html>
+

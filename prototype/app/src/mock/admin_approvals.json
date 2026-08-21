@@ -1,0 +1,13 @@
+[
+  {
+    "id": "ADM-APR-001",
+    "companyId": "ORG-001",
+    "companyName": "Công ty TNHH Truyền thông & Sự kiện EventAZ (Công ty A)",
+    "requestType": "PersonnelImport",
+    "title": "Yêu cầu phê duyệt bổ sung 2 Nhân sự mới từ File Excel",
+    "requestDate": "2026-08-21 10:30",
+    "status": "Pending",
+    "pendingUserIds": ["USR-019", "USR-020"],
+    "notes": "File Excel tải lên 2 nhân sự mới thuộc Ban Truyền thông và Ban Kỹ thuật."
+  }
+]

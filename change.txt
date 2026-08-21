@@ -1,0 +1,37 @@
+BẢNG TỔNG HỢP CÁC THAY ĐỔI NGHIỆP VỤ (BUSINESS LOGIC CHANGES)
+================================================================
+
+1. GÁN GIAI ĐOẠN CHO NHÓM HẠNG MỤC WBS (WBS LIFECYCLE PHASE MAPPING)
+- Mỗi Nhóm Hạng Mục WBS được bổ sung thuộc tính Giai đoạn sự kiện (phaseId):
+  + Phase 1: Thiết lập & Lên kế hoạch
+  + Phase 2: Đang chuẩn bị
+  + Phase 3: Đang diễn ra
+  + Phase 4: Đã kết thúc & Tổng kết
+- Tác động nghiệp vụ: Trang Tổng quan (OverviewView.vue) tự động tính toán % tiến độ hoàn thành thực tế của 4 Giai đoạn trên Cây Tiến trình Sự kiện dựa trên tỷ lệ công việc (status = Done) thuộc các nhóm WBS trong từng giai đoạn tương ứng.
+
+2. PHÂN CÔNG QUẢN LÝ WBS ĐA CẤP (TEAM LEAD & CO-LEAD)
+- Khi khởi tạo nhóm WBS mới (qua CreateWbsModal.vue), hệ thống cho phép gán đồng thời:
+  + Trưởng nhóm phụ trách (Team Lead)
+  + Đồng phụ trách (Co-Lead tùy chọn)
+- Tác động nghiệp vụ: Tăng cường phối hợp liên ban và phân định rõ trách nhiệm điều phối hạng mục.
+
+3. QUY TRÌNH MINH CHỨNG KẾT QUẢ & NGHIỆM THU CÔNG VIỆC (RESULT PROOF & ACCEPTANCE - FR-02.5)
+- Bổ sung Tab "Minh chứng kết quả" riêng trong TaskDetailModal.vue dành cho các công việc đã hoàn thành:
+  + Hiển thị Banner xác nhận nghiệm thu từ Người phê duyệt Accountable (A).
+  + Đính kèm danh sách File / Hình ảnh minh chứng đầu ra (chọn từ Kho tài liệu sự kiện hoặc tải lên từ máy tính).
+  + Nhập Ghi chú đánh giá nghiệm thu sản phẩm kết quả.
+- Tác động nghiệp vụ: Đảm bảo công việc được hoàn thành đúng chất lượng đầu ra trước khi nghiệm thu đóng Task.
+
+4. TƯƠNG TÁC TRỰC TIẾP VỚI NHÂN SỰ RACI (INTERACTIVE RACI MATRIX - FR-02.2)
+- Cho phép nhấp trực tiếp vào tên Người thực hiện chính (R) và Người phê duyệt (A) trên Bảng danh sách công việc để:
+  + Xem Hồ sơ Nhân sự chi tiết (Mã ID, Phòng ban, Email, Số điện thoại).
+  + Mở Popup Gửi tin nhắn chỉ đạo / trao đổi công việc trực tiếp với nhân sự phụ trách.
+- Tác động nghiệp vụ: Rút ngắn thời gian giao tiếp, theo dõi trách nhiệm công việc minh bạch.
+
+5. QUẢN LÝ TIÊN QUYẾT PHỤ THUỘC CÔNG VIỆC (PREDECESSOR TASK DEPENDENCY - FR-02.7)
+- Tách riêng cột "Mã Task Phụ Thuộc (Predecessor)" trên Bảng danh sách 12 cột và Sơ đồ Gantt Chart.
+- Tác động nghiệp vụ: Thiết lập chuỗi phụ thuộc giữa các công việc, hỗ trợ kiểm soát tiến độ theo đúng trình tự thi công sự kiện.
+
+6. THỜI GIAN NGÀY BẮT ĐẦU VÀ DEADLINE CHÍNH XÁC ĐẾN TỪNG PHÚT (DATETIME-LOCAL PRECISION)
+- Nâng cấp ô nhập và hiển thị Ngày bắt đầu (startDate) và Hạn hoàn thành (dueDate) từ mức Ngày sang mức Ngày & Giờ Phút (định dạng YYYY-MM-DD HH:mm, ví dụ: 2026-08-20 17:30).
+- Tác động nghiệp vụ: Hỗ trợ lập lịch và theo dõi deadline công việc chính xác đến từng phút cho các đầu việc gấp trong sự kiện.

@@ -184,31 +184,38 @@
             </button>
         </div>
         <nav class="flex-1 space-y-1">
-            <a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all active:scale-95 text-white" href="../index.html">
+            <a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all text-white" href="dashboard.html">
                 <span class="material-symbols-outlined">dashboard</span>
-                <span class="font-label-md">Overview</span>
+                <span class="font-label-md">Tổng quan tổ chức</span>
             </a>
-            <a id="event-tab-toggle" class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all active:scale-95 text-white cursor-pointer select-none" href="javascript:void(0)">
+            <a id="event-tab-toggle" class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold transition-all text-white cursor-pointer select-none" href="javascript:void(0)">
                 <span class="material-symbols-outlined">event</span>
                 <span class="font-label-md">Sự kiện</span>
                 <span id="event-tab-arrow" class="material-symbols-outlined ml-auto transition-transform duration-200">expand_more</span>
             </a>
             <div id="event-subtabs-container" class="space-y-1 overflow-hidden transition-all duration-300 ease-in-out max-h-96 opacity-100">
-                <a href="#" class="flex items-center gap-2 px-4 py-2.5 text-[13px] text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors truncate font-medium border-l-2 border-primary bg-white/5">
+                <a href="overview.html" class="flex items-center gap-2 px-4 py-2.5 text-[13px] text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors truncate font-medium border-l-2 border-primary bg-white/5">
                     <span class="material-symbols-outlined text-[16px] text-primary-fixed">radio_button_checked</span>
                     <span class="truncate">Tech Summit Asia 2024</span>
                 </a>
             </div>
-            <a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all active:scale-95 text-white" href="#"><span class="material-symbols-outlined">groups</span><span class="font-label-md">Personnel</span></a>
+            <a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all text-white" href="templates.html">
+                <span class="material-symbols-outlined">folder_special</span>
+                <span class="font-label-md">Thư viện Template</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all text-white" href="org-personnel.html">
+                <span class="material-symbols-outlined">groups</span>
+                <span class="font-label-md">Nhân sự tổ chức</span>
+            </a>
         </nav>
         <div class="mt-auto border-t border-white/10 pt-6 space-y-1">
             <a class="flex items-center gap-3 px-4 py-2 hover:text-on-primary transition-colors text-white" href="#">
                 <span class="material-symbols-outlined">monitoring</span>
-                <span class="font-label-md">System Monitor</span>
+                <span class="font-label-md">Giám sát hệ thống</span>
             </a>
             <a class="flex items-center gap-3 px-4 py-2 hover:text-on-primary transition-colors text-white" href="#">
                 <span class="material-symbols-outlined">manage_accounts</span>
-                <span class="font-label-md">User Mgmt</span>
+                <span class="font-label-md">Quản lý người dùng</span>
             </a>
         </div>
     </aside>
@@ -248,7 +255,7 @@
                 </button>
                 <button onclick="window.location.href='tasks.html'" class="event-nav-tab active-event-tab px-6 py-3.5 rounded-none font-bold text-body-sm flex items-center gap-2 transition-all bg-primary text-white shrink-0 whitespace-nowrap border-r border-outline-variant/30">
                     <span class="material-symbols-outlined text-[18px]">task_alt</span>
-                    <span>Tiến độ & Công việc</span>
+                    <span>Tiến độ, Công việc & WBS</span>
                 </button>
             </nav>
         </div>

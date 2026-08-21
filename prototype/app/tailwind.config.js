@@ -1,0 +1,72 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
+  ],
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "tertiary-fixed": "#89f5e7",
+        "on-secondary-container": "#fffbff",
+        "secondary-fixed": "#eaddff",
+        "on-secondary-fixed": "#25005a",
+        "tertiary-fixed-dim": "#6bd8cb",
+        "primary": "#00288e",
+        "surface-bright": "#f8f9ff",
+        "on-primary": "#ffffff",
+        "on-surface-variant": "#444653",
+        "surface-tint": "#3755c3",
+        "primary-fixed-dim": "#b8c4ff",
+        "outline": "#757684",
+        "inverse-surface": "#213145",
+        "surface-container-high": "#dce9ff",
+        "on-secondary-fixed-variant": "#5a00c6",
+        "secondary-fixed-dim": "#d2bbff",
+        "primary-fixed": "#dde1ff",
+        "on-secondary": "#ffffff",
+        "background": "#f8f9ff",
+        "on-surface": "#0b1c30",
+        "surface-container-lowest": "#ffffff",
+        "error-container": "#ffdad6",
+        "surface-container-low": "#eff4ff",
+        "surface-container": "#e5eeff",
+        "tertiary": "#003c36",
+        "on-primary-fixed-variant": "#173bab",
+        "primary-container": "#1e40af",
+        "surface": "#f8f9ff",
+        "on-tertiary": "#ffffff",
+        "secondary-container": "#8a4cfc",
+        "secondary": "#712ae2",
+        "tertiary-container": "#00554e",
+        "on-tertiary-container": "#5fcdbf",
+        "error": "#ba1a1a",
+        "on-primary-container": "#a8b8ff",
+        "inverse-primary": "#b8c4ff",
+        "outline-variant": "#c4c5d5",
+        "on-background": "#0b1c30",
+        "surface-dim": "#cbdbf5",
+        "on-tertiary-fixed": "#00201d",
+        "surface-variant": "#d3e4fe",
+        "inverse-on-surface": "#eaf1ff",
+        "on-tertiary-fixed-variant": "#005049",
+        "surface-container-highest": "#d3e4fe",
+        "on-error": "#ffffff",
+        "on-primary-fixed": "#001453",
+        "on-error-container": "#93000a"
+      },
+      borderRadius: {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      fontFamily: {
+        "sans": ["Inter", "sans-serif"],
+        "mono": ["JetBrains Mono", "monospace"]
+      }
+    },
+  },
+  plugins: [],
+}

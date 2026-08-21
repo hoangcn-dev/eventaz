@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Tổng quan Tổ chức - EventAZ Prototype</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#89f5e7",
+                        "on-secondary-container": "#fffbff",
+                        "secondary-fixed": "#eaddff",
+                        "on-secondary-fixed": "#25005a",
+                        "tertiary-fixed-dim": "#6bd8cb",
+                        "primary": "#00288e",
+                        "surface-bright": "#f8f9ff",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#444653",
+                        "surface-tint": "#3755c3",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "outline": "#757684",
+                        "inverse-surface": "#213145",
+                        "surface-container-high": "#dce9ff",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "primary-fixed": "#dde1ff",
+                        "on-secondary": "#ffffff",
+                        "background": "#f8f9ff",
+                        "on-surface": "#0b1c30",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container": "#e5eeff",
+                        "tertiary": "#003c36",
+                        "on-primary-fixed-variant": "#173bab",
+                        "primary-container": "#1e40af",
+                        "surface": "#f8f9ff",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#8a4cfc",
+                        "secondary": "#712ae2",
+                        "tertiary-container": "#00554e",
+                        "on-tertiary-container": "#5fcdbf",
+                        "error": "#ba1a1a",
+                        "on-primary-container": "#a8b8ff",
+                        "inverse-primary": "#b8c4ff",
+                        "outline-variant": "#c4c5d5",
+                        "on-background": "#0b1c30",
+                        "surface-dim": "#cbdbf5",
+                        "on-tertiary-fixed": "#00201d",
+                        "surface-variant": "#d3e4fe",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-tertiary-fixed-variant": "#005049",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed": "#001453",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "container-max": "1440px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "mono-sm": ["JetBrains Mono"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f8f9ff;
+            color: #0b1c30;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+
+<body class="bg-surface text-on-surface font-sans antialiased min-h-screen">
+    <!-- Top App Header -->
+    <header class="fixed top-0 left-0 right-0 h-16 bg-surface-container-lowest border-b border-outline-variant z-50 flex items-center justify-between px-4 shadow-sm">
+        <div class="flex items-center gap-4">
+            <button id="mobile-menu-btn" class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant lg:hidden">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div class="flex items-center gap-2">
+                <div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-xl shadow-md">E</div>
+                <span class="font-extrabold text-xl tracking-tight text-primary">EventAZ</span>
+                <span class="px-2 py-0.5 text-[11px] font-bold bg-primary/10 text-primary rounded-full uppercase ml-1">Ban Tổ Chức</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <div class="relative hidden sm:block w-64">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+                <input type="text" placeholder="Tìm sự kiện trong tổ chức..." class="w-full pl-9 pr-4 py-1.5 text-sm bg-surface-container-low border border-outline-variant rounded-lg focus:outline-none focus:border-primary">
+            </div>
+            <button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant relative">
+                <span class="material-symbols-outlined">notifications</span>
+                <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+            </button>
+            <div class="flex items-center gap-3 pl-3 border-l border-outline-variant">
+                <div class="w-8 h-8 rounded-full bg-primary/20 text-primary font-bold flex items-center justify-center text-sm">NV</div>
+                <div class="hidden md:block text-left">
+                    <p class="text-xs font-bold leading-tight">Nguyễn Văn A</p>
+                    <p class="text-[11px] text-on-surface-variant">Trưởng BTC Tổ chức</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SideNavBar Shell -->
+    <aside id="sidebar-aside" class="fixed left-0 top-0 h-full w-[280px] z-40 bg-inverse-surface flex flex-col pt-20 pb-8 px-4 shadow-sm transition-all duration-300 transform">
+        <button id="sidebar-toggle-btn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-50 w-5 h-10 bg-slate-800 text-white rounded-r-md border border-l-0 border-white/20 shadow-lg flex items-center justify-center opacity-60 hover:opacity-100 hover:bg-primary transition-all duration-200 cursor-pointer focus:outline-none" title="Ẩn/Hiện Sidebar">
+            <span class="material-symbols-outlined text-[16px]">chevron_left</span>
+        </button>
+        <div class="mb-6">
+            <button onclick="window.location.href='overview.html'" class="w-full py-3 px-4 bg-secondary text-white rounded-lg font-bold shadow-lg hover:shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined">add_circle</span>
+                <span>Tạo sự kiện mới</span>
+            </button>
+        </div>
+        <nav class="flex-1 space-y-1">
+            <a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg transition-all text-white" href="dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-label-md">Tổng quan tổ chức</span>
+            </a>
+            <a id="event-tab-toggle" class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all text-white cursor-pointer select-none" href="javascript:void(0)">
+                <span class="material-symbols-outlined">event</span>
+                <span class="font-label-md">Sự kiện</span>
+                <span id="event-tab-arrow" class="material-symbols-outlined ml-auto transition-transform duration-200">expand_more</span>
+            </a>
+            <div id="event-subtabs-container" class="space-y-1 overflow-hidden transition-all duration-300 ease-in-out max-h-96 opacity-100">
+                <a href="overview.html" class="flex items-center gap-2 px-4 py-2.5 text-[13px] text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors truncate font-medium border-l-2 border-primary bg-white/5">
+                    <span class="material-symbols-outlined text-[16px] text-primary-fixed">radio_button_checked</span>
+                    <span class="truncate">Tech Summit Asia 2024</span>
+                </a>
+            </div>
+            <a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all text-white" href="templates.html">
+                <span class="material-symbols-outlined">folder_special</span>
+                <span class="font-label-md">Thư viện Template</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 hover:text-on-primary hover:bg-surface-variant/10 rounded-lg transition-all text-white" href="org-personnel.html">
+                <span class="material-symbols-outlined">groups</span>
+                <span class="font-label-md">Nhân sự tổ chức</span>
+            </a>
+        </nav>
+        <div class="mt-auto border-t border-white/10 pt-6 space-y-1">
+            <a class="flex items-center gap-3 px-4 py-2 hover:text-on-primary transition-colors text-white" href="#">
+                <span class="material-symbols-outlined">monitoring</span>
+                <span class="font-label-md">Giám sát hệ thống</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 hover:text-on-primary transition-colors text-white" href="#">
+                <span class="material-symbols-outlined">manage_accounts</span>
+                <span class="font-label-md">Quản lý người dùng</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Canvas (No Event Top Tabs Bar because this is Global Organization Dashboard) -->
+    <main id="main-content" class="ml-[280px] pt-16 min-h-screen transition-all duration-300">
+        <div class="p-margin-desktop max-w-[1600px] mx-auto p-6 pb-24 space-y-6">
+
+            <!-- Banner Header Dashboard -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-xl shadow-sm border border-outline-variant/60">
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="px-2.5 py-0.5 bg-primary/10 text-primary text-[11px] font-bold rounded uppercase">Bảng Điều Hành Cấp Tổ Chức</span>
+                        <span class="text-on-surface-variant text-xs">EventAZ Portfolio Manager</span>
+                    </div>
+                    <h1 class="font-display-lg text-[28px] font-extrabold text-on-surface flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-[32px]">dashboard</span>
+                        <span>Tổng quan Tổ chức Ban Tổ Chức</span>
+                    </h1>
+                    <p class="text-on-surface-variant text-sm mt-1">Theo dõi danh mục tất cả sự kiện, tiến độ tổng thể, doanh thu và hoạt động nhân sự toàn bộ công ty/tổ chức.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="window.location.href='templates.html'" class="px-4 py-2.5 bg-surface-container border border-outline-variant text-on-surface font-bold rounded-lg shadow-sm hover:bg-surface-container-high transition-all flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[20px]">folder_special</span>
+                        <span>Thư viện Template</span>
+                    </button>
+                    <button onclick="window.location.href='overview.html'" class="px-5 py-2.5 bg-primary text-white font-bold rounded-lg shadow hover:shadow-lg active:scale-95 transition-all flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[20px]">add</span>
+                        <span>Tạo Sự kiện Mới</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- KPI Dashboard Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-xl border border-outline-variant/60 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 text-primary flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-[28px]">event</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Tổng Sự kiện</p>
+                        <p class="text-2xl font-extrabold text-on-surface" id="stat-total-events">2</p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-outline-variant/60 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-[28px]">payments</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Doanh thu Toàn sàn</p>
+                        <p class="text-2xl font-extrabold text-emerald-600">1.450.000.000 ₫</p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-outline-variant/60 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-[28px]">confirmation_number</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Vé Đã Phát Hành</p>
+                        <p class="text-2xl font-extrabold text-purple-600">3.850 / 5.000</p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-outline-variant/60 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-[28px]">groups</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Nhân sự Tổ chức</p>
+                        <p class="text-2xl font-extrabold text-amber-600" id="stat-org-users">12</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Organization Events Portfolio Section -->
+            <div class="bg-white p-6 rounded-xl border border-outline-variant/60 shadow-sm space-y-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-outline-variant/60 pb-4">
+                    <div>
+                        <h3 class="font-headline-sm font-bold text-on-surface flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">event_available</span>
+                            <span>Danh mục Sự kiện của Tổ chức</span>
+                        </h3>
+                        <p class="text-xs text-on-surface-variant">Quản lý và chuyển đổi nhanh giữa các sự kiện trong tổ chức.</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <select id="event-status-filter" class="px-3 py-1.5 text-sm border border-outline-variant rounded-lg bg-white focus:outline-none focus:border-primary">
+                            <option value="">Tất cả Trạng thái</option>
+                            <option value="Preparing">Preparing (Đang chuẩn bị)</option>
+                            <option value="Draft">Draft (Nháp)</option>
+                            <option value="Ongoing">Ongoing (Đang diễn ra)</option>
+                            <option value="Closed">Closed (Đã đóng)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Events Grid -->
+                <div id="org-events-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Dynamic rendering via JS -->
+                </div>
+            </div>
+
+            <!-- Recent Audit Feed -->
+            <div class="bg-white p-6 rounded-xl border border-outline-variant/60 shadow-sm space-y-4">
+                <h3 class="font-headline-sm font-bold text-on-surface flex items-center gap-2 border-b border-outline-variant/60 pb-3">
+                    <span class="material-symbols-outlined text-primary">history</span>
+                    <span>Nhật ký Hoạt động Tổ chức gần đây</span>
+                </h3>
+                <div id="org-audit-log-feed" class="space-y-3 text-sm">
+                    <!-- Dynamic rendering via JS -->
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Mock Layer Scripts -->
+    <script src="../mock/users.js"></script>
+    <script src="../mock/templates.js"></script>
+    <script src="../mock/events.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderEventsPortfolio();
+            renderAuditLogFeed();
+
+            document.getElementById('event-status-filter')?.addEventListener('change', renderEventsPortfolio);
+        });
+
+        function renderEventsPortfolio() {
+            const events = EventAZMockData.getEvents();
+            const filterStatus = document.getElementById('event-status-filter')?.value || '';
+            const filtered = events.filter(e => !filterStatus || e.status === filterStatus);
+
+            document.getElementById('stat-total-events').textContent = events.length;
+            const users = EventAZMockData.getUsers();
+            document.getElementById('stat-org-users').textContent = users.length;
+
+            const grid = document.getElementById('org-events-grid');
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-2 py-8 text-center text-on-surface-variant font-medium">Không tìm thấy sự kiện nào</div>`;
+                return;
+            }
+
+            const statusColors = {
+                'Draft': 'bg-slate-100 text-slate-700 border-slate-300',
+                'Planning': 'bg-blue-100 text-blue-800 border-blue-300',
+                'Preparing': 'bg-amber-100 text-amber-800 border-amber-300',
+                'Ongoing': 'bg-emerald-100 text-emerald-800 border-emerald-300',
+                'Closed': 'bg-purple-100 text-purple-800 border-purple-300',
+                'Archived': 'bg-gray-200 text-gray-700 border-gray-400'
+            };
+
+            grid.innerHTML = filtered.map(evt => `
+                <div class="border border-outline-variant/60 rounded-xl p-5 bg-surface-container-lowest hover:shadow-md transition-all flex flex-col justify-between space-y-4">
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-start gap-2">
+                            <span class="px-2.5 py-0.5 text-[11px] font-bold rounded-full border ${statusColors[evt.status] || 'bg-gray-100'}">
+                                Trạng thái: ${evt.status}
+                            </span>
+                            <span class="text-xs font-mono font-semibold text-primary">${evt.id}</span>
+                        </div>
+                        <h4 class="font-extrabold text-lg text-on-surface hover:text-primary transition-colors cursor-pointer" onclick="openEventDetail('${evt.id}')">
+                            ${evt.name}
+                        </h4>
+                        <p class="text-xs text-on-surface-variant flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[16px]">location_on</span>
+                            <span>${evt.location || 'Trung tâm Hội nghị National Convention Center'}</span>
+                        </p>
+                    </div>
+
+                    <div class="space-y-3 pt-3 border-t border-outline-variant/40">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-on-surface-variant">Thời gian tổ chức:</span>
+                            <span class="font-bold text-on-surface">${evt.startDate || '15/10/2024'} - ${evt.endDate || '17/10/2024'}</span>
+                        </div>
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-on-surface-variant">Trưởng BAN Tổ Chức:</span>
+                            <span class="font-bold text-primary">${evt.organizer || 'Nguyễn Văn Trưởng'}</span>
+                        </div>
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-on-surface-variant">Số nhóm hạng mục WBS:</span>
+                            <span class="font-bold text-on-surface">${evt.wbsCategories ? evt.wbsCategories.length : 4} nhóm</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2 pt-2">
+                        <button onclick="openEventDetail('${evt.id}')" class="flex-1 py-2 bg-primary text-white text-xs font-bold rounded-lg hover:bg-primary-hover transition-colors flex items-center justify-center gap-1 shadow-sm">
+                            <span class="material-symbols-outlined text-[16px]">visibility</span>
+                            <span>Quản lý Sự kiện</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openEventDetail(eventId) {
+            window.location.href = 'overview.html';
+        }
+
+        function renderAuditLogFeed() {
+            const container = document.getElementById('org-audit-log-feed');
+            const logs = [
+                { time: '10 phút trước', user: 'Nguyễn Văn Trưởng', action: 'Tạo mới sự kiện Tech Summit Asia 2024 (E-2024-99X)' },
+                { time: '25 phút trước', user: 'Trần Thị Hậu Cần', action: 'Cập nhật cấu trúc nhóm hạng mục WBS Hậu cần & Kỹ thuật' },
+                { time: '1 giờ trước', user: 'Nguyễn Văn A', action: 'Phân công Trưởng nhóm Kỹ thuật cho Vũ Anh Kỹ Thuật' },
+                { time: '3 giờ trước', user: 'Lê Văn Nội Dung', action: 'Lưu cấu trúc sự kiện thành Template "Hội nghị Công nghệ Tiêu chuẩn"' }
+            ];
+
+            container.innerHTML = logs.map(l => `
+                <div class="flex items-start gap-3 p-3 rounded-lg bg-surface-container-low border border-outline-variant/40">
+                    <span class="material-symbols-outlined text-primary text-[20px] mt-0.5">check_circle</span>
+                    <div class="flex-1">
+                        <p class="text-on-surface font-medium">${l.action}</p>
+                        <p class="text-xs text-on-surface-variant">Thực hiện bởi <b>${l.user}</b> • <span class="text-slate-400">${l.time}</span></p>
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

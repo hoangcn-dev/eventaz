@@ -1,4 +1,4 @@
-name: Deploy Prototype
+name: Deploy Prototype App (Vue 3 Vite)
 
 on:
   push:
@@ -9,21 +9,40 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps:
 
+    steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
-      - name: Copy static files to VPS
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: prototype/app/package-lock.json
+
+      - name: Install Dependencies & Build Vue 3 App
+        run: |
+          cd prototype/app
+          npm ci
+          npm run build
+
+      - name: Copy Compiled Dist Bundle to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
           host: prototype.eventaz.space
           username: root
           key: ${{ secrets.SSH_KEY }}
-          source: "prototype/static/*"
+          source: "prototype/app/dist/*"
           target: "/var/www/eventaz-prototype"
-          strip_components: 2
+          strip_components: 3
+          rm: true
 
-      
-
-
+      - name: Set Nginx Permissions on VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: prototype.eventaz.space
+          username: root
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            chmod -R 755 /var/www/eventaz-prototype

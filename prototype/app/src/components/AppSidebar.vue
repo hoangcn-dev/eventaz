@@ -1,15 +1,5 @@
 <template>
   <div>
-    <!-- FAB Toggle Button when collapsed -->
-    <button 
-      v-if="isCollapsed" 
-      @click="toggleSidebar"
-      class="fixed bottom-6 left-6 z-40 p-3.5 bg-primary text-white rounded-full shadow-2xl hover:bg-primary-hover active:scale-95 transition-all flex items-center justify-center border-2 border-white/20"
-      title="Mở thanh điều hướng"
-    >
-      <span class="material-symbols-outlined text-[24px]">menu</span>
-    </button>
-
     <!-- Main Sidebar Drawer -->
     <aside 
       :class="[
@@ -17,6 +7,20 @@
         isCollapsed ? '-translate-x-full' : 'translate-x-0'
       ]"
     >
+      <!-- Nút chuyển trạng thái Sidebar ở giữa lề phải (Hình chữ nhật nhỏ giống static) -->
+      <button 
+        @click="toggleSidebar"
+        :class="[
+          'absolute right-0 top-1/2 -translate-y-1/2 z-50 w-5 h-10 bg-slate-800 text-white rounded-r-md border border-l-0 border-white/20 shadow-lg flex items-center justify-center opacity-60 hover:opacity-100 hover:bg-primary transition-all duration-200 cursor-pointer focus:outline-none',
+          isCollapsed ? 'translate-x-full' : 'translate-x-1/2'
+        ]"
+        title="Ẩn/Hiện Sidebar"
+      >
+        <span class="material-symbols-outlined text-[16px]">
+          {{ isCollapsed ? 'chevron_right' : 'chevron_left' }}
+        </span>
+      </button>
+
       <!-- Header Area -->
       <div class="p-5 border-b border-white/10 flex justify-between items-center bg-inverse-surface/80 backdrop-blur-md">
         <router-link to="/dashboard" class="flex items-center gap-3 group">
@@ -28,14 +32,6 @@
             <span class="text-[10px] text-slate-400 font-mono tracking-normal block mt-1">Platform v2.0</span>
           </div>
         </router-link>
-
-        <button 
-          @click="toggleSidebar"
-          class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
-          title="Thu gọn menu"
-        >
-          <span class="material-symbols-outlined text-[20px]">chevron_left</span>
-        </button>
       </div>
 
       <!-- Scrollable Nav Section -->

@@ -3,11 +3,66 @@
     "id": "ADM-APR-001",
     "companyId": "ORG-001",
     "companyName": "Công ty TNHH Truyền thông & Sự kiện EventAZ (Công ty A)",
-    "requestType": "PersonnelImport",
+    "requestType": "Bổ sung Nhân sự",
     "title": "Yêu cầu phê duyệt bổ sung 2 Nhân sự mới từ File Excel",
     "requestDate": "2026-08-21 10:30",
     "status": "Pending",
     "pendingUserIds": ["USR-019", "USR-020"],
     "notes": "File Excel tải lên 2 nhân sự mới thuộc Ban Truyền thông và Ban Kỹ thuật."
+  },
+  {
+    "id": "ADM-APR-002",
+    "companyId": "ORG-002",
+    "companyName": "Công ty Cổ phần Âm thanh Ánh sáng Việt",
+    "requestType": "Duyệt Ngân sách",
+    "title": "Trình duyệt ngân sách bổ sung thiết bị sân khấu Live Concert",
+    "requestDate": "2026-08-22 14:15",
+    "status": "Approved",
+    "pendingUserIds": [],
+    "notes": "Đã đính kèm báo giá chi tiết hệ thống loa Line Array."
+  },
+  {
+    "id": "ADM-APR-003",
+    "companyId": "ORG-003",
+    "companyName": "Công ty TNHH Giải trí & Sự kiện SunFlower",
+    "requestType": "Bổ sung Nhân sự",
+    "title": "Phê duyệt tài khoản Quản trị viên mới cho Dự án Festival 2026",
+    "requestDate": "2026-08-22 16:45",
+    "status": "Pending",
+    "pendingUserIds": ["USR-021"],
+    "notes": "Bổ sung 1 nhân sự Event Manager."
+  },
+  {
+    "id": "ADM-APR-004",
+    "companyId": "ORG-004",
+    "companyName": "Tập đoàn Vingroup (Khối Sự kiện)",
+    "requestType": "Duyệt Hợp đồng",
+    "title": "Trình phê duyệt mẫu hợp đồng đối tác truyền thông đại bàng",
+    "requestDate": "2026-08-23 09:00",
+    "status": "Approved",
+    "pendingUserIds": [],
+    "notes": "Hợp đồng nguyên tắc quảng cáo sự kiện ra mắt sản phẩm mới."
+  },
+  {
+    "id": "ADM-APR-005",
+    "companyId": "ORG-001",
+    "companyName": "Công ty TNHH Truyền thông & Sự kiện EventAZ (Công ty A)",
+    "requestType": "Xuất Kho Thiết bị",
+    "title": "Yêu cầu cấp phát 10 bộ Bộ đàm và 5 micro không dây",
+    "requestDate": "2026-08-23 11:20",
+    "status": "Rejected",
+    "pendingUserIds": [],
+    "notes": "Từ chối do thiết bị bộ đàm hiện đang được bảo dưỡng."
+  },
+  {
+    "id": "ADM-APR-006",
+    "companyId": "ORG-005",
+    "companyName": "Công ty Cổ phần Truyền thông Sen Vàng",
+    "requestType": "Bổ sung Nhân sự",
+    "title": "Yêu cầu phê duyệt danh sách 5 tình nguyện viên cuộc thi",
+    "requestDate": "2026-08-23 15:30",
+    "status": "Pending",
+    "pendingUserIds": ["USR-022", "USR-023"],
+    "notes": "Tải lên danh sách nhân sự phụ trách tiếp đón khách VIP."
   }
 ]

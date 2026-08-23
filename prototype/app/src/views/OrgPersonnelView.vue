@@ -1,14 +1,6 @@
 <template>
   <div class="p-margin-desktop max-w-[1600px] mx-auto p-6 pb-24 space-y-6">
     <!-- Header Banner -->
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-6 rounded-2xl border border-outline-variant/60 shadow-sm gap-4">
-      <div>
-        <h1 class="text-2xl font-extrabold text-on-surface flex items-center gap-2">
-          <span class="material-symbols-outlined text-primary text-3xl">groups</span>
-          <span>Kho Nhân Sự Toàn Tổ Chức (FR-03.3)</span>
-        </h1>
-        <p class="text-xs text-on-surface-variant mt-1 font-medium">Quản lý danh sách hồ sơ nhân sự hệ thống, kỹ năng chuyên môn, import từ Excel và trình Admin phê duyệt.</p>
-      </div>
       <div class="flex flex-wrap items-center gap-2">
         <button @click="downloadExcelSample" class="px-4 py-2.5 bg-surface-container hover:bg-surface-container-high text-on-surface font-bold text-xs rounded-xl border border-outline-variant/60 transition-all flex items-center gap-1.5">
           <span class="material-symbols-outlined text-[18px]">download</span>
@@ -25,7 +17,6 @@
           <span>Thêm Nhân Sự Mới</span>
         </button>
       </div>
-    </div>
 
     <!-- SEARCH & FILTER BAR -->
     <div class="bg-white p-3.5 rounded-xl border border-outline-variant/60 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-3">
@@ -55,7 +46,7 @@
         <table class="w-full text-left text-xs border-collapse min-w-[1200px]">
           <thead class="sticky top-0 z-20 bg-surface-container-low shadow-sm">
             <tr class="text-on-surface-variant font-bold text-[11px] uppercase border-b border-outline-variant">
-              <th class="py-2.5 px-3 min-w-[240px] bg-surface-container-low">Mã ID & Nhân Sự</th>
+              <th class="py-2.5 px-3 min-w-[240px] bg-surface-container-low">Nhân Sự</th>
               <th class="py-2.5 px-3 min-w-[180px] bg-surface-container-low">Phòng Ban Chuyên Môn</th>
               <th class="py-2.5 px-3 min-w-[180px] bg-surface-container-low">Chức Danh / Vai Trò</th>
               <th class="py-2.5 px-3 min-w-[130px] bg-surface-container-low font-mono">Số Điện Thoại</th>
@@ -79,7 +70,7 @@
                   <img :src="user.avatar" class="w-8 h-8 rounded-full object-cover border border-primary/20 shrink-0" alt="Avatar">
                   <div>
                     <p class="font-extrabold text-on-surface text-xs leading-snug">{{ user.name }}</p>
-                    <p class="text-[10px] text-on-surface-variant font-mono">ID: {{ user.id }} • {{ user.email }}</p>
+                    <p class="text-[10px] text-on-surface-variant font-mono">{{ user.email }}</p>
                   </div>
                 </div>
               </td>

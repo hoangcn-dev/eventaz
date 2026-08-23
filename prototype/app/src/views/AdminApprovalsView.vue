@@ -5,7 +5,6 @@
     <BaseTable
       title="Danh Sách Yêu Cầu Trình Duyệt Từ Các Công Ty / Tổ Chức"
       icon="assignment"
-      subtitle="Di chuột vào tiêu đề cột có biểu tượng để mở bộ lọc cột."
       :data="requestsList"
       :columns="tableColumns"
       @reload="loadData"

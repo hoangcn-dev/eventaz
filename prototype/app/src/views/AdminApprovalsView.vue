@@ -1,103 +1,52 @@
 <template>
   <div class="p-margin-desktop max-w-[1600px] mx-auto p-6 pb-24 space-y-6">
-    <!-- Header Banner -->
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-900 text-white p-6 rounded-2xl shadow-xl gap-4 border border-slate-800">
-      <div>
-        <div class="flex items-center gap-3">
-          <h1 class="text-2xl font-extrabold flex items-center gap-2">
-            <span class="material-symbols-outlined text-amber-400 text-3xl">verified_user</span>
-            <span>Phê Duyệt Hệ Thống (Admin Approvals Center)</span>
-          </h1>
-          <span class="px-3 py-1 bg-amber-400/20 text-amber-300 font-bold rounded-full text-xs border border-amber-400/40">
-            Cấp Admin Tổ Chức
-          </span>
-        </div>
-        <p class="text-xs text-slate-300 mt-1 font-medium">Xét duyệt các yêu cầu bổ sung nhân sự từ Excel, phê duyệt tài khoản công ty và kiểm soát quyền truy cập hệ thống.</p>
-      </div>
-      <div class="flex items-center gap-2">
-        <span class="px-3.5 py-1.5 bg-amber-500/20 text-amber-300 font-bold rounded-xl text-xs border border-amber-500/40 flex items-center gap-1.5">
-          <span class="material-symbols-outlined text-[16px]">pending</span>
-          <span>Chờ Admin duyệt: {{ pendingCount }} yêu cầu</span>
+
+    <!-- REUSABLE COMPONENT: BASE TABLE -->
+    <BaseTable
+      title="Danh Sách Yêu Cầu Trình Duyệt Từ Các Công Ty / Tổ Chức"
+      icon="assignment"
+      :data="requestsList"
+      :columns="tableColumns"
+      @reload="loadData"
+    >
+      <!-- Custom Cell: Công ty trình -->
+      <template #cell-companyName="{ row }">
+        <p class="font-extrabold text-on-surface text-xs leading-tight">{{ row.companyName }}</p>
+      </template>
+
+      <!-- Custom Cell: Kiểu yêu cầu -->
+      <template #cell-requestType="{ value }">
+        <span class="px-2.5 py-1 rounded-md bg-surface-container-high text-on-surface font-semibold text-[10px] border border-outline-variant/60 inline-flex items-center gap-1">
+          <span class="material-symbols-outlined text-[13px] text-primary">category</span>
+          <span>{{ getRequestTypeText(value) }}</span>
         </span>
-      </div>
-    </div>
+      </template>
 
-    <!-- REQUESTS DATA TABLE -->
-    <div class="bg-white rounded-xl border border-outline-variant/60 shadow-sm p-4 space-y-4">
-      <div class="flex justify-between items-center">
-        <h3 class="font-extrabold text-base text-on-surface flex items-center gap-2">
-          <span class="material-symbols-outlined text-primary">assignment</span>
-          <span>Danh Sách Yêu Cầu Trình Duyệt Từ Các Công Ty / Tổ Chức</span>
-        </h3>
-        <span class="text-xs text-on-surface-variant font-medium">Tổng số: <b class="text-on-surface">{{ requestsList.length }}</b> yêu cầu</span>
-      </div>
+      <!-- Custom Cell: Nội dung yêu cầu -->
+      <template #cell-title="{ row }">
+        <p class="font-bold text-on-surface text-xs leading-snug">{{ row.title }}</p>
+      </template>
 
-      <div class="overflow-x-auto overflow-y-auto max-h-[550px]">
-        <table class="w-full text-left text-xs border-collapse min-w-[1100px]">
-          <thead class="sticky top-0 z-20 bg-surface-container-low shadow-sm">
-            <tr class="text-on-surface-variant font-bold text-[11px] uppercase border-b border-outline-variant">
-              <th class="py-2.5 px-3 min-w-[130px] bg-surface-container-low">Mã Yêu Cầu</th>
-              <th class="py-2.5 px-3 min-w-[240px] bg-surface-container-low">Công Ty / Tổ Chức Trình Duyệt</th>
-              <th class="py-2.5 px-3 min-w-[300px] bg-surface-container-low">Nội Dung Yêu Cầu Phê Duyệt</th>
-              <th class="py-2.5 px-3 min-w-[140px] bg-surface-container-low font-mono">Thời Gian Trình</th>
-              <th class="py-2.5 px-3 min-w-[140px] text-center bg-surface-container-low">Trạng Thái</th>
-              <th class="py-2.5 px-3 min-w-[200px] text-right bg-surface-container-low">Thao Tác Admin</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-outline-variant/40">
-            <tr v-for="req in requestsList" :key="req.id" class="hover:bg-surface-container-low transition-colors text-[11px]">
-              <!-- 1. Mã yêu cầu -->
-              <td class="py-3 px-3 font-mono font-bold text-primary">{{ req.id }}</td>
+      <!-- Custom Cell: Thời gian trình -->
+      <template #cell-requestDate="{ value }">
+        <span class="font-mono text-on-surface-variant text-[10px] whitespace-nowrap">{{ value }}</span>
+      </template>
 
-              <!-- 2. Công ty trình -->
-              <td class="py-3 px-3 font-bold text-on-surface">
-                <p class="font-extrabold text-on-surface text-xs">{{ req.companyName }}</p>
-                <p class="text-[10px] text-on-surface-variant font-mono mt-0.5">ID: {{ req.companyId }}</p>
-              </td>
+      <!-- Custom Cell: Trạng thái -->
+      <template #cell-status="{ value }">
+        <span :class="['px-2.5 py-1 rounded-full text-[10px] font-bold border inline-flex items-center gap-1', getStatusBadgeStyle(value)]">
+          <span class="material-symbols-outlined text-[13px]">
+            {{ value === 'Pending' ? 'hourglass_empty' : (value === 'Approved' ? 'check_circle' : 'cancel') }}
+          </span>
+          <span>{{ getStatusText(value) }}</span>
+        </span>
+      </template>
 
-              <!-- 3. Nội dung -->
-              <td class="py-3 px-3">
-                <p class="font-bold text-on-surface text-xs leading-snug">{{ req.title }}</p>
-                <p class="text-[10px] text-on-surface-variant mt-0.5" v-if="req.notes">{{ req.notes }}</p>
-              </td>
-
-              <!-- 4. Thời gian -->
-              <td class="py-3 px-3 font-mono text-on-surface-variant text-[10px] whitespace-nowrap">
-                {{ req.requestDate }}
-              </td>
-
-              <!-- 5. Trạng thái -->
-              <td class="py-3 px-3 text-center whitespace-nowrap">
-                <span :class="['px-2.5 py-0.5 rounded-full text-[10px] font-bold border', getStatusBadgeStyle(req.status)]">
-                  {{ req.status === 'Pending' ? '🟡 Chờ Admin duyệt' : (req.status === 'Approved' ? '🟢 Đã phê duyệt' : '🔴 Từ chối') }}
-                </span>
-              </td>
-
-              <!-- 6. Thao tác -->
-              <td class="py-3 px-3 text-right whitespace-nowrap">
-                <div class="flex items-center justify-end gap-1.5">
-                  <button 
-                    @click="openDetailModal(req)" 
-                    class="px-2.5 py-1 bg-surface-container hover:bg-primary/10 text-primary font-bold text-[10px] rounded-lg border border-primary/20 transition-all flex items-center gap-1"
-                  >
-                    <span class="material-symbols-outlined text-[14px]">visibility</span>
-                    <span>Xem Chi Tiết</span>
-                  </button>
-                  <button 
-                    v-if="req.status === 'Pending'" 
-                    @click="handleApprove(req.id, req.title)" 
-                    class="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] rounded-lg shadow-sm transition-all flex items-center gap-1"
-                  >
-                    <span class="material-symbols-outlined text-[14px]">check</span>
-                    <span>Phê Duyệt</span>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+      <!-- Custom Cell: Thao tác Admin Widget -->
+      <template #cell-actions="{ row }">
+        <BaseActionMenu :actions="getAdminActions(row)" />
+      </template>
+    </BaseTable>
 
     <!-- DETAIL MODAL FOR ADMIN REVIEW -->
     <div v-if="showDetailModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
@@ -180,7 +129,8 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { getAdminApprovalRequests, approveAdminRequest } from '../mock/admin_approvals.js';
+import { BaseTable, BaseActionMenu } from '../components/base';
+import { getAdminApprovalRequests, approveAdminRequest, rejectAdminRequest } from '../mock/admin_approvals.js';
 import { getUsers } from '../mock/users.js';
 
 const requestsList = ref([]);
@@ -188,25 +138,84 @@ const showDetailModal = ref(false);
 const activeRequest = ref({});
 const allUsers = ref([]);
 
+const requestTypeOptions = [
+  { label: 'Bổ sung Nhân sự', value: 'Bổ sung Nhân sự' },
+  { label: 'Duyệt Ngân sách', value: 'Duyệt Ngân sách' },
+  { label: 'Duyệt Hợp đồng', value: 'Duyệt Hợp đồng' },
+  { label: 'Xuất Kho Thiết bị', value: 'Xuất Kho Thiết bị' }
+];
+
+const statusOptions = [
+  { label: 'Chờ Admin duyệt', value: 'Pending' },
+  { label: 'Đã phê duyệt', value: 'Approved' },
+  { label: 'Từ chối', value: 'Rejected' }
+];
+
+// Definition of Table Schema (Columns)
+const tableColumns = [
+  { key: 'companyName', title: 'Công Ty / Tổ Chức', type: 'text', filterable: true, minWidth: '240px' },
+  { key: 'requestType', title: 'Kiểu Yêu Cầu', type: 'select', options: requestTypeOptions, filterable: true, minWidth: '160px' },
+  { key: 'title', title: 'Nội Dung Yêu Cầu Phê Duyệt', type: 'text', filterable: true, minWidth: '280px' },
+  { key: 'requestDate', title: 'Thời Gian Trình', type: 'date', filterable: false, minWidth: '130px' },
+  { key: 'status', title: 'Trạng Thái', type: 'boolean', options: statusOptions, filterable: true, align: 'center', minWidth: '160px' },
+  { key: 'actions', title: 'Thao Tác Admin', filterable: false, align: 'center', sticky: 'right', minWidth: '160px' }
+];
+
 function loadData() {
   requestsList.value = getAdminApprovalRequests();
   allUsers.value = getUsers();
 }
 
-const pendingCount = computed(() => {
-  return requestsList.value.filter(r => r.status === 'Pending').length;
-});
+function getRequestTypeText(type) {
+  if (!type) return 'Chưa phân loại';
+  const typeMap = {
+    PersonnelImport: 'Bổ sung Nhân sự',
+    BudgetApproval: 'Duyệt Ngân sách',
+    ContractApproval: 'Duyệt Hợp đồng',
+    EquipmentExport: 'Xuất Kho Thiết bị'
+  };
+  return typeMap[type] || type;
+}
 
-const pendingUsersList = computed(() => {
-  if (!activeRequest.value || !activeRequest.value.pendingUserIds) return [];
-  return allUsers.value.filter(u => activeRequest.value.pendingUserIds.includes(u.id));
-});
+function getStatusText(status) {
+  if (status === 'Pending') return 'Chờ Admin duyệt';
+  if (status === 'Approved') return 'Đã phê duyệt';
+  return 'Từ chối';
+}
 
 function getStatusBadgeStyle(status) {
   if (status === 'Pending') return 'bg-amber-100 text-amber-800 border-amber-300';
   if (status === 'Approved') return 'bg-emerald-100 text-emerald-800 border-emerald-300';
   return 'bg-red-100 text-red-800 border-red-300';
 }
+
+function getAdminActions(req) {
+  return [
+    {
+      id: 'view',
+      label: 'Xem Chi Tiết',
+      handler: () => openDetailModal(req)
+    },
+    {
+      id: 'approve',
+      label: 'Phê Duyệt',
+      hidden: req.status !== 'Pending',
+      handler: () => handleApprove(req.id, req.title)
+    },
+    {
+      id: 'reject',
+      label: 'Từ Chối',
+      danger: true,
+      hidden: req.status !== 'Pending',
+      handler: () => handleReject(req.id, req.title)
+    }
+  ];
+}
+
+const pendingUsersList = computed(() => {
+  if (!activeRequest.value || !activeRequest.value.pendingUserIds) return [];
+  return allUsers.value.filter(u => activeRequest.value.pendingUserIds.includes(u.id));
+});
 
 function openDetailModal(req) {
   activeRequest.value = req;
@@ -215,8 +224,16 @@ function openDetailModal(req) {
 
 function handleApprove(id, title) {
   approveAdminRequest(id);
-  alert(`ĐÃ PHÊ DUYỆT THÀNH CÔNG!\n\nToàn bộ nhân sự mới của Công ty A đã được cập nhật thành Nhân sự chính thức (Active)!`);
+  alert(`ĐÃ PHÊ DUYỆT THÀNH CÔNG!\n\nYêu cầu "${title}" đã được cập nhật thành công!`);
   loadData();
+}
+
+function handleReject(id, title) {
+  if (confirm(`Bạn có chắc chắn muốn từ chối yêu cầu "${title}"?`)) {
+    rejectAdminRequest(id);
+    alert(`ĐÃ TỪ CHỐI THÀNH CÔNG!\n\nYêu cầu "${title}" đã được chuyển sang trạng thái Từ chối.`);
+    loadData();
+  }
 }
 
 onMounted(() => {

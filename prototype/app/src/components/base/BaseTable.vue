@@ -49,13 +49,9 @@
         </div>
       </div>
 
-      <!-- Right: Utility Actions Slot (Counter, Buttons, etc.) -->
-      <div class="flex items-center gap-3">
-        <slot name="utility-actions">
-          <span class="text-xs text-on-surface-variant font-medium bg-surface-container px-3 py-1.5 rounded-lg border border-outline-variant/50">
-            Hiển thị: <b class="text-primary font-bold">{{ filteredData.length }}</b> / {{ data.length }} mục
-          </span>
-        </slot>
+      <!-- Right: Utility Actions Slot -->
+      <div v-if="$slots['utility-actions']" class="flex items-center gap-3">
+        <slot name="utility-actions"></slot>
       </div>
     </div>
 
@@ -65,7 +61,7 @@
       :style="{ maxHeight: maxHeight }"
     >
       <table class="w-full text-left text-xs border-collapse min-w-[900px]">
-        <!-- Table Header (Thead with BaseTh component) -->
+        <!-- Table Header -->
         <thead class="sticky top-0 z-20 bg-surface-container-low shadow-sm">
           <tr class="text-on-surface-variant font-bold text-[11px] uppercase border-b border-outline-variant">
             <template v-for="col in columns" :key="col.key">
@@ -90,9 +86,9 @@
 
         <!-- Table Body -->
         <tbody class="divide-y divide-outline-variant/40 bg-white">
-          <template v-if="filteredData.length > 0">
+          <template v-if="paginatedData.length > 0">
             <tr 
-              v-for="(row, rowIndex) in filteredData" 
+              v-for="(row, rowIndex) in paginatedData" 
               :key="row[rowKey] || rowIndex" 
               class="hover:bg-surface-container-low/70 transition-colors text-[11px] group"
             >
@@ -107,7 +103,6 @@
                 >
                   <!-- Custom Cell Slot for columnKey -->
                   <slot :name="`cell-${col.key}`" :row="row" :value="row[col.key]" :index="rowIndex">
-                    <!-- Default fallback text rendering -->
                     <span class="font-bold text-on-surface">{{ row[col.key] }}</span>
                   </slot>
                 </td>
@@ -129,6 +124,15 @@
         </tbody>
       </table>
     </div>
+
+    <!-- 4. FOOTER PAGINATION SECTION -->
+    <BasePagination
+      v-if="showPagination"
+      :total-items="filteredData.length"
+      v-model:current-page="currentPage"
+      v-model:page-size="pageSize"
+      :page-size-options="pageSizeOptions"
+    />
   </div>
 </template>
 
@@ -136,6 +140,7 @@
 import { ref, computed, watch } from 'vue';
 import BaseTh from './BaseTh.vue';
 import BaseEmptyState from './BaseEmptyState.vue';
+import BasePagination from './BasePagination.vue';
 
 const props = defineProps({
   title: {
@@ -157,7 +162,6 @@ const props = defineProps({
   columns: {
     type: Array,
     required: true
-    // Schema: [{ key: 'field', title: 'Header', type: 'text'|'number'|'date'|'boolean'|'select', filterable: true, options: [], align: 'left', minWidth: '150px', sticky: 'right' }]
   },
   maxHeight: {
     type: String,
@@ -166,12 +170,25 @@ const props = defineProps({
   rowKey: {
     type: String,
     default: 'id'
+  },
+  showPagination: {
+    type: Boolean,
+    default: true
+  },
+  defaultPageSize: {
+    type: Number,
+    default: 20
+  },
+  pageSizeOptions: {
+    type: Array,
+    default: () => [10, 20, 50, 100]
   }
 });
 
 const emit = defineEmits(['filter-change', 'reload']);
 
-// Reactive filter state initialized for each column
+const currentPage = ref(1);
+const pageSize = ref(props.defaultPageSize);
 const columnFilters = ref({});
 
 function initFilters() {
@@ -185,6 +202,7 @@ function initFilters() {
     }
   });
   columnFilters.value = newFilters;
+  currentPage.value = 1;
 }
 
 watch(() => props.columns, initFilters, { immediate: true });
@@ -205,7 +223,18 @@ function matchFilter(fieldValue, filterObj, type = 'text') {
   const operator = filterObj.operator;
 
   if (type === 'boolean' || type === 'select') {
-    return String(fieldValue) === String(filterObj.value);
+    const fieldStr = String(fieldValue || '');
+    const filterStr = String(filterObj.value);
+    if (fieldStr === filterStr) return true;
+
+    const typeMap = {
+      PersonnelImport: 'Bổ sung Nhân sự',
+      BudgetApproval: 'Duyệt Ngân sách',
+      ContractApproval: 'Duyệt Hợp đồng',
+      EquipmentExport: 'Xuất Kho Thiết bị'
+    };
+    if (typeMap[fieldStr] && typeMap[fieldStr] === filterStr) return true;
+    return false;
   }
 
   if (type === 'number') {
@@ -224,7 +253,6 @@ function matchFilter(fieldValue, filterObj, type = 'text') {
     }
   }
 
-  // Text operators
   switch (operator) {
     case 'contains':
       return valStr.includes(filterValStr);
@@ -249,6 +277,16 @@ const filteredData = computed(() => {
       return matchFilter(row[col.key], filterObj, col.type || 'text');
     });
   });
+});
+
+watch(filteredData, () => {
+  currentPage.value = 1;
+});
+
+const paginatedData = computed(() => {
+  if (!props.showPagination) return filteredData.value;
+  const start = (currentPage.value - 1) * pageSize.value;
+  return filteredData.value.slice(start, start + pageSize.value);
 });
 
 const activeFilterTags = computed(() => {
@@ -293,6 +331,7 @@ function clearSingleFilter(key) {
       value: ''
     };
   }
+  currentPage.value = 1;
 }
 
 function resetAllFilters() {

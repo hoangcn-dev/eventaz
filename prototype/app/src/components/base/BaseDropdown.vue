@@ -5,7 +5,11 @@
       <button
         type="button"
         @click.stop="toggleDropdown"
-        class="px-2.5 py-1.5 bg-white hover:bg-surface-container border border-outline-variant rounded-lg text-on-surface font-medium flex items-center gap-1 shadow-2xs transition-all"
+        :class="[
+          'px-2.5 py-1.5 font-medium flex items-center gap-1 transition-all rounded-lg text-on-surface',
+          bgClass,
+          isLine ? 'border border-outline-variant shadow-2xs' : 'border-0 shadow-none'
+        ]"
       >
         <span>{{ label }}</span>
         <span class="material-symbols-outlined text-[16px] transition-transform duration-200" :class="{ 'rotate-180': isOpen }">
@@ -29,7 +33,7 @@
           ref="menuRef"
           :style="menuStyle"
           @click.stop
-          class="min-w-[160px] bg-white rounded-xl shadow-2xl border border-outline-variant/80 py-1.5 space-y-0.5 font-sans text-xs text-on-surface z-[9999]"
+          class="min-w-[150px] bg-white rounded-xl shadow-2xl border border-outline-variant/80 py-1.5 space-y-0.5 font-sans text-xs text-on-surface z-[9999]"
         >
           <slot :close="closeDropdown">
             <template v-for="item in visibleItems" :key="item.id || item.label">
@@ -52,7 +56,7 @@
                     )
                 ]"
               >
-                <span v-if="item.icon" class="material-symbols-outlined text-[16px]" :class="item.danger ? 'text-error' : 'text-primary'">
+                <span v-if="item.icon && showItemIcon" class="material-symbols-outlined text-[16px]" :class="item.danger ? 'text-error' : 'text-primary'">
                   {{ item.icon }}
                 </span>
                 <span>{{ item.label }}</span>
@@ -79,7 +83,19 @@ const props = defineProps({
   },
   placement: {
     type: String,
-    default: 'bottom-end' // 'bottom-start' | 'bottom-end'
+    default: 'bottom-end'
+  },
+  isLine: {
+    type: Boolean,
+    default: true
+  },
+  bgColor: {
+    type: String,
+    default: 'transparent'
+  },
+  showItemIcon: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -90,6 +106,11 @@ const menuRef = ref(null);
 const isOpen = ref(false);
 const menuStyle = ref({});
 
+const bgClass = computed(() => {
+  if (props.bgColor === 'white') return 'bg-white hover:bg-surface-container-low';
+  return 'bg-transparent hover:bg-surface-container/60';
+});
+
 const visibleItems = computed(() => {
   return props.items.filter(item => !item.hidden);
 });
@@ -98,20 +119,19 @@ function updateMenuPosition() {
   if (!triggerRef.value) return;
   const rect = triggerRef.value.getBoundingClientRect();
   
-  const menuWidth = 160;
+  const menuWidth = 150;
   let left = rect.right - menuWidth;
   if (props.placement === 'bottom-start' || left < 16) {
     left = rect.left;
   }
   
-  // Align bounds
   if (left + menuWidth > window.innerWidth - 16) {
     left = Math.max(16, window.innerWidth - menuWidth - 16);
   }
 
   let top = rect.bottom + 4;
   if (top + 200 > window.innerHeight && rect.top - 200 > 0) {
-    top = rect.top - 200; // Flip above
+    top = rect.top - 200;
   }
 
   menuStyle.value = {

@@ -62,7 +62,7 @@ const props = defineProps({
   },
   icon: {
     type: String,
-    default: 'search' // 'search' | 'search_off' | 'find_in_page'
+    default: 'search'
   },
   isFiltered: {
     type: Boolean,

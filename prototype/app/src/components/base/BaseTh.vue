@@ -11,7 +11,7 @@
       <!-- Title text -->
       <span class="truncate font-bold" :title="title">{{ title }}</span>
 
-      <!-- Filter Toggle Icon (Visible on hover, when filter is active, or when popup is open) -->
+      <!-- Filter Toggle Icon -->
       <button
         v-if="filterable"
         type="button"
@@ -37,7 +37,7 @@
       </button>
     </div>
 
-    <!-- TELEPORTED FILTER POPUP (Prevents overflow clipping by table or container) -->
+    <!-- TELEPORTED FILTER POPUP -->
     <Teleport to="body">
       <transition
         enter-active-class="transition duration-150 ease-out"
@@ -71,7 +71,7 @@
 
           <!-- Popup Body -->
           <div class="space-y-2.5">
-            <!-- CASE 1: BOOLEAN / SELECT TYPE (1 custom BaseComboBox, no operator) -->
+            <!-- CASE 1: BOOLEAN / SELECT TYPE -->
             <template v-if="isOptionType">
               <div class="space-y-1">
                 <label class="text-[10px] font-bold uppercase text-on-surface-variant/80 tracking-wider">
@@ -86,7 +86,7 @@
               </div>
             </template>
 
-            <!-- CASE 2: TEXT, NUMBER, DATE TYPES (2 inputs: Custom Operator ComboBox + Value Input) -->
+            <!-- CASE 2: TEXT, NUMBER, DATE TYPES -->
             <template v-else>
               <!-- 1. Operator Selection ComboBox -->
               <div class="space-y-1">
@@ -132,7 +132,7 @@
             </template>
           </div>
 
-          <!-- Popup Footer Action Buttons: [Bỏ lọc] (trái) - [Hủy] [Áp dụng] (phải) -->
+          <!-- Popup Footer Action Buttons -->
           <div class="flex items-center justify-between pt-2.5 border-t border-outline-variant/50 gap-1.5">
             <!-- Left: Bỏ lọc button -->
             <button
@@ -146,7 +146,7 @@
             </button>
 
             <div class="flex items-center gap-1.5">
-              <!-- Right 1: Hủy (Close popup without applying unapplied changes) -->
+              <!-- Right 1: Hủy -->
               <button
                 type="button"
                 @click="handleCancel"
@@ -157,7 +157,7 @@
                 <span>Hủy</span>
               </button>
 
-              <!-- Right 2: Áp dụng (Apply filter & close popup) -->
+              <!-- Right 2: Áp dụng -->
               <button
                 type="button"
                 @click="handleApplyFilter"
@@ -186,7 +186,7 @@ const props = defineProps({
   },
   type: {
     type: String,
-    default: 'text' // 'text' | 'number' | 'date' | 'boolean' | 'select'
+    default: 'text'
   },
   filterable: {
     type: Boolean,
@@ -202,7 +202,7 @@ const props = defineProps({
   },
   align: {
     type: String,
-    default: 'left' // 'left' | 'center' | 'right'
+    default: 'left'
   }
 });
 
@@ -213,11 +213,9 @@ const popupRef = ref(null);
 const isOpen = ref(false);
 const popupStyle = ref({});
 
-// Local state for popup inputs
 const tempOperator = ref('contains');
 const tempValue = ref('');
 
-// Pure Vietnamese Operator definitions per type
 const textOperators = [
   { value: 'contains', label: 'Chứa' },
   { value: 'not_contains', label: 'Không chứa' },
@@ -276,22 +274,18 @@ const isActive = computed(() => {
   return val !== undefined && val !== null && String(val).trim() !== '';
 });
 
-// Calculate position for Teleport popup
 function updatePopupPosition() {
   if (!thRef.value) return;
   const rect = thRef.value.getBoundingClientRect();
   
-  const popupWidth = 288; // 72 = 18rem = 288px
+  const popupWidth = 288;
   let left = rect.left;
   
-  // Align right edge if popup would overflow right side of screen
   if (left + popupWidth > window.innerWidth - 16) {
     left = Math.max(16, window.innerWidth - popupWidth - 16);
   }
 
   let top = rect.bottom + 4;
-  
-  // Flip popup above if too close to screen bottom
   if (top + 260 > window.innerHeight && rect.top - 260 > 0) {
     top = rect.top - 260;
   }
@@ -304,7 +298,6 @@ function updatePopupPosition() {
   };
 }
 
-// Initialize / Sync temp state from props
 function syncFromProps() {
   if (props.modelValue) {
     tempOperator.value = props.modelValue.operator || (props.type === 'number' ? 'equals' : 'contains');
@@ -335,7 +328,6 @@ function emitFilterState() {
   emit('change', payload);
 }
 
-// Button action 1: Bỏ lọc (Clear filter value & close)
 function handleClearFilter() {
   tempValue.value = '';
   if (isOptionType.value) {
@@ -347,27 +339,21 @@ function handleClearFilter() {
   isOpen.value = false;
 }
 
-// Button action 2: Hủy (Cancel unapplied changes & close popup)
 function handleCancel() {
   syncFromProps();
   isOpen.value = false;
 }
 
-// Button action 3: Áp dụng (Apply filter & close popup)
 function handleApplyFilter() {
   emitFilterState();
   isOpen.value = false;
 }
 
-// Handle click outside to close popup
 function handleClickOutside(event) {
   if (!isOpen.value) return;
   const isInsideTh = thRef.value && thRef.value.contains(event.target);
   const isInsidePopup = popupRef.value && popupRef.value.contains(event.target);
-  
-  // Also don't close if clicking inside teleports/dropdowns
   if (event.target.closest && event.target.closest('.relative')) return;
-  
   if (!isInsideTh && !isInsidePopup) {
     isOpen.value = false;
   }

@@ -1,37 +1,34 @@
 <template>
-  <div v-if="primaryAction" class="inline-flex items-center rounded-lg border border-primary/30 shadow-2xs bg-white text-xs select-none overflow-hidden">
-    <!-- Left: Primary Action Button (Click executes primary action directly) -->
+  <div v-if="primaryAction" class="inline-flex items-center rounded-lg bg-transparent text-xs select-none">
+    <!-- Left: Primary Action Button -->
     <button
       type="button"
       @click="handlePrimaryClick"
       :class="[
-        'px-2.5 py-1 flex items-center gap-1 font-bold transition-all',
+        'px-2 py-1 font-bold transition-all bg-transparent rounded-l-lg',
         primaryAction.danger 
-          ? 'bg-error/5 hover:bg-error/15 text-error' 
-          : 'bg-primary/5 hover:bg-primary/15 text-primary'
+          ? 'text-error hover:bg-error/10' 
+          : 'text-on-surface hover:text-primary hover:bg-surface-container/60'
       ]"
       :title="'Thực hiện: ' + primaryAction.label"
     >
-      <span v-if="primaryAction.icon" class="material-symbols-outlined text-[14px]">
-        {{ primaryAction.icon }}
-      </span>
       <span>{{ primaryAction.label }}</span>
     </button>
 
     <!-- Vertical Divider line -->
-    <div class="h-4 w-[1px] bg-outline-variant/60"></div>
+    <div class="h-3.5 w-[1px] bg-outline-variant/60 mx-0.5"></div>
 
-    <!-- Right: Dropdown Chevron Button (Click opens BaseDropdown menu with all actions) -->
-    <BaseDropdown :items="actions" placement="bottom-end">
+    <!-- Right: Dropdown Chevron Button -->
+    <BaseDropdown :items="actions" :is-line="false" :show-item-icon="false" bg-color="transparent" placement="bottom-end">
       <template #trigger="{ isOpen, toggle }">
         <button
           type="button"
           @click.stop="toggle"
           :class="[
-            'px-1.5 py-1 flex items-center justify-center transition-colors text-on-surface-variant hover:text-primary hover:bg-surface-container-high',
-            isOpen ? 'bg-primary/10 text-primary' : 'bg-white'
+            'px-1 py-1 flex items-center justify-center transition-colors text-on-surface bg-transparent hover:text-primary hover:bg-surface-container/60 rounded-r-lg',
+            isOpen ? 'text-primary bg-surface-container/60' : ''
           ]"
-          title="Danh sách tất cả thao tác"
+          title="Danh sách thao tác"
         >
           <span class="material-symbols-outlined text-[16px] transition-transform duration-200" :class="{ 'rotate-180 text-primary': isOpen }">
             expand_more

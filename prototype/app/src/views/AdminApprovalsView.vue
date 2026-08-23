@@ -5,7 +5,6 @@
     <BaseTable
       title="Danh Sách Yêu Cầu Trình Duyệt Từ Các Công Ty / Tổ Chức"
       icon="assignment"
-      subtitle="Di chuột vào tiêu đề cột có biểu tượng để mở bộ lọc cột."
       :data="requestsList"
       :columns="tableColumns"
       @reload="loadData"
@@ -13,21 +12,19 @@
       <!-- Custom Cell: Công ty trình -->
       <template #cell-companyName="{ row }">
         <p class="font-extrabold text-on-surface text-xs leading-tight">{{ row.companyName }}</p>
-        <p class="text-[10px] text-on-surface-variant font-mono mt-0.5">ID: {{ row.id }}</p>
       </template>
 
       <!-- Custom Cell: Kiểu yêu cầu -->
       <template #cell-requestType="{ value }">
         <span class="px-2.5 py-1 rounded-md bg-surface-container-high text-on-surface font-semibold text-[10px] border border-outline-variant/60 inline-flex items-center gap-1">
           <span class="material-symbols-outlined text-[13px] text-primary">category</span>
-          <span>{{ value || 'Chưa phân loại' }}</span>
+          <span>{{ getRequestTypeText(value) }}</span>
         </span>
       </template>
 
       <!-- Custom Cell: Nội dung yêu cầu -->
       <template #cell-title="{ row }">
         <p class="font-bold text-on-surface text-xs leading-snug">{{ row.title }}</p>
-        <p v-if="row.notes" class="text-[10px] text-on-surface-variant mt-0.5 italic line-clamp-1">{{ row.notes }}</p>
       </template>
 
       <!-- Custom Cell: Thời gian trình -->
@@ -132,8 +129,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import BaseTable from '../components/BaseTable.vue';
-import BaseActionMenu from '../components/BaseActionMenu.vue';
+import { BaseTable, BaseActionMenu } from '../components/base';
 import { getAdminApprovalRequests, approveAdminRequest, rejectAdminRequest } from '../mock/admin_approvals.js';
 import { getUsers } from '../mock/users.js';
 
@@ -170,6 +166,17 @@ function loadData() {
   allUsers.value = getUsers();
 }
 
+function getRequestTypeText(type) {
+  if (!type) return 'Chưa phân loại';
+  const typeMap = {
+    PersonnelImport: 'Bổ sung Nhân sự',
+    BudgetApproval: 'Duyệt Ngân sách',
+    ContractApproval: 'Duyệt Hợp đồng',
+    EquipmentExport: 'Xuất Kho Thiết bị'
+  };
+  return typeMap[type] || type;
+}
+
 function getStatusText(status) {
   if (status === 'Pending') return 'Chờ Admin duyệt';
   if (status === 'Approved') return 'Đã phê duyệt';
@@ -187,20 +194,17 @@ function getAdminActions(req) {
     {
       id: 'view',
       label: 'Xem Chi Tiết',
-      icon: 'visibility',
       handler: () => openDetailModal(req)
     },
     {
       id: 'approve',
       label: 'Phê Duyệt',
-      icon: 'check_circle',
       hidden: req.status !== 'Pending',
       handler: () => handleApprove(req.id, req.title)
     },
     {
       id: 'reject',
       label: 'Từ Chối',
-      icon: 'cancel',
       danger: true,
       hidden: req.status !== 'Pending',
       handler: () => handleReject(req.id, req.title)

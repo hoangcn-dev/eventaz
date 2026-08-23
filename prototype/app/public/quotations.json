@@ -1,0 +1,51 @@
+[
+  {
+    "id": "QUO-2026-001",
+    "eventId": "E-2024-99X",
+    "companyName": "Tập đoàn Công nghệ TechCorp Vietnam",
+    "contactPerson": "Ông Nguyễn Hoàng Nam (Giám đốc Marketing)",
+    "contactPhone": "0912 345 678",
+    "attendeesCount": 1000,
+    "subtotal": 320000000,
+    "vatPercent": 10,
+    "discountAmount": 20000000,
+    "totalAmount": 332000000,
+    "creatorName": "Nguyễn Văn Trưởng (Trưởng BTC)",
+    "createdDate": "2026-08-01 10:00",
+    "status": "ContractSigned",
+    "milestones": [
+      { "step": "Đợt 1", "name": "Tạm ứng cọc 50% Hợp đồng sau khi ký", "amount": 166000000, "status": "Paid" },
+      { "step": "Đợt 2", "name": "Thanh toán 50% sau khi nghiệm thu kết thúc sự kiện", "amount": 166000000, "status": "Pending" }
+    ],
+    "lineItems": [
+      { "name": "Thuê Trọn gói Hội trường Main Hall NCC (1 ngày)", "qty": 1, "unitPrice": 120000000, "total": 120000000 },
+      { "name": "Hệ thống Màn hình LED P2.5 & Ánh sáng Sân khấu Pro", "qty": 1, "unitPrice": 80000000, "total": 80000000 },
+      { "name": "Tiệc Trà Teabreak VIP 1.000 Khách (Menu 8 món)", "qty": 1000, "unitPrice": 80000, "total": 80000000 },
+      { "name": "Đội ngũ Nhân sự Điều phối EventAZ (40 nhân viên)", "qty": 1, "unitPrice": 40000000, "total": 40000000 }
+    ]
+  },
+  {
+    "id": "QUO-2026-002",
+    "eventId": "E-2024-99X",
+    "companyName": "Tập đoàn Tài chính & Quỹ Đầu tư V-Capital",
+    "contactPerson": "Bà Phạm Phương Anh (Head of PR)",
+    "contactPhone": "0903 888 777",
+    "attendeesCount": 500,
+    "subtotal": 180000000,
+    "vatPercent": 8,
+    "discountAmount": 10000000,
+    "totalAmount": 184400000,
+    "creatorName": "Phạm Hoàng Truyền Thông",
+    "createdDate": "2026-08-10 14:30",
+    "status": "PendingApproval",
+    "milestones": [
+      { "step": "Đợt 1", "name": "Tạm ứng cọc 50% Hợp đồng", "amount": 92200000, "status": "Pending" },
+      { "step": "Đợt 2", "name": "Thanh toán 50% sau nghiệm thu", "amount": 92200000, "status": "Pending" }
+    ],
+    "lineItems": [
+      { "name": "Thuê Hội trường Sảnh A VIP NCC (1/2 ngày)", "qty": 1, "unitPrice": 70000000, "total": 70000000 },
+      { "name": "Thiết kế & Thi công Backstage 3D Mapping", "qty": 1, "unitPrice": 50000000, "total": 50000000 },
+      { "name": "Tiệc Teabreak Cao cấp (500 suất)", "qty": 500, "unitPrice": 120000, "total": 60000000 }
+    ]
+  }
+]

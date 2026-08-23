@@ -1,0 +1,54 @@
+[
+  {
+    "id": "TKT-001",
+    "eventId": "E-2024-99X",
+    "name": "Vé VIP Diamond (Diễn giả & Sponsor)",
+    "price": 3500000,
+    "totalQty": 100,
+    "soldQty": 100,
+    "checkedInQty": 85,
+    "zone": "Khu A — Ghế VIP Hàng 1 - 2 (Bục Chính)",
+    "benefits": "Vị trí hàng 1, tiệc Teabreak riêng, xe đón đưa VIP & quà lưu niệm 2.000.000 ₫",
+    "color": "bg-purple-100 text-purple-800 border-purple-300",
+    "status": "SoldOut"
+  },
+  {
+    "id": "TKT-002",
+    "eventId": "E-2024-99X",
+    "name": "Vé Business Gold (Doanh nhân & Lãnh đạo)",
+    "price": 1800000,
+    "totalQty": 300,
+    "soldQty": 260,
+    "checkedInQty": 210,
+    "zone": "Khu B — Ghế Trung Tâm Hàng 3 - 8",
+    "benefits": "Vị trí khu vực trung tâm, tài liệu hội thảo in bìa da & tiệc trưa Networking",
+    "color": "bg-amber-100 text-amber-800 border-amber-300",
+    "status": "Active"
+  },
+  {
+    "id": "TKT-003",
+    "eventId": "E-2024-99X",
+    "name": "Vé Standard Press (Báo chí & Đơn vị truyền thông)",
+    "price": 0,
+    "totalQty": 100,
+    "soldQty": 100,
+    "checkedInQty": 95,
+    "zone": "Khu Báo Chí — Hàng Ghế Media B1 - B10",
+    "benefits": "Cấp Thẻ Báo chí, bàn Press Booth, cổng wifi tốc độ cao & ổ cắm sạc",
+    "color": "bg-emerald-100 text-emerald-800 border-emerald-300",
+    "status": "SoldOut"
+  },
+  {
+    "id": "TKT-004",
+    "eventId": "E-2024-99X",
+    "name": "Vé Thường (Khách tham quan & Sinh viên)",
+    "price": 450000,
+    "totalQty": 1000,
+    "soldQty": 840,
+    "checkedInQty": 680,
+    "zone": "Khu C — Khán Phòng Tầng 2 (Tự Do)",
+    "benefits": "Vé vào cổng xem toàn bộ phiên tham luận & nhận Slide tài liệu qua Email",
+    "color": "bg-blue-100 text-blue-800 border-blue-300",
+    "status": "Active"
+  }
+]

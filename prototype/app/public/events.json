@@ -1,0 +1,55 @@
+[
+  {
+    "id": "E-2024-99X",
+    "name": "Tech Summit Asia 2024",
+    "category": "Hội thảo Công nghệ",
+    "status": "Ongoing",
+    "startDate": "2026-10-15",
+    "endDate": "2026-10-17",
+    "location": "Trung tâm Hội nghị Quốc gia, Hà Nội",
+    "scale": 1500,
+    "budget": 500000000,
+    "description": "Sự kiện hội tụ hơn 1.500 chuyên gia công nghệ, nhà đầu tư và doanh nghiệp khởi nghiệp hàng đầu khu vực Châu Á - Thái Bình Dương.",
+    "director": "Nguyễn Văn Trưởng",
+    "directorId": "USR-001",
+    "runOfShowLocked": true,
+    "createdAt": "2026-08-01 09:00:00",
+    "wbs": [
+      { "id": "WBS-01", "name": "Nội dung & Diễn giả", "phaseId": 1, "phaseName": "Thiết lập & Lên kế hoạch", "leadId": "USR-003", "leadName": "Lê Văn Nội Dung", "coLead": "Nguyễn Văn Trưởng", "order": 1 },
+      { "id": "WBS-02", "name": "Hậu cần & Địa điểm", "phaseId": 2, "phaseName": "Đang chuẩn bị", "leadId": "USR-002", "leadName": "Trần Thị Hậu Cần", "coLead": "", "order": 2 },
+      { "id": "WBS-03", "name": "Truyền thông & Tiếp thị", "phaseId": 1, "phaseName": "Thiết lập & Lên kế hoạch", "leadId": "USR-004", "leadName": "Phạm Hoàng Truyền Thông", "coLead": "", "order": 3 },
+      { "id": "WBS-04", "name": "Đón tiếp Khách mời VIP", "phaseId": 3, "phaseName": "Đang diễn ra", "leadId": "USR-005", "leadName": "Đỗ Minh Đối Ngoại", "coLead": "", "order": 4 },
+      { "id": "WBS-05", "name": "Tài chính & Vé điện tử", "phaseId": 1, "phaseName": "Thiết lập & Lên kế hoạch", "leadId": "USR-001", "leadName": "Nguyễn Văn Trưởng", "coLead": "", "order": 5 },
+      { "id": "WBS-06", "name": "An ninh & Hạ tầng Kỹ thuật", "phaseId": 2, "phaseName": "Đang chuẩn bị", "leadId": "USR-006", "leadName": "Vũ Anh Kỹ Thuật", "coLead": "", "order": 6 }
+    ],
+    "auditLogs": [
+      { "id": "LOG-01", "timestamp": "2026-08-01 09:00:00", "user": "Nguyễn Văn Trưởng", "action": "Khởi tạo sự kiện (Trạng thái: Nháp)" },
+      { "id": "LOG-02", "timestamp": "2026-08-05 14:30:00", "user": "Nguyễn Văn Trưởng", "action": "Chuyển trạng thái sang: Lên kế hoạch" },
+      { "id": "LOG-03", "timestamp": "2026-08-10 10:15:00", "user": "Nguyễn Văn Trưởng", "action": "Chuyển trạng thái sang: Đang chuẩn bị" },
+      { "id": "LOG-04", "timestamp": "2026-08-15 08:00:00", "user": "Nguyễn Văn Trưởng", "action": "Khóa kịch bản Run-of-Show và Chuyển trạng thái sang: Đang diễn ra" }
+    ],
+    "lastStatusChangeTime": "2026-08-15T08:00:00Z"
+  },
+  {
+    "id": "E-2024-100",
+    "name": "Vietnam Music Festival 2024",
+    "category": "Đại nhạc hội",
+    "status": "Preparing",
+    "startDate": "2026-11-20",
+    "endDate": "2026-11-21",
+    "location": "Sân vận động Mỹ Đình, Hà Nội",
+    "scale": 12000,
+    "budget": 1500000000,
+    "description": "Đại nhạc hội âm nhạc ngoài trời với sự tham gia của hơn 20 nghệ sĩ nổi tiếng V-Pop và DJ quốc tế.",
+    "director": "Nguyễn Văn Trưởng",
+    "directorId": "USR-001",
+    "runOfShowLocked": false,
+    "createdAt": "2026-08-05 10:00:00",
+    "wbs": [
+      { "id": "WBS-01", "name": "Sân khấu & Âm thanh", "phaseId": 2, "phaseName": "Đang chuẩn bị", "leadId": "USR-006", "leadName": "Vũ Anh Kỹ Thuật", "coLead": "", "order": 1 },
+      { "id": "WBS-02", "name": "Nghệ sĩ & Kịch bản", "phaseId": 1, "phaseName": "Thiết lập & Lên kế hoạch", "leadId": "USR-003", "leadName": "Lê Văn Nội Dung", "coLead": "", "order": 2 }
+    ],
+    "auditLogs": [],
+    "lastStatusChangeTime": "2026-08-05T10:00:00Z"
+  }
+]

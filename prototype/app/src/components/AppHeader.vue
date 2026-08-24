@@ -72,6 +72,15 @@
       </router-link>
 
       <router-link 
+        to="/change-password" 
+        @click="showUserDropdown = false"
+        class="flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-on-surface rounded-none hover:bg-surface-container transition-colors"
+      >
+        <span class="material-symbols-outlined text-[18px] text-primary">key</span>
+        <span>Đổi mật khẩu</span>
+      </router-link>
+
+      <router-link 
         to="/settings" 
         @click="showUserDropdown = false"
         class="flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-on-surface rounded-none hover:bg-surface-container transition-colors"
@@ -178,6 +187,10 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { clearSession } from '../utils/auth';
+
+const router = useRouter();
 
 defineEmits(['toggle-mobile-menu']);
 
@@ -258,7 +271,8 @@ function markAllAsRead() {
 
 function handleLogout() {
   showUserDropdown.value = false;
-  alert('Đã đăng xuất thành công!');
+  clearSession();
+  router.push('/login');
 }
 
 function handleClickOutside(event) {

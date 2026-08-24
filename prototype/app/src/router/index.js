@@ -18,8 +18,22 @@ import ApprovalsView from '../views/ApprovalsView.vue';
 import RunOfShowView from '../views/RunOfShowView.vue';
 import AdminApprovalsView from '../views/AdminApprovalsView.vue';
 
+// Auth Views
+import LoginView from '../views/LoginView.vue';
+import ForgotPasswordView from '../views/ForgotPasswordView.vue';
+import ChangePasswordView from '../views/ChangePasswordView.vue';
+
+import { getSession } from '../utils/auth';
+
 const routes = [
   { path: '/', redirect: '/dashboard' },
+  
+  // Auth Routes
+  { path: '/login', name: 'login', component: LoginView, meta: { isAuthPage: true } },
+  { path: '/forgot-password', name: 'forgot-password', component: ForgotPasswordView, meta: { isAuthPage: true } },
+  { path: '/change-password', name: 'change-password', component: ChangePasswordView, meta: { isAuthPage: true } },
+
+  // Org Scope Routes
   { path: '/dashboard', name: 'dashboard', component: DashboardView, meta: { isOrgScope: true } },
   { path: '/org-personnel', name: 'org-personnel', component: OrgPersonnelView, meta: { isOrgScope: true } },
   { path: '/admin/approvals', name: 'admin-approvals', component: AdminApprovalsView, meta: { isOrgScope: true } },
@@ -46,6 +60,17 @@ const router = createRouter({
   routes,
   scrollBehavior() {
     return { top: 0 };
+  }
+});
+
+router.beforeEach((to, from, next) => {
+  const session = getSession();
+  const isAuthPage = to.meta && to.meta.isAuthPage;
+
+  if (!session && !isAuthPage) {
+    next('/login');
+  } else {
+    next();
   }
 });
 

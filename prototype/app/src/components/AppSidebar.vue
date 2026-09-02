@@ -94,7 +94,7 @@
               >
                 <span class="truncate flex-1">{{ evt.name }}</span>
                 <span :class="['text-[10px] px-1.5 py-0.5 rounded font-normal shrink-0 ml-2', getStatusBadgeColor(evt.status)]">
-                  {{ evt.status }}
+                  {{ getStatusBadgeText(evt) }}
                 </span>
               </div>
             </div>
@@ -199,131 +199,30 @@
 
         <!-- Tab Test cuộn -->
         <div>
-          <!-- Org Personnel -->
-          <router-link 
-            to="/tc1"
-            :class="[
-              'flex items-center gap-3 px-5 py-3 transition-all text-sm',
-              route.path === '/tc1'
-                ? 'bg-primary-container text-on-primary-container font-bold border-l-4 border-primary'
-                : 'text-white hover:bg-surface-variant/10'
-            ]"
-          >
+          <div class="flex items-center gap-3 px-5 py-3 transition-all text-sm text-white/70 hover:bg-surface-variant/10 cursor-pointer">
             <span class="material-symbols-outlined">groups</span>
             <span>Test cuộn 1</span>
-          </router-link>
-
-          <!-- Org Personnel -->
-          <router-link 
-            to="/tc2"
-            :class="[
-              'flex items-center gap-3 px-5 py-3 transition-all text-sm',
-              route.path === '/tc2'
-                ? 'bg-primary-container text-on-primary-container font-bold border-l-4 border-primary'
-                : 'text-white hover:bg-surface-variant/10'
-            ]"
-          >
-            <span class="material-symbols-outlined">groups</span>
-            <span>Test cuộn 1</span>
-          </router-link>
-
-          <!-- Org Personnel -->
-          <router-link 
-            to="/tc3"
-            :class="[
-              'flex items-center gap-3 px-5 py-3 transition-all text-sm',
-              route.path === '/tc3'
-                ? 'bg-primary-container text-on-primary-container font-bold border-l-4 border-primary'
-                : 'text-white hover:bg-surface-variant/10'
-            ]"
-          >
+          </div>
+          <div class="flex items-center gap-3 px-5 py-3 transition-all text-sm text-white/70 hover:bg-surface-variant/10 cursor-pointer">
             <span class="material-symbols-outlined">groups</span>
             <span>Test cuộn 2</span>
-          </router-link>
-
-          <!-- Org Personnel -->
-          <router-link 
-            to="/tc3"
-            :class="[
-              'flex items-center gap-3 px-5 py-3 transition-all text-sm',
-              route.path === '/tc3'
-                ? 'bg-primary-container text-on-primary-container font-bold border-l-4 border-primary'
-                : 'text-white hover:bg-surface-variant/10'
-            ]"
-          >
+          </div>
+          <div class="flex items-center gap-3 px-5 py-3 transition-all text-sm text-white/70 hover:bg-surface-variant/10 cursor-pointer">
             <span class="material-symbols-outlined">groups</span>
             <span>Test cuộn 3</span>
-          </router-link>
-
-          <!-- Org Personnel -->
-          <router-link 
-            to="/tc4"
-            :class="[
-              'flex items-center gap-3 px-5 py-3 transition-all text-sm',
-              route.path === '/tc4'
-                ? 'bg-primary-container text-on-primary-container font-bold border-l-4 border-primary'
-                : 'text-white hover:bg-surface-variant/10'
-            ]"
-          >
+          </div>
+          <div class="flex items-center gap-3 px-5 py-3 transition-all text-sm text-white/70 hover:bg-surface-variant/10 cursor-pointer">
             <span class="material-symbols-outlined">groups</span>
             <span>Test cuộn 4</span>
-          </router-link>
-
-          <!-- Org Personnel -->
-          <router-link 
-            to="/tc3"
-            :class="[
-              'flex items-center gap-3 px-5 py-3 transition-all text-sm',
-              route.path === '/tc3'
-                ? 'bg-primary-container text-on-primary-container font-bold border-l-4 border-primary'
-                : 'text-white hover:bg-surface-variant/10'
-            ]"
-          >
+          </div>
+          <div class="flex items-center gap-3 px-5 py-3 transition-all text-sm text-white/70 hover:bg-surface-variant/10 cursor-pointer">
             <span class="material-symbols-outlined">groups</span>
             <span>Test cuộn 5</span>
-          </router-link>
-
-          <!-- Org Personnel -->
-          <router-link 
-            to="/tc4"
-            :class="[
-              'flex items-center gap-3 px-5 py-3 transition-all text-sm',
-              route.path === '/tc4'
-                ? 'bg-primary-container text-on-primary-container font-bold border-l-4 border-primary'
-                : 'text-white hover:bg-surface-variant/10'
-            ]"
-          >
+          </div>
+          <div class="flex items-center gap-3 px-5 py-3 transition-all text-sm text-white/70 hover:bg-surface-variant/10 cursor-pointer">
             <span class="material-symbols-outlined">groups</span>
             <span>Test cuộn 6</span>
-          </router-link>  
-
-          <!-- Org Personnel -->
-          <router-link 
-            to="/tc3"
-            :class="[
-              'flex items-center gap-3 px-5 py-3 transition-all text-sm',
-              route.path === '/tc3'
-                ? 'bg-primary-container text-on-primary-container font-bold border-l-4 border-primary'
-                : 'text-white hover:bg-surface-variant/10'
-            ]"
-          >
-            <span class="material-symbols-outlined">groups</span>
-            <span>Test cuộn 7</span>
-          </router-link>
-
-          <!-- Org Personnel -->
-          <router-link 
-            to="/tc4"
-            :class="[
-              'flex items-center gap-3 px-5 py-3 transition-all text-sm',
-              route.path === '/tc4'
-                ? 'bg-primary-container text-on-primary-container font-bold border-l-4 border-primary'
-                : 'text-white hover:bg-surface-variant/10'
-            ]"
-          >
-            <span class="material-symbols-outlined">groups</span>
-            <span>Test cuộn 8</span>
-          </router-link>
+          </div>
         </div>
       </nav>
 
@@ -347,7 +246,7 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { getEvents, getCurrentEventId, setCurrentEventId } from '../mock/events.js';
+import { getEvents, getCurrentEventId, setCurrentEventId, LIFECYCLE_STATES } from '../mock/events.js';
 
 const SIDEBAR_STORAGE_KEY = 'eventaz_sidebar_collapsed';
 
@@ -447,6 +346,26 @@ function getStatusBadgeColor(status) {
     'Archived': 'bg-gray-500/20 text-gray-400'
   };
   return map[status] || 'bg-slate-500/20 text-slate-300';
+}
+
+function getStatusBadgeText(evt) {
+  if (!evt || !evt.status) return '';
+  const status = evt.status;
+  if (evt.lifecycleStates && evt.lifecycleStates[status] && evt.lifecycleStates[status].nameVi) {
+    return evt.lifecycleStates[status].nameVi;
+  }
+  if (LIFECYCLE_STATES[status] && LIFECYCLE_STATES[status].nameVi) {
+    return LIFECYCLE_STATES[status].nameVi;
+  }
+  const fallbackMap = {
+    'Draft': 'Nháp',
+    'Planning': 'Thiết lập',
+    'Preparing': 'Chuẩn bị',
+    'Ongoing': 'Đang diễn ra',
+    'Closed': 'Kết thúc',
+    'Archived': 'Lưu trữ'
+  };
+  return fallbackMap[status] || status;
 }
 
 watch(

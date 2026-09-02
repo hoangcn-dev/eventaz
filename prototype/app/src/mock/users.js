@@ -37,25 +37,27 @@ export const defaultEventRosters = {
     ]
 };
 
+let usersList = initialUsers;
+
 export function getUsers() {
-    try {
-        const stored = localStorage.getItem(USERS_STORAGE_KEY);
-        if (stored) {
-            const parsed = JSON.parse(stored);
-            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-        }
-    } catch (e) {
-        console.error('Error parsing stored users', e);
-    }
-    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(defaultUsers));
-    return defaultUsers;
+    return usersList;
 }
 
-export function saveUsers(users) {
+export function getUserById(userId) {
+    if (!userId) return null;
+    return usersList.find(u => u.id === userId) || null;
+}
+
+export async function saveUsers(users) {
+    usersList = users;
     try {
-        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+        await fetch('/api/save-json', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ filename: 'users.json', data: usersList })
+        });
     } catch (e) {
-        console.error('Error saving users', e);
+        console.error('Error saving users to users.json', e);
     }
 }
 

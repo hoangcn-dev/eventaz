@@ -27,8 +27,29 @@
             <button @click="addStage" class="px-3 py-1.5 text-xs font-medium border border-outline-variant rounded-lg bg-white hover:bg-surface-container transition-colors">
               Thêm giai đoạn
             </button>
-            <button @click="deleteStage" class="px-3 py-1.5 text-xs font-medium border border-outline-variant/60 rounded-lg bg-white hover:bg-red-50 text-red-600 transition-colors">
-              Xóa giai đoạn
+            <button 
+              @click="toggleDeleteStageMode" 
+              :disabled="isDeleteStageMode && selectedStageCodes.length === 0"
+              :class="[
+                'px-3 py-1.5 text-xs font-medium border rounded-lg transition-colors flex items-center gap-1.5',
+                isDeleteStageMode 
+                  ? (selectedStageCodes.length > 0 
+                      ? 'bg-red-600 border-red-600 text-white hover:bg-red-700 cursor-pointer shadow-xs font-bold' 
+                      : 'bg-red-50 border-red-200 text-red-300 cursor-not-allowed')
+                  : 'border-outline-variant/60 bg-white hover:bg-red-50 text-red-600 cursor-pointer'
+              ]"
+            >
+              <span class="material-symbols-outlined text-[16px]" v-if="isDeleteStageMode">delete</span>
+              <span>{{ isDeleteStageMode ? `Xóa ${selectedStageCodes.length} giai đoạn` : 'Xóa giai đoạn' }}</span>
+            </button>
+
+            <!-- Nút Hủy bên cạnh nút Xóa khi ở chế độ xóa -->
+            <button 
+              v-if="isDeleteStageMode" 
+              @click="cancelDeleteStageMode" 
+              class="px-3 py-1.5 text-xs font-medium border border-outline-variant rounded-lg bg-white hover:bg-surface-container transition-colors text-on-surface-variant cursor-pointer"
+            >
+              Hủy
             </button>
           </div>
         </div>
@@ -57,15 +78,30 @@
             :key="item.code"
             :style="{ minWidth: 'calc((100% - 36px) / 4)', width: 'calc((100% - 36px) / 4)', flexShrink: 0 }"
             :class="[
-              'p-3.5 rounded-xl border flex flex-col justify-between space-y-2 cursor-pointer transition-all snap-start',
-              currentEvent.status === item.code ? 'border-primary bg-primary/5 shadow-md' : 'border-outline-variant/60 bg-surface-container-low opacity-75 hover:opacity-100'
+              'p-3.5 rounded-xl border flex flex-col justify-between space-y-2 cursor-pointer transition-all snap-start relative select-none',
+              isDeleteStageMode && selectedStageCodes.includes(item.code) ? 'ring-2 ring-red-500 border-red-500 bg-red-50/20' : '',
+              currentEvent.status === item.code ? 'border-primary bg-primary/5 shadow-md' : 'border-outline-variant/60 bg-surface-container-low opacity-75 hover:opacity-100',
+              isDeleteStageMode && isOngoingOrPastStage(item) ? 'opacity-50 cursor-not-allowed' : ''
             ]"
-            @click="openStageDetail(item.code, item)"
+            @click="isDeleteStageMode ? toggleSelectStage(item.code, item) : openStageDetail(item.code, item)"
           >
             <div class="flex justify-between items-center">
-              <span class="text-xs font-bold text-on-surface-variant">Giai đoạn {{ item.stepOrder }}</span>
-              <span v-if="item.code===currentEvent.status" class="w-3 h-3 rounded-full bg-emerald-500 ring-2 ring-emerald-200"></span>
-              <small v-else class="">{{ item.code === currentEvent.status ? 'Đang diễn ra' : 'Đã kết thúc' }}</small>
+              <!-- Checkbox chọn khi ở chế độ xóa -->
+              <div v-if="isDeleteStageMode" class="flex items-center gap-1.5" @click.stop>
+                <input 
+                  type="checkbox" 
+                  :checked="selectedStageCodes.includes(item.code)"
+                  :disabled="isOngoingOrPastStage(item)"
+                  @change="toggleSelectStage(item.code, item)"
+                  class="w-4 h-4 text-red-600 rounded border-outline-variant focus:ring-red-500 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                  title="Tích chọn để xóa giai đoạn này"
+                />
+                <span class="text-xs font-bold text-on-surface-variant">Giai đoạn {{ item.stepOrder }}</span>
+              </div>
+              <span v-else class="text-xs font-bold text-on-surface-variant">Giai đoạn {{ item.stepOrder }}</span>
+
+              <span v-if="item.code===currentEvent.status" class="w-3 h-3 rounded-full bg-emerald-500 ring-2 ring-emerald-200" title="Đang diễn ra"></span>
+              <small v-else class="">{{ isOngoingOrPastStage(item) ? 'Đã kết thúc' : 'Chưa diễn ra' }}</small>
             </div>
             <p class="font-bold text-sm text-on-surface leading-tight">{{ item.nameVi }}</p>
             <span class="text-[11px] font-mono text-on-surface-variant">Tỉ lệ hoàn thành: {{ item.completionRate || '95%' }}</span>
@@ -708,6 +744,28 @@ const sortedLifecycleStates = computed(() => {
   entries.sort((a, b) => (Number(a.stepOrder) || 0) - (Number(b.stepOrder) || 0));
   return entries;
 });
+
+// Quản lý chế độ xóa nhiều giai đoạn và danh sách các giai đoạn được chọn
+const isDeleteStageMode = ref(false);
+const selectedStageCodes = ref([]);
+
+// Xác định thứ tự stepOrder của giai đoạn đang diễn ra
+const activeStageOrder = computed(() => {
+  if (!currentEvent.value || !currentEvent.value.status) return 0;
+  const activeState = lifecycleStates[currentEvent.value.status];
+  return activeState ? (Number(activeState.stepOrder) || 0) : 0;
+});
+
+// Kiểm tra giai đoạn có phải đang diễn ra hoặc đã diễn ra hay không (Không cho phép xóa)
+function isOngoingOrPastStage(item) {
+  if (!item || !item.code) return false;
+  if (item.code === currentEvent.value.status) return true;
+  const itemOrder = Number(item.stepOrder) || 0;
+  if (activeStageOrder.value > 0 && itemOrder <= activeStageOrder.value) {
+    return true;
+  }
+  return false;
+}
 const showAuditLogModal = ref(false);
 const showSaveTemplateModal = ref(false);
 const showSearchPersonnelModal = ref(false);
@@ -847,10 +905,16 @@ function confirmStatusChangeFromModal() {
 
 function deleteStageFromModal() {
   if (!selectedStage.value.code) return;
+  if (isOngoingOrPastStage(selectedStage.value)) {
+    alert('Không thể xóa giai đoạn đang diễn ra hoặc đã diễn ra!');
+    return;
+  }
   const stageName = selectedStage.value.nameVi || selectedStage.value.code;
   if (confirm(`Bạn có chắc chắn muốn xóa giai đoạn [${stageName}] này không?`)) {
     delete lifecycleStates[selectedStage.value.code];
     showStageDetailModal.value = false;
+    currentEvent.value.lifecycleStates = JSON.parse(JSON.stringify(lifecycleStates));
+    markFormModified();
     nextTick(() => {
       updateScrollButtons();
     });
@@ -1146,19 +1210,58 @@ function addStage() {
   });
 }
 
-function deleteStage() {
-  const keys = Object.keys(lifecycleStates);
-  if (keys.length === 0) return;
-  const lastKey = keys[keys.length - 1];
-  const stageName = lifecycleStates[lastKey]?.nameVi || lastKey;
-  if (confirm(`Bạn có chắc chắn muốn xóa giai đoạn cuối cùng [${stageName}] không?`)) {
-    delete lifecycleStates[lastKey];
+// Bật/tắt chế độ xóa giai đoạn hoặc thực hiện xóa khi đã tích chọn
+function toggleDeleteStageMode() {
+  if (isDeleteStageMode.value) {
+    confirmDeleteSelectedStages();
+  } else {
+    isDeleteStageMode.value = true;
+    selectedStageCodes.value = [];
+  }
+}
+
+// Hủy chế độ xóa giai đoạn
+function cancelDeleteStageMode() {
+  isDeleteStageMode.value = false;
+  selectedStageCodes.value = [];
+}
+
+// Tích/bỏ chọn một giai đoạn
+function toggleSelectStage(code, item) {
+  if (!isDeleteStageMode.value) return;
+  if (isOngoingOrPastStage(item)) return;
+
+  const idx = selectedStageCodes.value.indexOf(code);
+  if (idx > -1) {
+    selectedStageCodes.value.splice(idx, 1);
+  } else {
+    selectedStageCodes.value.push(code);
+  }
+}
+
+// Thực hiện xóa các giai đoạn đã được chọn
+function confirmDeleteSelectedStages() {
+  const count = selectedStageCodes.value.length;
+  if (count === 0) return;
+
+  if (confirm(`Bạn có chắc chắn muốn xóa ${count} giai đoạn đã chọn không?`)) {
+    selectedStageCodes.value.forEach(code => {
+      delete lifecycleStates[code];
+    });
+    const deletedCount = count;
+    selectedStageCodes.value = [];
+    isDeleteStageMode.value = false;
+    currentEvent.value.lifecycleStates = JSON.parse(JSON.stringify(lifecycleStates));
     markFormModified();
     nextTick(() => {
       updateScrollButtons();
     });
-    alert(`Đã xóa thành công giai đoạn [${stageName}]!`);
+    alert(`Đã xóa thành công ${deletedCount} giai đoạn!`);
   }
+}
+
+function deleteStage() {
+  toggleDeleteStageMode();
 }
 
 function addAssignee(stageCode) {

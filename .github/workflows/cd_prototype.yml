@@ -2,7 +2,7 @@ name: Deploy Prototype App (Vue 3 Vite)
 
 on:
   push:
-    branches: [ deploy/prototype ]
+    branches: [ test ]
 
 jobs:
   deploy:

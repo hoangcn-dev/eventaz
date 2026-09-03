@@ -40,7 +40,7 @@ jobs:
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: prototype.eventaz.space
-          username: root
+          username: nguyen
           key: ${{ secrets.SSH_KEY }}
           script: |
             chmod -R 755 /var/www/eventaz-prototype

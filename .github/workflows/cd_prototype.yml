@@ -29,7 +29,7 @@ jobs:
         uses: appleboy/scp-action@v0.1.7
         with:
           host: prototype.eventaz.space
-          username: root
+          username: nguyen
           key: ${{ secrets.SSH_KEY }}
           source: "prototype/app/dist/*"
           target: "/var/www/eventaz-prototype"

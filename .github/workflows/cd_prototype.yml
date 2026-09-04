@@ -25,6 +25,15 @@ jobs:
           npm ci
           npm run build
 
+      - name: Clean Old Dist Content on VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: prototype.eventaz.space
+          username: nguyen
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            rm -rf /var/www/eventaz-prototype/*
+
       - name: Copy Compiled Dist Bundle to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -34,7 +43,8 @@ jobs:
           source: "prototype/app/dist/*"
           target: "/var/www/eventaz-prototype"
           strip_components: 3
-          rm: true
+          overwrite: true
+          rm: false
 
       - name: Set Nginx Permissions on VPS
         uses: appleboy/ssh-action@v1.0.3

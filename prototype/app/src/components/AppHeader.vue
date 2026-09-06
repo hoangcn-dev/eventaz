@@ -1,5 +1,5 @@
 <template>
-  <header class="fixed top-0 left-0 right-0 h-16 bg-surface-container-lowest border-b border-outline-variant z-50 flex items-center justify-between pl-4 pr-0 shadow-sm">
+  <header class="fixed top-0 left-0 right-0 h-16 bg-surface-container-lowest border-b border-outline-variant z-[60] flex items-center justify-between pl-4 pr-0 shadow-sm">
     <!-- Cụm Logo & Tên Công Ty -->
     <div class="flex items-center gap-4">
       <button @click="$emit('toggle-mobile-menu')" class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant lg:hidden">

@@ -43,7 +43,8 @@ let currentEventIdState = "E-2024-99X";
 export async function loadEventsAsync() {
     if (typeof window !== 'undefined') {
         try {
-            const res = await fetch('/events.json');
+            // Nạp events.json không qua cache để luôn cập nhật ảnh và dữ liệu mới nhất
+            const res = await fetch(`/events.json?t=${Date.now()}`, { cache: 'no-store' });
             if (res.ok) {
                 const data = await res.json();
                 if (Array.isArray(data) && data.length > 0) {

@@ -32,8 +32,9 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { getCurrentEvent } from '../mock/events.js';
 
 const route = useRoute();
 const isEventScope = computed(() => route.meta.isEventScope);
@@ -46,56 +47,59 @@ function handleWheel(e) {
   }
 }
 
-// Thứ tự danh sách tab mặc định (Ưu tiên: Tổng quan => Thông tin sự kiện => Nhân sự => Công việc)
-const defaultTabs = [
-  { path: '/event/overview', label: 'Tổng quan', icon: 'dashboard' },
-  { path: '/event/info', label: 'Thông tin sự kiện', icon: 'info' },
-  { path: '/event/personnel', label: 'Nhân sự', icon: 'badge' },
-  { path: '/event/tasks', label: 'Tiến độ, Công việc & WBS', icon: 'task_alt' },
-  { path: '/event/run-of-show', label: 'Kịch bản Run-of-Show', icon: 'theater_comedy' },
-  { path: '/event/approvals', label: 'Phê duyệt', icon: 'fact_check' },
-  { path: '/event/budget', label: 'Ngân sách & Tài chính', icon: 'account_balance_wallet' },
-  { path: '/event/media', label: 'Truyền thông & Quảng bá', icon: 'campaign' },
-  { path: '/event/tickets', label: 'Vé, chỗ ngồi & Địa điểm', icon: 'confirmation_number' },
-  { path: '/event/guests', label: 'Khách mời', icon: 'star' },
-  { path: '/event/documents', label: 'Tài liệu', icon: 'folder_open' },
-  { path: '/event/equipment', label: 'Thiết bị & Vật tư', icon: 'inventory_2' }
+// Danh sách tất cả các Module tab đồng bộ 1-1 với modules.json
+const ALL_MODULE_TABS = [
+  { key: 'overview', path: '/event/overview', label: 'Tổng quan', icon: 'dashboard', isAlwaysVisible: true },
+  { key: 'info', path: '/event/info', label: 'Thông tin sự kiện', icon: 'info', isAlwaysVisible: true },
+  { key: 'personnel', path: '/event/personnel', label: 'Nhân sự', icon: 'badge' },
+  { key: 'wbs', path: '/event/tasks', label: 'Công việc', icon: 'task_alt' },
+  { key: 'runOfShow', path: '/event/run-of-show', label: 'Chương trình sự kiện', icon: 'theater_comedy' },
+  { key: 'budget', path: '/event/budget', label: 'Ngân sách và tài chính', icon: 'account_balance_wallet' },
+  { key: 'media', path: '/event/media', label: 'Truyền thông và quảng bá', icon: 'campaign' },
+  { key: 'tickets', path: '/event/tickets', label: 'Vé, chỗ ngồi và địa điểm', icon: 'confirmation_number' },
+  { key: 'guests', path: '/event/guests', label: 'Khách mời', icon: 'star' },
+  { key: 'documents', path: '/event/documents', label: 'Tài liệu', icon: 'folder_open' },
+  { key: 'equipment', path: '/event/equipment', label: 'Thiết bị và vật tư', icon: 'inventory_2' },
+  { key: 'approvals', path: '/event/approvals', label: 'Phê duyệt', icon: 'fact_check' }
 ];
 
-const STORAGE_KEY = 'event_top_tabs_order';
+const currentEvent = ref(getCurrentEvent());
 
-// Khôi phục thứ tự tab tùy chỉnh từ localStorage nếu có
-function loadSavedTabs() {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      const paths = JSON.parse(saved);
-      const reordered = [];
-      paths.forEach(p => {
-        const found = defaultTabs.find(t => t.path === p);
-        if (found) reordered.push(found);
-      });
-      defaultTabs.forEach(t => {
-        if (!reordered.some(r => r.path === t.path)) {
-          reordered.push(t);
-        }
-      });
-      return reordered;
-    }
-  } catch (e) {
-    console.warn('Failed to load tabs order from localStorage', e);
-  }
-  return [...defaultTabs];
+function updateCurrentEvent() {
+  currentEvent.value = getCurrentEvent();
 }
 
-const tabs = ref(loadSavedTabs());
+onMounted(() => {
+  updateCurrentEvent();
+  if (typeof window !== 'undefined') {
+    window.addEventListener('eventaz:events-updated', updateCurrentEvent);
+  }
+});
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('eventaz:events-updated', updateCurrentEvent);
+  }
+});
+
+// Lọc hiển thị các tab theo thuộc tính enabledModules của sự kiện đang được chọn
+const tabs = computed(() => {
+  const evt = currentEvent.value;
+  const enabledKeys = evt && Array.isArray(evt.enabledModules) ? evt.enabledModules : null;
+
+  return ALL_MODULE_TABS.filter(tab => {
+    if (tab.isAlwaysVisible) return true;
+    if (!enabledKeys) return true; // Hiển thị mặc định nếu sự kiện chưa cấu hình
+    return enabledKeys.includes(tab.key);
+  });
+});
+
 const draggedIndex = ref(null);
 const dragOverIndex = ref(null);
 
 let autoScrollFrameId = null;
 let autoScrollSpeed = 0;
 
-// Tự động cuộn mượt khi con trỏ ở gần mép trái hoặc phải của khung cuộn
 function startAutoScroll(speed) {
   autoScrollSpeed = speed;
   if (autoScrollFrameId !== null) return;
@@ -119,7 +123,6 @@ function stopAutoScroll() {
   autoScrollSpeed = 0;
 }
 
-// Kiểm tra vị trí con trỏ so với 2 mép rìa (khoảng cách 60px)
 function checkEdgeAutoScroll(event) {
   if (!tabContainerRef.value) return;
   const rect = tabContainerRef.value.getBoundingClientRect();
@@ -127,12 +130,10 @@ function checkEdgeAutoScroll(event) {
   const EDGE_THRESHOLD = 60;
 
   if (mouseX - rect.left >= 0 && mouseX - rect.left < EDGE_THRESHOLD) {
-    // Gần mép trái -> cuộn sang trái
     const intensity = (EDGE_THRESHOLD - (mouseX - rect.left)) / EDGE_THRESHOLD;
     const speed = -Math.max(4, Math.round(intensity * 16));
     startAutoScroll(speed);
   } else if (rect.right - mouseX >= 0 && rect.right - mouseX < EDGE_THRESHOLD) {
-    // Gần mép phải -> cuộn sang phải
     const intensity = (EDGE_THRESHOLD - (rect.right - mouseX)) / EDGE_THRESHOLD;
     const speed = Math.max(4, Math.round(intensity * 16));
     startAutoScroll(speed);
@@ -146,7 +147,6 @@ function onContainerDragOver(event) {
   checkEdgeAutoScroll(event);
 }
 
-// Xử lý sự kiện kéo thả tab (HTML5 Drag & Drop)
 function onDragStart(index, event) {
   draggedIndex.value = index;
   event.dataTransfer.effectAllowed = 'move';
@@ -169,19 +169,6 @@ function onDragLeave(index) {
 function onDrop(targetIndex, event) {
   event.preventDefault();
   stopAutoScroll();
-  const sourceIndex = draggedIndex.value;
-  if (sourceIndex !== null && sourceIndex !== targetIndex) {
-    // Tráo đổi vị trí tab trong mảng
-    const movedTab = tabs.value.splice(sourceIndex, 1)[0];
-    tabs.value.splice(targetIndex, 0, movedTab);
-
-    // Lưu thứ tự mới vào localStorage
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(tabs.value.map(t => t.path)));
-    } catch (e) {
-      console.warn('Failed to save tabs order to localStorage', e);
-    }
-  }
   draggedIndex.value = null;
   dragOverIndex.value = null;
 }

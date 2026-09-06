@@ -66,8 +66,8 @@ jobs:
           username: nguyen
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cp /tmp/eventaz-data-backup/*.json /var/www/eventaz-prototype/ 2>/dev/null || true
-            cp -r /tmp/eventaz-data-backup/uploads /var/www/eventaz-prototype/ 2>/dev/null || true
+            cp -rf /tmp/eventaz-data-backup/*.json /var/www/eventaz-prototype/ 2>/dev/null || true
+            cp -rf /tmp/eventaz-data-backup/uploads /var/www/eventaz-prototype/ 2>/dev/null || true
             rm -rf /tmp/eventaz-data-backup
             chmod -R 777 /var/www/eventaz-prototype
             cd /var/www/eventaz-prototype

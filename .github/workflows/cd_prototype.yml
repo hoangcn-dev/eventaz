@@ -31,7 +31,7 @@ jobs:
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: prototype.eventaz.space
-          username: root
+          username: nguyen
           key: ${{ secrets.SSH_KEY }}
           script: |
             mkdir -p /tmp/eventaz-data-backup

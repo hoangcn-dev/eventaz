@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3101;
 // Ưu tiên ghi vào thư mục dist nếu chạy trên VPS production, ngược lại ghi vào public
 const PUBLIC_DIR = process.env.PUBLIC_DIR || (
   fs.existsSync(path.resolve(__dirname, '../dist'))

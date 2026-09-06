@@ -24,6 +24,19 @@ jobs:
           cd prototype/app
           npm ci
           npm run build
+          mkdir -p dist/mock
+          cp mock/mock-server.js dist/mock/
+
+      - name: Backup VPS JSON Data & Media before SCP
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: prototype.eventaz.space
+          username: root
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            mkdir -p /tmp/eventaz-data-backup
+            cp /var/www/eventaz-prototype/*.json /tmp/eventaz-data-backup/ 2>/dev/null || true
+            cp -r /var/www/eventaz-prototype/uploads /tmp/eventaz-data-backup/ 2>/dev/null || true
 
       - name: Copy Compiled Dist Bundle to VPS
         uses: appleboy/scp-action@v0.1.7
@@ -36,11 +49,16 @@ jobs:
           strip_components: 3
           rm: true
 
-      - name: Set Nginx Permissions on VPS
+      - name: Restore VPS Data & Restart PM2 Mock Server
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: prototype.eventaz.space
           username: root
           key: ${{ secrets.SSH_KEY }}
           script: |
-            chmod -R 755 /var/www/eventaz-prototype
+            cp /tmp/eventaz-data-backup/*.json /var/www/eventaz-prototype/ 2>/dev/null || true
+            cp -r /tmp/eventaz-data-backup/uploads /var/www/eventaz-prototype/ 2>/dev/null || true
+            rm -rf /tmp/eventaz-data-backup
+            chmod -R 777 /var/www/eventaz-prototype
+            cd /var/www/eventaz-prototype
+            pm2 restart eventaz-mock || pm2 start mock/mock-server.js --name "eventaz-mock"

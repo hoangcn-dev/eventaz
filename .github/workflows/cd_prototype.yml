@@ -47,15 +47,6 @@ jobs:
           script: |
             rm -rf /var/www/eventaz-prototype/*
 
-      - name: Clean Old Dist Content on VPS
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: prototype.eventaz.space
-          username: nguyen
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            rm -rf /var/www/eventaz-prototype/*
-
       - name: Copy Compiled Dist Bundle to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -75,8 +66,8 @@ jobs:
           username: nguyen
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cp /tmp/eventaz-data-backup/*.json /var/www/eventaz-prototype/ 2>/dev/null || true
-            cp -r /tmp/eventaz-data-backup/uploads /var/www/eventaz-prototype/ 2>/dev/null || true
+            cp -rf /tmp/eventaz-data-backup/*.json /var/www/eventaz-prototype/ 2>/dev/null || true
+            cp -rf /tmp/eventaz-data-backup/uploads /var/www/eventaz-prototype/ 2>/dev/null || true
             rm -rf /tmp/eventaz-data-backup
             chmod -R 777 /var/www/eventaz-prototype
             cd /var/www/eventaz-prototype

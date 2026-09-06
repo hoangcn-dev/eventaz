@@ -7,12 +7,18 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PORT = process.env.PORT || 3101;
-// Ưu tiên ghi vào thư mục dist nếu chạy trên VPS production, ngược lại ghi vào public
-const PUBLIC_DIR = process.env.PUBLIC_DIR || (
-  fs.existsSync(path.resolve(__dirname, '../dist'))
-    ? path.resolve(__dirname, '../dist')
-    : path.resolve(__dirname, '../public')
-);
+const ROOT_DIR = path.resolve(__dirname, '..');
+
+const getTargetDir = () => {
+  if (process.env.PUBLIC_DIR) return process.env.PUBLIC_DIR;
+  if (fs.existsSync(path.join(ROOT_DIR, 'dist'))) return path.join(ROOT_DIR, 'dist');
+  // Nếu file events.json nằm ngay thư mục gốc (trên VPS), ghi trực tiếp vào thư mục gốc
+  if (fs.existsSync(path.join(ROOT_DIR, 'events.json'))) return ROOT_DIR;
+  if (fs.existsSync(path.join(ROOT_DIR, 'public'))) return path.join(ROOT_DIR, 'public');
+  return ROOT_DIR;
+};
+
+const PUBLIC_DIR = getTargetDir();
 
 function setCorsHeaders(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');

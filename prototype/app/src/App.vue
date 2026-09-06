@@ -37,7 +37,7 @@
     </main>
 
     <!-- Global Shared Modals -->
-    <CreateEventModal :isOpen="showCreateModal" @close="showCreateModal = false" />
+    <CreateEventModal :isOpen="showCreateModal" :isSidebarCollapsed="isSidebarCollapsed" @close="showCreateModal = false" />
     <CloneEventModal :isOpen="showCloneModal" @close="showCloneModal = false" />
   </div>
 </template>

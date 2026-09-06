@@ -2,10 +2,20 @@
  * EventAZ Mock Data - System Admin Approvals Center
  */
 
-import initialAdminApprovals from './admin_approvals.json';
 import { approvePendingUsers } from './users.js';
 
 const ADMIN_APPROVALS_KEY = "eventaz_mock_admin_approvals_v1";
+
+const defaultAdminApprovals = [
+    {
+        id: "APR-001",
+        type: "EventPublish",
+        title: "Phê duyệt Xuất bản Sự kiện Công khai",
+        requester: "Nguyễn Văn Trưởng",
+        status: "Pending",
+        createdAt: "2026-08-01 10:00:00"
+    }
+];
 
 export function getAdminApprovalRequests() {
     try {
@@ -17,8 +27,8 @@ export function getAdminApprovalRequests() {
     } catch (e) {
         console.error("Error reading admin approvals data", e);
     }
-    localStorage.setItem(ADMIN_APPROVALS_KEY, JSON.stringify(initialAdminApprovals));
-    return initialAdminApprovals;
+    localStorage.setItem(ADMIN_APPROVALS_KEY, JSON.stringify(defaultAdminApprovals));
+    return defaultAdminApprovals;
 }
 
 export function saveAdminApprovalRequests(list) {

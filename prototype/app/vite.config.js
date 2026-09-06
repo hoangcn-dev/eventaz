@@ -15,13 +15,9 @@ function jsonAndMediaStoragePlugin() {
             try {
               const { filename, data } = JSON.parse(body);
               if (filename && (filename.endsWith('.json'))) {
+                // Lưu dữ liệu duy nhất vào thư mục public
                 const publicPath = path.resolve(__dirname, './public', filename);
                 fs.writeFileSync(publicPath, JSON.stringify(data, null, 2), 'utf-8');
-
-                const srcMockPath = path.resolve(__dirname, './src/mock', filename);
-                if (fs.existsSync(srcMockPath)) {
-                  fs.writeFileSync(srcMockPath, JSON.stringify(data, null, 2), 'utf-8');
-                }
 
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');

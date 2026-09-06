@@ -1,120 +1,42 @@
 [
   {
-    "id": "E-2024-99X",
-    "name": "Sự kiện test 2026",
-    "category": "Hội thảo Công nghệ",
-    "status": "Ongoing",
-    "startDate": "2026-10-15",
-    "endDate": "2026-10-17",
-    "eventType": "Hybrid",
+    "id": "E-2026-8170",
+    "name": "test2 ccvcv",
+    "category": "Hội thảo / Triển lãm",
+    "status": "Planning",
+    "startDate": "2026-12-01",
+    "endDate": "2026-12-02",
+    "eventType": "Offline",
     "location": "Trung tâm Hội nghị Quốc gia, Hà Nội",
-    "latitude": 21.0074,
-    "longitude": 105.7828,
-    "scale": "small",
-    "host": "Hiệp hội Công nghệ Châu Á & EventAZ Org",
+    "scale": "mega",
     "scope": "Public",
+    "budget": 500000000,
+    "description": "Sự kiện test2 được khởi tạo thành công với 3 module quản lý.",
+    "templateSource": "custom",
+    "templateId": "",
+    "enabledModules": [
+      "wbs",
+      "personnel",
+      "approvals"
+    ],
+    "wbs": [],
+    "auditLogs": [
+      {
+        "id": "LOG-01",
+        "timestamp": "2026-09-06 03:33:18",
+        "user": "Nguyễn Văn Trưởng",
+        "action": "Khởi tạo sự kiện [test2]"
+      }
+    ],
+    "createdAt": "2026-09-06 03:33:18",
     "showOnLandingPage": true,
-    "bannerUrl": "/uploads/1788278504810-banner.jpg",
+    "host": "Hiệp hội Công nghệ Châu Á & EventAZ Org",
+    "bannerUrl": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=80",
     "reviewImages": [
       "https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&q=80",
       "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&q=80"
     ],
-    "budget": 500000000,
-    "description": "Sự kiện hội tụ hơn 1.500 chuyên gia công nghệ, nhà đầu tư và doanh nghiệp khởi nghiệp hàng đầu khu vực Châu Á - Thái Bình Dương.",
-    "descriptionHtml": "<p><b>Tech Summit Asia 2024</b> là diễn đàn công nghệ đỉnh cao khu vực với sự tham gia của các chuyên gia và đối tác hàng đầu.</p>",
-    "directorId": "USR-009",
-    "runOfShowLocked": true,
-    "createdAt": "2026-08-01 09:00:00",
-    "wbs": [
-      {
-        "id": "WBS-01",
-        "name": "Nội dung & Diễn giả",
-        "phaseId": 1,
-        "phaseName": "Thiết lập & Lên kế hoạch",
-        "leadId": "USR-003",
-        "leadName": "Lê Văn Nội Dung",
-        "coLead": "Nguyễn Văn Trưởng",
-        "order": 1
-      },
-      {
-        "id": "WBS-02",
-        "name": "Hậu cần & Địa điểm",
-        "phaseId": 2,
-        "phaseName": "Đang chuẩn bị",
-        "leadId": "USR-002",
-        "leadName": "Trần Thị Hậu Cần",
-        "coLead": "",
-        "order": 2
-      },
-      {
-        "id": "WBS-03",
-        "name": "Truyền thông & Tiếp thị",
-        "phaseId": 1,
-        "phaseName": "Thiết lập & Lên kế hoạch",
-        "leadId": "USR-004",
-        "leadName": "Phạm Hoàng Truyền Thông",
-        "coLead": "",
-        "order": 3
-      },
-      {
-        "id": "WBS-04",
-        "name": "Đón tiếp Khách mời VIP",
-        "phaseId": 3,
-        "phaseName": "Đang diễn ra",
-        "leadId": "USR-005",
-        "leadName": "Đỗ Minh Đối Ngoại",
-        "coLead": "",
-        "order": 4
-      },
-      {
-        "id": "WBS-05",
-        "name": "Tài chính & Vé điện tử",
-        "phaseId": 1,
-        "phaseName": "Thiết lập & Lên kế hoạch",
-        "leadId": "USR-001",
-        "leadName": "Nguyễn Văn Trưởng",
-        "coLead": "",
-        "order": 5
-      },
-      {
-        "id": "WBS-06",
-        "name": "An ninh & Hạ tầng Kỹ thuật",
-        "phaseId": 2,
-        "phaseName": "Đang chuẩn bị",
-        "leadId": "USR-006",
-        "leadName": "Vũ Anh Kỹ Thuật",
-        "coLead": "",
-        "order": 6
-      }
-    ],
-    "auditLogs": [
-      {
-        "id": "LOG-01",
-        "timestamp": "2026-08-01 09:00:00",
-        "user": "Nguyễn Văn Trưởng",
-        "action": "Khởi tạo sự kiện (Trạng thái: Nháp)"
-      },
-      {
-        "id": "LOG-02",
-        "timestamp": "2026-08-05 14:30:00",
-        "user": "Nguyễn Văn Trưởng",
-        "action": "Chuyển trạng thái sang: Lên kế hoạch"
-      },
-      {
-        "id": "LOG-03",
-        "timestamp": "2026-08-10 10:15:00",
-        "user": "Nguyễn Văn Trưởng",
-        "action": "Chuyển trạng thái sang: Đang chuẩn bị"
-      },
-      {
-        "id": "LOG-04",
-        "timestamp": "2026-08-15 08:00:00",
-        "user": "Nguyễn Văn Trưởng",
-        "action": "Khóa kịch bản Run-of-Show và Chuyển trạng thái sang: Đang diễn ra"
-      }
-    ],
-    "lastStatusChangeTime": "2026-08-15T08:00:00Z",
-    "director": "Đặng Thu Thảo",
+    "descriptionHtml": "<p><b>test2</b> là diễn đàn công nghệ đỉnh cao khu vực với sự tham gia của các chuyên gia và đối tác hàng đầu.</p>",
     "lifecycleStates": {
       "Planning": {
         "code": "Planning",
@@ -130,7 +52,7 @@
         "color": "bg-indigo-600",
         "textClass": "text-indigo-600",
         "bgLight": "bg-indigo-50",
-        "stepOrder": 3
+        "stepOrder": 2
       },
       "Ongoing": {
         "code": "Ongoing",
@@ -138,7 +60,7 @@
         "color": "bg-emerald-600",
         "textClass": "text-emerald-600",
         "bgLight": "bg-emerald-50",
-        "stepOrder": 4
+        "stepOrder": 3
       },
       "Closed": {
         "code": "Closed",
@@ -146,7 +68,7 @@
         "color": "bg-amber-600",
         "textClass": "text-amber-600",
         "bgLight": "bg-amber-50",
-        "stepOrder": 5
+        "stepOrder": 4
       },
       "t1": {
         "code": "t1",
@@ -154,7 +76,7 @@
         "color": "bg-blue-600",
         "textClass": "text-blue-600",
         "bgLight": "bg-blue-50",
-        "stepOrder": 6
+        "stepOrder": 5
       },
       "t2": {
         "code": "t2",
@@ -162,7 +84,7 @@
         "color": "bg-indigo-600",
         "textClass": "text-indigo-600",
         "bgLight": "bg-indigo-50",
-        "stepOrder": 7
+        "stepOrder": 6
       },
       "t3": {
         "code": "t3",
@@ -170,7 +92,7 @@
         "color": "bg-emerald-600",
         "textClass": "text-emerald-600",
         "bgLight": "bg-emerald-50",
-        "stepOrder": 8
+        "stepOrder": 6
       },
       "t4": {
         "code": "t4",
@@ -178,19 +100,130 @@
         "color": "bg-amber-600",
         "textClass": "text-amber-600",
         "bgLight": "bg-amber-50",
-        "stepOrder": 9
+        "stepOrder": 8
+      }
+    }
+  },
+  {
+    "id": "E-2026-2973",
+    "name": "tets",
+    "category": "Hội thảo / Triển lãm",
+    "status": "Planning",
+    "startDate": "2026-12-01",
+    "endDate": "2026-12-02",
+    "eventType": "Offline",
+    "location": "Trung tâm Hội nghị Quốc gia, Hà Nội",
+    "scale": "mega",
+    "scope": "Public",
+    "budget": 500000000,
+    "description": "Sự kiện tets được khởi tạo thành công với 5 module quản lý.",
+    "templateSource": "custom",
+    "templateId": "",
+    "enabledModules": [
+      "wbs",
+      "personnel",
+      "runOfShow",
+      "approvals",
+      "budget"
+    ],
+    "wbs": [],
+    "auditLogs": [
+      {
+        "id": "LOG-01",
+        "timestamp": "2026-09-06 03:27:42",
+        "user": "Nguyễn Văn Trưởng",
+        "action": "Khởi tạo sự kiện [tets]"
+      }
+    ],
+    "createdAt": "2026-09-06 03:27:42"
+  },
+  {
+    "id": "E-2024-99X",
+    "name": "Sự kiện test 2026",
+    "category": "Hội thảo Công nghệ",
+    "status": "Ongoing",
+    "startDate": "2026-10-15",
+    "endDate": "2026-10-17",
+    "eventType": "Hybrid",
+    "location": "Trung tâm Hội nghị Quốc gia, Hà Nội",
+    "scale": "small",
+    "budget": 500000000,
+    "description": "Sự kiện hội tụ hơn 1.500 chuyên gia công nghệ.",
+    "directorId": "USR-009",
+    "createdAt": "2026-08-01 09:00:00",
+    "scope": "Public",
+    "showOnLandingPage": true,
+    "host": "Hiệp hội Công nghệ Châu Á & EventAZ Org",
+    "bannerUrl": "/uploads/1788665844053-banner.jpg",
+    "reviewImages": [
+      "https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&q=80",
+      "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&q=80"
+    ],
+    "descriptionHtml": "<p><b>Sự kiện test 2026</b> là diễn đàn công nghệ đỉnh cao khu vực với sự tham gia của các chuyên gia và đối tác hàng đầu.</p>",
+    "lifecycleStates": {
+      "Planning": {
+        "code": "Planning",
+        "nameVi": "Thiết lập",
+        "color": "bg-blue-600",
+        "textClass": "text-blue-600",
+        "bgLight": "bg-blue-50",
+        "stepOrder": 1
       },
-      "stage_6667": {
-        "code": "stage_6667",
-        "nameVi": "--",
-        "color": "bg-slate-600",
-        "textClass": "text-slate-600",
-        "bgLight": "bg-slate-50",
-        "stepOrder": 2,
-        "completionRate": "--",
-        "backlogCount": "--",
-        "assignee": "--",
-        "description": "--"
+      "Preparing": {
+        "code": "Preparing",
+        "nameVi": "Chuẩn bị",
+        "color": "bg-indigo-600",
+        "textClass": "text-indigo-600",
+        "bgLight": "bg-indigo-50",
+        "stepOrder": 2
+      },
+      "Ongoing": {
+        "code": "Ongoing",
+        "nameVi": "Đang diễn ra",
+        "color": "bg-emerald-600",
+        "textClass": "text-emerald-600",
+        "bgLight": "bg-emerald-50",
+        "stepOrder": 3
+      },
+      "Closed": {
+        "code": "Closed",
+        "nameVi": "Kết thúc",
+        "color": "bg-amber-600",
+        "textClass": "text-amber-600",
+        "bgLight": "bg-amber-50",
+        "stepOrder": 4
+      },
+      "t1": {
+        "code": "t1",
+        "nameVi": "Thiết lập",
+        "color": "bg-blue-600",
+        "textClass": "text-blue-600",
+        "bgLight": "bg-blue-50",
+        "stepOrder": 5
+      },
+      "t2": {
+        "code": "t2",
+        "nameVi": "Chuẩn bị",
+        "color": "bg-indigo-600",
+        "textClass": "text-indigo-600",
+        "bgLight": "bg-indigo-50",
+        "stepOrder": 6
+      },
+      "t3": {
+        "code": "t3",
+        "nameVi": "Đang diễn ra",
+        "color": "bg-emerald-600",
+        "textClass": "text-emerald-600",
+        "bgLight": "bg-emerald-50",
+        "stepOrder": 6
+      },
+      "t4": {
+        "code": "t4",
+        "nameVi": "Kết thúc",
+        "color": "bg-amber-600",
+        "textClass": "text-amber-600",
+        "bgLight": "bg-amber-50",
+        "stepOrder": 8
       }
     }
   },

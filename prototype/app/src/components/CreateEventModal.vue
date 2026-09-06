@@ -62,7 +62,8 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import { createEvent } from '../mock/events.js';
+import { createEvent, getEvents, setCurrentEventId } from '../mock/events.js';
+import { getTemplates } from '../mock/templates.js';
 
 const props = defineProps({
   isOpen: Boolean
@@ -86,9 +87,28 @@ function close() {
   emit('close');
 }
 
-function handleSubmit() {
-  const newEvt = createEvent(form);
-  alert(`Tạo thành công sự kiện: [${newEvt.name}]! Sự kiện được tạo ở trạng thái Nháp (Draft).`);
+function handleConfirmCreate() {
+  const eventPayload = {
+    name: form.name,
+    category: form.category,
+    eventType: form.eventType,
+    scale: form.scale,
+    startDate: form.startDate,
+    endDate: form.endDate,
+    location: form.location || 'Trung tâm Hội nghị Quốc gia, Hà Nội',
+    budget: form.budget,
+    description: form.description || `Sự kiện ${form.name} được khởi tạo thành công với ${selectedModules.value.length} module quản lý.`,
+    templateSource: selectedTemplateType.value,
+    templateId: selectedTemplateId.value,
+    enabledModules: [...selectedModules.value]
+  };
+
+  const newEvt = createEvent(eventPayload);
+  if (newEvt && newEvt.id) {
+    setCurrentEventId(newEvt.id);
+  }
+
+  alert(`Đã hoàn tất khởi tạo sự kiện: [${newEvt.name}]!\nĐã kích hoạt ${selectedModules.value.length} module quản lý.`);
   close();
   router.push('/event/overview');
 }

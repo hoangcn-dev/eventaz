@@ -256,9 +256,9 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { getEvents, getCurrentEventId, setCurrentEventId, LIFECYCLE_STATES } from '../mock/events.js';
+import { getEvents, loadEventsAsync, getCurrentEventId, setCurrentEventId, LIFECYCLE_STATES } from '../mock/events.js';
 
 const SIDEBAR_STORAGE_KEY = 'eventaz_sidebar_collapsed';
 
@@ -335,10 +335,20 @@ function toggleSidebar() {
   emit('sidebar-toggled', isCollapsed.value);
 }
 
-function loadEvents() {
+async function loadEvents() {
+  await loadEventsAsync();
   eventsList.value = getEvents();
   currentEventId.value = getCurrentEventId();
   currentEvent.value = eventsList.value.find(e => e.id === currentEventId.value) || eventsList.value[0] || {};
+}
+
+function handleEventsUpdated(e) {
+  loadEvents();
+  isEventsOpen.value = true;
+  if (e && e.detail && e.detail.id) {
+    currentEventId.value = e.detail.id;
+  }
+  setTimeout(updateScrollThumb, 50);
 }
 
 function selectEvent(eventId) {
@@ -399,9 +409,18 @@ watch(
 onMounted(() => {
   loadSidebarState();
   loadEvents();
+  if (typeof window !== 'undefined') {
+    window.addEventListener('eventaz:events-updated', handleEventsUpdated);
+  }
   setTimeout(() => {
     updateScrollThumb();
   }, 100);
+});
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('eventaz:events-updated', handleEventsUpdated);
+  }
 });
 
 defineExpose({

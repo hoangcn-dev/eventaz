@@ -727,7 +727,7 @@
 
 <script setup>
 import { ref, reactive, onMounted, nextTick } from 'vue';
-import { getCurrentEvent, saveEvent, LIFECYCLE_STATES, changeEventStatus, resetEventsToDefault, uploadImageApi, deleteImageApi } from '../mock/events.js';
+import { getCurrentEvent, loadEventsAsync, saveEvent, LIFECYCLE_STATES, changeEventStatus, resetEventsToDefault, uploadImageApi, deleteImageApi } from '../mock/events.js';
 import { saveTemplate } from '../mock/templates.js';
 import SearchAssignPersonnelModal from '../components/SearchAssignPersonnelModal.vue';
 
@@ -970,7 +970,9 @@ const templateForm = reactive({
   description: ''
 });
 
-function loadData() {
+async function loadData() {
+  // Nạp dữ liệu sự kiện từ public/events.json trước khi cập nhật currentEvent
+  await loadEventsAsync();
   currentEvent.value = getCurrentEvent();
 
   if (currentEvent.value.lifecycleStates) {
@@ -1052,16 +1054,23 @@ function triggerBannerFileUpload() {
 }
 
 function handleBannerFileUpload(event) {
-  const file = event.target.files?.[0];
+  const inputEl = event.target;
+  const file = inputEl.files?.[0];
   if (!file) return;
+
   const reader = new FileReader();
   reader.onload = (e) => {
     const oldBannerUrl = currentEvent.value.bannerUrl;
     if (oldBannerUrl && oldBannerUrl.startsWith('/uploads/')) {
       pendingDeleteImageUrls.value.push(oldBannerUrl);
     }
-    currentEvent.value.bannerUrl = e.target.result;
+    // Gán dữ liệu Base64 để hiển thị preview ngay tại client (chưa gửi API server)
+    currentEvent.value = {
+      ...currentEvent.value,
+      bannerUrl: e.target.result
+    };
     markFormModified();
+    inputEl.value = '';
   };
   reader.readAsDataURL(file);
 }
@@ -1071,18 +1080,25 @@ function triggerReviewFilesUpload() {
 }
 
 function handleReviewFilesUpload(event) {
-  const files = Array.from(event.target.files || []);
+  const inputEl = event.target;
+  const files = Array.from(inputEl.files || []);
   if (files.length === 0) return;
 
   if (!currentEvent.value.reviewImages) {
     currentEvent.value.reviewImages = [];
   }
 
+  let readCount = 0;
   files.forEach(file => {
     const reader = new FileReader();
     reader.onload = (e) => {
-      currentEvent.value.reviewImages.push(e.target.result);
+      // Gán dữ liệu Base64 vào mảng để hiển thị preview ngay tại client (chưa gửi API server)
+      currentEvent.value.reviewImages = [...(currentEvent.value.reviewImages || []), e.target.result];
       markFormModified();
+      readCount++;
+      if (readCount === files.length) {
+        inputEl.value = '';
+      }
     };
     reader.readAsDataURL(file);
   });
@@ -1310,8 +1326,8 @@ function handleSaveTemplate() {
   alert(`Lưu thành công Template mẫu: [${newTpl.name}] (FR-01.5)!`);
 }
 
-onMounted(() => {
-  loadData();
+onMounted(async () => {
+  await loadData();
   nextTick(() => {
     updateScrollButtons();
   });

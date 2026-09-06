@@ -2,7 +2,7 @@ name: Deploy Prototype App (Vue 3 Vite)
 
 on:
   push:
-    branches: [ deploy/prototype ]
+    branches: [ test ]
 
 jobs:
   deploy:
@@ -38,22 +38,32 @@ jobs:
             cp /var/www/eventaz-prototype/*.json /tmp/eventaz-data-backup/ 2>/dev/null || true
             cp -r /var/www/eventaz-prototype/uploads /tmp/eventaz-data-backup/ 2>/dev/null || true
 
+      - name: Clean Old Dist Content on VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: prototype.eventaz.space
+          username: nguyen
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            rm -rf /var/www/eventaz-prototype/*
+
       - name: Copy Compiled Dist Bundle to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
           host: prototype.eventaz.space
-          username: root
+          username: nguyen
           key: ${{ secrets.SSH_KEY }}
           source: "prototype/app/dist/*"
           target: "/var/www/eventaz-prototype"
           strip_components: 3
-          rm: true
+          overwrite: true
+          rm: false
 
       - name: Restore VPS Data & Restart PM2 Mock Server
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: prototype.eventaz.space
-          username: root
+          username: nguyen
           key: ${{ secrets.SSH_KEY }}
           script: |
             cp /tmp/eventaz-data-backup/*.json /var/www/eventaz-prototype/ 2>/dev/null || true

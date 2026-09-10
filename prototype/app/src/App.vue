@@ -9,6 +9,7 @@
       ref="sidebarRef"
       @open-create-event="showCreateModal = true"
       @open-clone-event="showCloneModal = true"
+      @select-event="showCreateModal = false"
       @sidebar-toggled="handleSidebarToggled"
     />
 
@@ -43,7 +44,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import AppHeader from './components/AppHeader.vue';
 import AppSidebar from './components/AppSidebar.vue';
@@ -56,6 +57,12 @@ const showCreateModal = ref(false);
 const showCloneModal = ref(false);
 const sidebarRef = ref(null);
 const isSidebarCollapsed = ref(false);
+
+// Tự động ẩn trang/modal tạo mới sự kiện khi chọn hoặc chuyển sang bất kỳ sự kiện nào
+watch(() => route.path, () => {
+  showCreateModal.value = false;
+  showCloneModal.value = false;
+});
 
 const isAuthPage = computed(() => {
   return route.meta && route.meta.isAuthPage;

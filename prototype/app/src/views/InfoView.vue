@@ -172,16 +172,16 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label class="block text-xs font-bold text-on-surface uppercase tracking-wider mb-1">Thời gian Bắt đầu</label>
-          <input type="date" v-model="currentEvent.startDate" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm focus:border-primary focus:outline-none font-medium">
-          <p class="text-[11px] text-on-surface-variant mt-1 italic">
-            * Nếu bỏ trống, thời gian bắt đầu sẽ tự động gán khi hoàn thành giai đoạn Thiết lập.
+          <input type="datetime-local" v-model="currentEvent.startDate" @click="$event.target.showPicker?.()" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm focus:border-primary focus:outline-none font-medium">
+          <p class="text-[11px] text-on-surface-variant mt-1">
+            Bỏ trống nếu muốn bắt đầu ngay sau khi kết thúc pha thiết lập
           </p>
         </div>
         <div>
           <label class="block text-xs font-bold text-on-surface uppercase tracking-wider mb-1">Thời gian Kết thúc</label>
-          <input type="date" v-model="currentEvent.endDate" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm focus:border-primary focus:outline-none font-medium">
-          <p class="text-[11px] text-on-surface-variant mt-1 italic">
-            * Có thể bỏ trống thời gian kết thúc.
+          <input type="datetime-local" v-model="currentEvent.endDate" @click="$event.target.showPicker?.()" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm focus:border-primary focus:outline-none font-medium">
+          <p class="text-[11px] text-on-surface-variant mt-1">
+            Bỏ trống nếu muốn chỉ kết thúc khi đóng sự kiện thủ công
           </p>
         </div>
       </div>
@@ -993,6 +993,21 @@ function loadData() {
   }
   if (!currentEvent.value.descriptionHtml) {
     currentEvent.value.descriptionHtml = `<p><b>${currentEvent.value.name || 'Sự kiện'}</b> là diễn đàn công nghệ đỉnh cao khu vực với sự tham gia của các chuyên gia và đối tác hàng đầu.</p>`;
+  }
+
+  if (currentEvent.value.startDate && !currentEvent.value.startDate.includes('T')) {
+    if (currentEvent.value.startDate.length === 10) {
+      currentEvent.value.startDate = `${currentEvent.value.startDate}T08:00`;
+    } else if (currentEvent.value.startDate.includes(' ')) {
+      currentEvent.value.startDate = currentEvent.value.startDate.replace(' ', 'T');
+    }
+  }
+  if (currentEvent.value.endDate && !currentEvent.value.endDate.includes('T')) {
+    if (currentEvent.value.endDate.length === 10) {
+      currentEvent.value.endDate = `${currentEvent.value.endDate}T17:00`;
+    } else if (currentEvent.value.endDate.includes(' ')) {
+      currentEvent.value.endDate = currentEvent.value.endDate.replace(' ', 'T');
+    }
   }
 
   templateForm.name = `Mẫu chuẩn: ${currentEvent.value.name}`;

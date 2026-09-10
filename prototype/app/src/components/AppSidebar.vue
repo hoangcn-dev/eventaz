@@ -345,6 +345,7 @@ function selectEvent(eventId) {
   setCurrentEventId(eventId);
   currentEventId.value = eventId;
   currentEvent.value = eventsList.value.find(e => e.id === eventId) || {};
+  emit('select-event', eventId);
   router.push('/event/overview');
 }
 

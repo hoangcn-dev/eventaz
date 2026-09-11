@@ -129,12 +129,14 @@
           <!-- 3. Thời gian bắt đầu - kết thúc -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="space-y-1.5">
-              <label class="block text-xs font-bold uppercase tracking-wider text-on-surface">Thời gian Bắt đầu <span class="text-red-500">*</span></label>
-              <input type="date" v-model="form.startDate" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm font-medium focus:border-primary focus:outline-none" />
+              <label class="block text-xs font-bold uppercase tracking-wider text-on-surface">Thời gian Bắt đầu</label>
+              <input type="datetime-local" v-model="form.startDate" @click="$event.target.showPicker?.()" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm font-medium focus:border-primary focus:outline-none" />
+              <p class="text-[11px] text-on-surface-variant">Bỏ trống nếu muốn bắt đầu ngay sau khi kết thúc pha thiết lập</p>
             </div>
             <div class="space-y-1.5">
-              <label class="block text-xs font-bold uppercase tracking-wider text-on-surface">Thời gian Kết thúc <span class="text-red-500">*</span></label>
-              <input type="date" v-model="form.endDate" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm font-medium focus:border-primary focus:outline-none" />
+              <label class="block text-xs font-bold uppercase tracking-wider text-on-surface">Thời gian Kết thúc</label>
+              <input type="datetime-local" v-model="form.endDate" @click="$event.target.showPicker?.()" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm font-medium focus:border-primary focus:outline-none" />
+              <p class="text-[11px] text-on-surface-variant">Bỏ trống nếu muốn chỉ kết thúc khi đóng sự kiện thủ công</p>
             </div>
           </div>
 
@@ -395,7 +397,7 @@
                 <div class="min-w-0 space-y-0.5">
                   <div class="flex items-center gap-2 flex-wrap">
                     <span class="font-bold text-xs text-on-surface">{{ mod.name }}</span>
-                    <span v-if="mod.required" class="text-[10px] text-amber-700 font-bold bg-amber-100 px-1.5 py-0.2 rounded">Bắt buộc</span>
+                    <span v-if="mod.isDefault" class="text-[10px] text-slate-700 font-bold bg-slate-100 px-1.5 py-0.2 rounded border border-slate-200">Mặc định</span>
                     <span v-else-if="mod.fromTemplate && selectedTemplateType !== 'custom'" class="text-[10px] text-primary font-bold bg-primary/10 px-1.5 py-0.2 rounded">Theo Template</span>
                   </div>
                   <p class="text-[11px] text-on-surface-variant line-clamp-1 font-normal">{{ mod.desc }}</p>
@@ -407,7 +409,7 @@
                 <input 
                   type="checkbox" 
                   :checked="selectedModules.includes(mod.key)"
-                  :disabled="mod.required || (selectedTemplateType !== 'custom' && mod.fromTemplate)"
+                  :disabled="selectedTemplateType !== 'custom' && mod.fromTemplate"
                   @change="toggleModule(mod.key)"
                   class="w-4 h-4 text-primary rounded border-outline-variant focus:ring-primary disabled:opacity-50 cursor-pointer"
                 />
@@ -579,8 +581,8 @@ const form = reactive({
   eventType: 'Offline',
   scale: 'mega',
   scope: 'Public',
-  startDate: '2026-12-01',
-  endDate: '2026-12-02',
+  startDate: '',
+  endDate: '',
   budget: 500000000,
   description: ''
 });
@@ -596,16 +598,16 @@ const libraryTemplates = ref([]);
 
 // Danh sách các Module quản lý sẵn có ở Bước 3 (đồng bộ theo modules.json)
 const availableModules = reactive([
-  { key: 'personnel', name: 'Nhân sự', icon: 'badge', desc: 'Sơ đồ tổ chức Ban Tổ Chức, gán Trưởng BAN và phân công phụ trách.', required: true, fromTemplate: true },
-  { key: 'wbs', name: 'Công việc', icon: 'task_alt', desc: 'Quản lý cây công việc WBS, tiến độ và giao việc cho nhân sự.', required: true, fromTemplate: true },
-  { key: 'runOfShow', name: 'Chương trình sự kiện', icon: 'theater_comedy', desc: 'Quản lý timeline kịch bản sự kiện thời gian thực theo phút.', required: false, fromTemplate: true },
-  { key: 'budget', name: 'Ngân sách và tài chính', icon: 'account_balance_wallet', desc: 'Quản lý thu chi, lập dự toán và quyết toán sự kiện.', required: false, fromTemplate: true },
-  { key: 'media', name: 'Truyền thông và quảng bá', icon: 'campaign', desc: 'Lên kế hoạch bài viết, báo chí và các kênh quảng bá.', required: false, fromTemplate: false },
-  { key: 'tickets', name: 'Vé, chỗ ngồi và địa điểm', icon: 'confirmation_number', desc: 'Cấu hình sơ đồ ghế ngồi, loại vé và thông tin địa điểm.', required: false, fromTemplate: false },
-  { key: 'guests', name: 'Khách mời', icon: 'star', desc: 'Quản lý danh sách khách mời, đón tiếp và điểm danh check-in.', required: false, fromTemplate: false },
-  { key: 'documents', name: 'Tài liệu', icon: 'folder_open', desc: 'Lưu trữ file hợp đồng, thiết kế 2D/3D và hồ sơ pháp lý.', required: false, fromTemplate: false },
-  { key: 'equipment', name: 'Thiết bị và vật tư', icon: 'inventory_2', desc: 'Kiểm kê âm thanh, ánh sáng và vật tư thi công.', required: false, fromTemplate: false },
-  { key: 'approvals', name: 'Phê duyệt', icon: 'fact_check', desc: 'Quy trình trình ký duyệt ngân sách và nghiệm thu công việc.', required: false, fromTemplate: true }
+  { key: 'personnel', name: 'Nhân sự', icon: 'badge', desc: 'Sơ đồ tổ chức Ban Tổ Chức, gán Trưởng BAN và phân công phụ trách.', isDefault: true, fromTemplate: true },
+  { key: 'wbs', name: 'Công việc', icon: 'task_alt', desc: 'Quản lý cây công việc WBS, tiến độ và giao việc cho nhân sự.', isDefault: true, fromTemplate: true },
+  { key: 'runOfShow', name: 'Chương trình sự kiện', icon: 'theater_comedy', desc: 'Quản lý timeline kịch bản sự kiện thời gian thực theo phút.', isDefault: false, fromTemplate: true },
+  { key: 'budget', name: 'Ngân sách và tài chính', icon: 'account_balance_wallet', desc: 'Quản lý thu chi, lập dự toán và quyết toán sự kiện.', isDefault: false, fromTemplate: true },
+  { key: 'media', name: 'Truyền thông và quảng bá', icon: 'campaign', desc: 'Lên kế hoạch bài viết, báo chí và các kênh quảng bá.', isDefault: false, fromTemplate: false },
+  { key: 'tickets', name: 'Vé, chỗ ngồi và địa điểm', icon: 'confirmation_number', desc: 'Cấu hình sơ đồ ghế ngồi, loại vé và thông tin địa điểm.', isDefault: false, fromTemplate: false },
+  { key: 'guests', name: 'Khách mời', icon: 'star', desc: 'Quản lý danh sách khách mời, đón tiếp và điểm danh check-in.', isDefault: false, fromTemplate: false },
+  { key: 'documents', name: 'Tài liệu', icon: 'folder_open', desc: 'Lưu trữ file hợp đồng, thiết kế 2D/3D và hồ sơ pháp lý.', isDefault: false, fromTemplate: false },
+  { key: 'equipment', name: 'Thiết bị và vật tư', icon: 'inventory_2', desc: 'Kiểm kê âm thanh, ánh sáng và vật tư thi công.', isDefault: false, fromTemplate: false },
+  { key: 'approvals', name: 'Phê duyệt', icon: 'fact_check', desc: 'Quy trình trình ký duyệt ngân sách và nghiệm thu công việc.', isDefault: false, fromTemplate: true }
 ]);
 
 const selectedModules = ref(['wbs', 'personnel', 'runOfShow', 'approvals', 'budget']);
@@ -613,7 +615,7 @@ const selectedModules = ref(['wbs', 'personnel', 'runOfShow', 'approvals', 'budg
 // Kiểm tra điều kiện cho phép chuyển sang bước tiếp theo
 const canProceedNext = computed(() => {
   if (currentStep.value === 1) {
-    return form.name && form.name.trim().length > 0 && form.startDate && form.endDate;
+    return form.name && form.name.trim().length > 0;
   }
   if (currentStep.value === 2) {
     return true; // Bước 2 luôn chọn 1 trong 3 dạng
@@ -623,7 +625,7 @@ const canProceedNext = computed(() => {
 
 function goToStep(step) {
   if (step === 2 && !canProceedNext.value) {
-    alert('Vui lòng điền đầy đủ Tên sự kiện và Thời gian ở Bước 1!');
+    alert('Vui lòng điền Tên sự kiện ở Bước 1!');
     return;
   }
   currentStep.value = step;
@@ -675,7 +677,7 @@ function updateModulesFromSelection() {
 
 function toggleModule(key) {
   const mod = availableModules.find(m => m.key === key);
-  if (mod && mod.required) return; // Không cho phép bỏ tích module bắt buộc
+  if (selectedTemplateType.value !== 'custom' && mod && mod.fromTemplate) return;
 
   const idx = selectedModules.value.indexOf(key);
   if (idx > -1) {

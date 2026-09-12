@@ -1,17 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 
+/* Import Modular Design Tokens & Theme Files */
+@import './styles/tokens.css';
+@import './styles/themes/light.css';
+@import './styles/themes/dark.css';
+@import './styles/themes/ocean.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  background-color: #f8f9ff;
-  color: #0b1c30;
+  background-color: var(--bg-surface);
+  color: var(--text-on-surface);
   font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .material-symbols-outlined {
@@ -36,14 +43,14 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f3f9;
+  background: var(--bg-surface-container-low);
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: var(--border-outline-variant);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: var(--border-outline);
 }
 
 /* Vue View Fade Animations */

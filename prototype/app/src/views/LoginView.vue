@@ -13,7 +13,7 @@
       <!-- Floating Branding Elements -->
       <div class="relative z-20 px-12 text-on-primary">
         <div class="mb-8">
-          <router-link to="/dashboard" class="text-3xl font-extrabold tracking-tight cursor-pointer">EventAZ</router-link>
+          <router-link to="/" class="text-3xl font-extrabold tracking-tight cursor-pointer">EventAZ</router-link>
           <div class="h-1 w-12 bg-on-tertiary-container mt-2 rounded-full"></div>
         </div>
         <h1 class="text-4xl font-bold max-w-lg mb-6 leading-tight">
@@ -37,15 +37,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Subtle Decorative Mesh -->
-      <div class="absolute bottom-0 left-0 w-full h-1/3 opacity-20 pointer-events-none">
-        <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
-          <path d="M0 100 C 20 0 50 0 100 100" fill="none" stroke="white" stroke-width="0.1"></path>
-          <path d="M0 100 C 40 10 70 10 100 100" fill="none" stroke="white" stroke-width="0.1"></path>
-          <path d="M0 100 C 60 20 90 20 100 100" fill="none" stroke="white" stroke-width="0.1"></path>
-        </svg>
-      </div>
     </section>
 
     <!-- Right Side: Authentication Canvas -->
@@ -53,14 +44,14 @@
       <div class="w-full max-w-md">
         <!-- Mobile Branding -->
         <div class="lg:hidden mb-6 flex flex-col items-center text-center">
-          <span class="text-3xl font-extrabold text-primary">EventAZ</span>
+          <router-link to="/" class="text-3xl font-extrabold text-primary">EventAZ</router-link>
           <p class="text-sm text-on-surface-variant mt-1">Hệ thống Quản lý Sự kiện Chuyên nghiệp</p>
         </div>
 
         <!-- Header -->
         <div class="mb-6">
-          <h2 class="text-2xl font-bold text-on-surface mb-1">Chào mừng quay trở lại</h2>
-          <p class="text-base text-on-surface-variant">Đăng nhập để quản lý các sự kiện của tổ chức bạn.</p>
+          <h2 class="text-2xl font-bold text-on-surface mb-1">{{ $t('auth.login.title') }}</h2>
+          <p class="text-base text-on-surface-variant">{{ $t('auth.login.subtitle') }}</p>
         </div>
 
         <!-- Login Card -->
@@ -68,7 +59,7 @@
           <form class="space-y-4" @submit.prevent="handleSubmit">
             <!-- Email Field -->
             <div class="space-y-1.5">
-              <label class="block text-xs font-semibold text-on-surface uppercase tracking-wider" for="email">Địa chỉ Email</label>
+              <label class="block text-xs font-semibold text-on-surface uppercase tracking-wider" for="email">{{ $t('auth.login.emailLabel') }}</label>
               <div class="relative">
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">mail</span>
                 <input 
@@ -85,8 +76,8 @@
             <!-- Password Field -->
             <div class="space-y-1.5">
               <div class="flex justify-between items-center">
-                <label class="block text-xs font-semibold text-on-surface uppercase tracking-wider" for="password">Mật khẩu</label>
-                <router-link to="/forgot-password" class="text-xs font-semibold text-primary hover:underline transition-all">Quên mật khẩu?</router-link>
+                <label class="block text-xs font-semibold text-on-surface uppercase tracking-wider" for="password">{{ $t('auth.login.passwordLabel') }}</label>
+                <router-link to="/forgot-password" class="text-xs font-semibold text-primary hover:underline transition-all">{{ $t('auth.login.forgotPassword') }}</router-link>
               </div>
               <div class="relative">
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">lock</span>
@@ -111,7 +102,7 @@
             <!-- Remember Me -->
             <div class="flex items-center space-x-3 pt-1">
               <input id="remember" v-model="rememberMe" type="checkbox" class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary transition-all">
-              <label for="remember" class="text-xs text-on-surface-variant cursor-pointer">Ghi nhớ thiết bị này trong 30 ngày</label>
+              <label for="remember" class="text-xs text-on-surface-variant cursor-pointer">{{ $t('auth.login.rememberMe') }}</label>
             </div>
 
             <!-- Sign In Button -->
@@ -119,7 +110,7 @@
               type="submit" 
               class="w-full py-3 bg-primary text-on-primary font-semibold text-sm rounded-lg shadow-lg hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-2"
             >
-              <span>Đăng nhập</span>
+              <span>{{ $t('auth.login.submitButton') }}</span>
               <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
             </button>
           </form>
@@ -157,18 +148,16 @@
         <!-- Footer Link -->
         <div class="mt-6 text-center">
           <p class="text-sm text-on-surface-variant">
-            Mới sử dụng EventAZ? 
-            <a class="text-primary font-bold hover:underline transition-all ml-1" href="#">Tạo tài khoản tổ chức</a>
+            {{ $t('auth.login.noAccount') }}
+            <router-link to="/register" class="text-primary font-bold hover:underline transition-all ml-1">{{ $t('auth.login.registerLink') }}</router-link>
           </p>
         </div>
 
         <!-- Footer Small Print -->
         <div class="mt-10 flex flex-wrap justify-center gap-4 text-outline text-xs font-semibold">
-          <a class="hover:text-on-surface transition-colors" href="#">Chính sách bảo mật</a>
+          <router-link to="/about" class="hover:text-on-surface transition-colors">{{ $t('public.footer.linkPrivacy') }}</router-link>
           <span class="w-1 h-1 bg-outline rounded-full self-center"></span>
-          <a class="hover:text-on-surface transition-colors" href="#">Điều khoản dịch vụ</a>
-          <span class="w-1 h-1 bg-outline rounded-full self-center"></span>
-          <a class="hover:text-on-surface transition-colors" href="#">Trạng thái hệ thống</a>
+          <router-link to="/about" class="hover:text-on-surface transition-colors">{{ $t('public.footer.linkTerms') }}</router-link>
         </div>
       </div>
     </section>

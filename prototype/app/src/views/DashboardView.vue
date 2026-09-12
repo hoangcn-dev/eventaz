@@ -71,18 +71,18 @@
         <div>
           <h3 class="font-headline-sm font-bold text-on-surface flex items-center gap-2">
             <span class="material-symbols-outlined text-primary">event_available</span>
-            <span>Danh mục Sự kiện của Tổ chức</span>
+            <span>Danh mục sự kiện của tổ chức</span>
           </h3>
           <p class="text-xs text-on-surface-variant">Quản lý và chuyển đổi nhanh giữa các sự kiện trong tổ chức.</p>
         </div>
         <div class="flex items-center gap-3">
-          <select v-model="filterStatus" class="px-3 py-1.5 text-sm border border-outline-variant rounded-lg bg-white focus:outline-none focus:border-primary">
-            <option value="">Tất cả Trạng thái</option>
-            <option value="Preparing">Preparing (Đang chuẩn bị)</option>
-            <option value="Draft">Draft (Nháp)</option>
-            <option value="Ongoing">Ongoing (Đang diễn ra)</option>
-            <option value="Closed">Closed (Đã đóng)</option>
-          </select>
+          <BaseDropdown 
+            :label="filterStatusLabel"
+            :items="statusOptions"
+            placement="bottom-start"
+            bgColor="white"
+            @select="(item) => filterStatus = item.id"
+          />
         </div>
       </div>
 
@@ -141,6 +141,7 @@ import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { getEvents, setCurrentEventId } from '../mock/events.js';
 import { getUsers } from '../mock/users.js';
+import BaseDropdown from '../components/base/BaseDropdown.vue';
 
 defineEmits(['open-create-event']);
 const router = useRouter();
@@ -148,6 +149,19 @@ const router = useRouter();
 const events = ref([]);
 const usersCount = ref(0);
 const filterStatus = ref('');
+
+const statusOptions = [
+  { id: '', label: 'Tất cả Trạng thái' },
+  { id: 'Preparing', label: 'Preparing (Đang chuẩn bị)' },
+  { id: 'Draft', label: 'Draft (Nháp)' },
+  { id: 'Ongoing', label: 'Ongoing (Đang diễn ra)' },
+  { id: 'Closed', label: 'Closed (Đã đóng)' }
+];
+
+const filterStatusLabel = computed(() => {
+  const found = statusOptions.find(o => o.id === filterStatus.value);
+  return found ? found.label : 'Tất cả Trạng thái';
+});
 
 const filteredEvents = computed(() => {
   if (!filterStatus.value) return events.value;

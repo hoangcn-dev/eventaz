@@ -74,7 +74,7 @@
           <span class="px-2 py-0.5 bg-red-100 text-red-800 text-[10px] font-bold rounded">Rejected</span>
         </div>
         <div class="mt-3">
-          <p class="text-on-surface-variant text-[11px] font-bold uppercase tracking-wider">Đã Từ Chối Trả Về</p>
+          <p class="text-on-surface-variant text-[11px] font-bold uppercase tracking-wider">Đã từ chối trả về</p>
           <h2 class="text-2xl font-extrabold text-red-700 mt-1">{{ summary.rejected }} Yêu cầu</h2>
           <p class="text-[10px] text-red-600 font-bold mt-1">Yêu cầu chỉnh sửa lại</p>
         </div>
@@ -93,19 +93,20 @@
             class="w-full pl-8 pr-3 py-1.5 border border-outline-variant rounded-lg focus:outline-none focus:border-primary"
           >
         </div>
-        <select v-model="selectedTypeFilter" class="px-3 py-1.5 border border-outline-variant rounded-lg bg-white focus:outline-none focus:border-primary font-medium">
-          <option value="">Tất cả Loại Yêu Cầu</option>
-          <option value="Budget">🟣 Kinh phí Ngân sách</option>
-          <option value="Task">🔵 Nghiệm thu Công việc</option>
-          <option value="Media">🟡 Bài viết Truyền thông</option>
-          <option value="VIP">🟢 Hậu cần VIP Diễn giả</option>
-        </select>
-        <select v-model="selectedStatusFilter" class="px-3 py-1.5 border border-outline-variant rounded-lg bg-white focus:outline-none focus:border-primary font-medium">
-          <option value="">Tất cả Trạng thái</option>
-          <option value="Pending">🟡 Chờ phê duyệt</option>
-          <option value="Approved">🟢 Đã phê duyệt</option>
-          <option value="Rejected">🔴 Từ chối</option>
-        </select>
+        <BaseDropdown 
+          :label="getSelectedLabel(typeFilterOptions, selectedTypeFilter, 'Tất cả loại yêu cầu')"
+          :items="typeFilterOptions"
+          placement="bottom-start"
+          bgColor="white"
+          @select="(item) => selectedTypeFilter = item.id"
+        />
+        <BaseDropdown 
+          :label="getSelectedLabel(statusFilterOptions, selectedStatusFilter, 'Tất cả trạng thái')"
+          :items="statusFilterOptions"
+          placement="bottom-start"
+          bgColor="white"
+          @select="(item) => selectedStatusFilter = item.id"
+        />
       </div>
       <div class="text-xs text-on-surface-variant font-medium">
         Hiển thị: <b class="text-on-surface">{{ filteredApprovals.length }}</b> / {{ approvalsList.length }} yêu cầu
@@ -118,14 +119,14 @@
         <table class="w-full text-left text-xs border-collapse min-w-[1300px]">
           <thead class="sticky top-0 z-20 bg-surface-container-low shadow-sm">
             <tr class="text-on-surface-variant font-bold text-[11px] uppercase border-b border-outline-variant">
-              <th class="py-2.5 px-3 min-w-[260px] bg-surface-container-low">Mã & Nội Dung Yêu Cầu Trình Duyệt</th>
-              <th class="py-2.5 px-3 min-w-[160px] bg-surface-container-low">Loại Yêu Cầu</th>
-              <th class="py-2.5 px-3 min-w-[140px] bg-surface-container-low">Giá Trị / Phạm Vi</th>
-              <th class="py-2.5 px-3 min-w-[170px] bg-surface-container-low">Người Trình Duyệt</th>
-              <th class="py-2.5 px-3 min-w-[130px] bg-surface-container-low">Thời Gian Trình</th>
-              <th class="py-2.5 px-3 min-w-[130px] text-center bg-surface-container-low">Trạng Thái</th>
-              <th class="py-2.5 px-3 min-w-[180px] bg-surface-container-low">Người & Ngày Phê Duyệt</th>
-              <th class="py-2.5 px-3 min-w-[160px] text-right bg-surface-container-low">Thao Tác Phê Duyệt</th>
+              <th class="py-2.5 px-3 min-w-[260px] bg-surface-container-low">Mã & nội dung yêu cầu trình duyệt</th>
+              <th class="py-2.5 px-3 min-w-[160px] bg-surface-container-low">Loại yêu cầu</th>
+              <th class="py-2.5 px-3 min-w-[140px] bg-surface-container-low">Giá trị / Phạm vi</th>
+              <th class="py-2.5 px-3 min-w-[170px] bg-surface-container-low">Người trình duyệt</th>
+              <th class="py-2.5 px-3 min-w-[130px] bg-surface-container-low">Thời gian trình</th>
+              <th class="py-2.5 px-3 min-w-[130px] text-center bg-surface-container-low">Trạng thái</th>
+              <th class="py-2.5 px-3 min-w-[180px] bg-surface-container-low">Người & ngày phê duyệt</th>
+              <th class="py-2.5 px-3 min-w-[160px] text-right bg-surface-container-low">Thao tác phê duyệt</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-outline-variant/40">
@@ -189,14 +190,14 @@
                     class="px-2.5 py-1 bg-emerald-600 text-white font-bold text-[10px] rounded-lg hover:bg-emerald-700 shadow-sm flex items-center gap-0.5"
                   >
                     <span class="material-symbols-outlined text-[13px]">check</span>
-                    <span>Phê Duyệt</span>
+                    <span>Phê duyệt</span>
                   </button>
                   <button 
                     @click="handleReject(apr.id, apr.title)" 
                     class="px-2.5 py-1 bg-red-600 text-white font-bold text-[10px] rounded-lg hover:bg-red-700 shadow-sm flex items-center gap-0.5"
                   >
                     <span class="material-symbols-outlined text-[13px]">close</span>
-                    <span>Từ Chối</span>
+                    <span>Từ chối</span>
                   </button>
                 </div>
                 <span v-else class="text-on-surface-variant font-bold text-[10px]">Đã xử lý xong</span>
@@ -213,6 +214,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { getCurrentEvent } from '../mock/events.js';
 import { getApprovals, approveRequest, rejectRequest, calculateApprovalSummary, APPROVAL_TYPES, APPROVAL_STATUSES } from '../mock/approvals.js';
+import BaseDropdown from '../components/base/BaseDropdown.vue';
 
 const currentEvent = ref({});
 const approvalsList = ref([]);
@@ -226,6 +228,26 @@ const summary = ref({
 const searchQuery = ref('');
 const selectedTypeFilter = ref('');
 const selectedStatusFilter = ref('');
+
+const typeFilterOptions = [
+  { id: '', label: 'Tất cả Loại Yêu Cầu' },
+  { id: 'Budget', label: 'Kinh phí Ngân sách' },
+  { id: 'Task', label: 'Nghiệm thu Công việc' },
+  { id: 'Media', label: 'Bài viết Truyền thông' },
+  { id: 'VIP', label: 'Hậu cần VIP Diễn giả' }
+];
+
+const statusFilterOptions = [
+  { id: '', label: 'Tất cả Trạng thái' },
+  { id: 'Pending', label: 'Chờ phê duyệt' },
+  { id: 'Approved', label: 'Đã phê duyệt' },
+  { id: 'Rejected', label: 'Từ chối' }
+];
+
+function getSelectedLabel(options, selectedId, fallback) {
+  const found = options.find(o => o.id === selectedId);
+  return found ? found.label : fallback;
+}
 
 function loadApprovalsData() {
   currentEvent.value = getCurrentEvent();

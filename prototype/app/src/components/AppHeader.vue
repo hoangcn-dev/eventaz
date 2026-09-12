@@ -19,8 +19,28 @@
       <!-- Ô Tìm kiếm -->
       <div class="relative hidden sm:block w-64">
         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
-        <input type="text" placeholder="Tìm kiếm sự kiện, công việc..." class="w-full pl-9 pr-4 py-1.5 text-sm bg-surface-container-low border border-outline-variant rounded-lg focus:outline-none focus:border-primary">
+        <input type="text" placeholder="Tìm kiếm sự kiện, công việc..." class="w-full pl-9 pr-4 py-1.5 text-sm bg-surface-container-low border border-outline-variant rounded-lg focus:outline-none focus:border-primary text-on-surface">
       </div>
+
+      <!-- Language Switcher Toggle (VI | EN) -->
+      <button 
+        @click="toggleLanguage" 
+        class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border border-outline-variant hover:bg-surface-container transition-colors text-on-surface"
+        title="Chuyển đổi ngôn ngữ / Switch Language"
+      >
+        <span class="material-symbols-outlined text-[16px] text-primary">translate</span>
+        <span>{{ currentLang }}</span>
+      </button>
+
+      <!-- Light / Dark Theme Switcher Button -->
+      <button 
+        @click="toggleTheme" 
+        class="w-9 h-9 rounded-full flex items-center justify-center border border-outline-variant hover:bg-surface-container transition-colors text-on-surface-variant"
+        :title="isDark ? 'Chuyển sang Giao diện Sáng' : 'Chuyển sang Giao diện Tối'"
+      >
+        <span class="material-symbols-outlined text-[18px] text-amber-500" v-if="isDark">light_mode</span>
+        <span class="material-symbols-outlined text-[18px] text-slate-600" v-else>dark_mode</span>
+      </button>
 
       <!-- Nút Thông báo (Hover tròn chuẩn) -->
       <button 

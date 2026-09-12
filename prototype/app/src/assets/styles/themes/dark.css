@@ -1,0 +1,25 @@
+/* EventAZ Dark Theme Override Definition */
+html.dark {
+  --bg-surface: #0b1329;
+  --bg-surface-bright: #151e38;
+  --bg-surface-dim: #090f20;
+  --bg-surface-container: #17213c;
+  --bg-surface-container-low: #111a30;
+  --bg-surface-container-lowest: #0b1329;
+  --bg-surface-container-high: #1f2c4e;
+  --bg-surface-container-highest: #283760;
+
+  --text-on-surface: #f1f5f9;
+  --text-on-surface-variant: #94a3b8;
+  --text-on-background: #f1f5f9;
+
+  --border-outline: #475569;
+  --border-outline-variant: #1e293b;
+
+  --color-primary: #4169e1;
+  --color-primary-container: #2563eb;
+  --color-on-primary: #ffffff;
+
+  --color-secondary: #8b5cf6;
+  --color-secondary-container: #7c3aed;
+}

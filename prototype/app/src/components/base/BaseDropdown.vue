@@ -33,7 +33,7 @@
           ref="menuRef"
           :style="menuStyle"
           @click.stop
-          class="min-w-[150px] bg-white rounded-xl shadow-2xl border border-outline-variant/80 py-1.5 space-y-0.5 font-sans text-xs text-on-surface z-[9999]"
+          class="min-w-[150px] bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 space-y-0.5 font-sans text-xs text-on-surface z-[9999]"
         >
           <slot :close="closeDropdown">
             <template v-for="item in visibleItems" :key="item.id || item.label">
@@ -96,6 +96,10 @@ const props = defineProps({
   showItemIcon: {
     type: Boolean,
     default: false
+  },
+  matchWidth: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -119,9 +123,9 @@ function updateMenuPosition() {
   if (!triggerRef.value) return;
   const rect = triggerRef.value.getBoundingClientRect();
   
-  const menuWidth = 150;
+  const menuWidth = props.matchWidth ? rect.width : 150;
   let left = rect.right - menuWidth;
-  if (props.placement === 'bottom-start' || left < 16) {
+  if (props.placement === 'bottom-start' || props.matchWidth || left < 16) {
     left = rect.left;
   }
   
@@ -130,14 +134,15 @@ function updateMenuPosition() {
   }
 
   let top = rect.bottom + 4;
-  if (top + 200 > window.innerHeight && rect.top - 200 > 0) {
-    top = rect.top - 200;
+  if (top + 220 > window.innerHeight && rect.top - 220 > 0) {
+    top = rect.top - 220;
   }
 
   menuStyle.value = {
     position: 'fixed',
     top: `${top}px`,
     left: `${left}px`,
+    width: props.matchWidth ? `${rect.width}px` : undefined,
     zIndex: 9999
   };
 }

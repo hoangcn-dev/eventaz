@@ -30,7 +30,7 @@
           <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-[10px] font-bold rounded">Approved Budget</span>
         </div>
         <div class="mt-3">
-          <p class="text-on-surface-variant text-[11px] font-bold uppercase tracking-wider">Tổng Ngân Sách Phê Duyệt</p>
+          <p class="text-on-surface-variant text-[11px] font-bold uppercase tracking-wider">Tổng ngân sách phê duyệt</p>
           <h2 class="text-2xl font-extrabold text-on-surface mt-1">{{ formatVnd(summary.totalApproved) }}</h2>
           <p class="text-[10px] text-on-surface-variant font-medium mt-1">Gồm {{ formatVnd(summary.contingencyReserve) }} dự phòng</p>
         </div>
@@ -175,16 +175,20 @@
               class="w-full pl-8 pr-3 py-1.5 border border-outline-variant rounded-lg focus:outline-none focus:border-primary"
             >
           </div>
-          <select v-model="selectedWbsFilter" class="px-3 py-1.5 border border-outline-variant rounded-lg bg-white focus:outline-none focus:border-primary font-medium">
-            <option value="">Tất cả Nhóm WBS</option>
-            <option v-for="w in summary.wbsSummary" :key="w.wbsId" :value="w.wbsId">{{ w.wbsName }}</option>
-          </select>
-          <select v-model="selectedStatusFilter" class="px-3 py-1.5 border border-outline-variant rounded-lg bg-white focus:outline-none focus:border-primary font-medium">
-            <option value="">Tất cả Trạng thái</option>
-            <option value="Paid">🟢 Đã thanh toán</option>
-            <option value="Advanced">🟡 Tạm ứng</option>
-            <option value="Pending">🟠 Chờ thanh toán</option>
-          </select>
+          <BaseDropdown 
+            :label="getSelectedLabel(wbsFilterOptions, selectedWbsFilter, 'Tất cả Nhóm WBS')"
+            :items="wbsFilterOptions"
+            placement="bottom-start"
+            bgColor="white"
+            @select="(item) => selectedWbsFilter = item.id"
+          />
+          <BaseDropdown 
+            :label="getSelectedLabel(budgetStatusOptions, selectedStatusFilter, 'Tất cả Trạng thái')"
+            :items="budgetStatusOptions"
+            placement="bottom-start"
+            bgColor="white"
+            @select="(item) => selectedStatusFilter = item.id"
+          />
         </div>
       </div>
 
@@ -256,6 +260,7 @@ import { ref, computed, onMounted } from 'vue';
 import { getCurrentEvent } from '../mock/events.js';
 import { calculateBudgetSummary, getExpenses, deleteExpense, PAYMENT_STATUSES } from '../mock/budget.js';
 import CreateExpenseModal from '../components/CreateExpenseModal.vue';
+import BaseDropdown from '../components/base/BaseDropdown.vue';
 
 const currentEvent = ref({});
 const expensesList = ref([]);
@@ -271,6 +276,26 @@ const summary = ref({
 const searchQuery = ref('');
 const selectedWbsFilter = ref('');
 const selectedStatusFilter = ref('');
+
+const wbsFilterOptions = computed(() => {
+  const opts = [{ id: '', label: 'Tất cả Nhóm WBS' }];
+  summary.value.wbsSummary.forEach(w => {
+    opts.push({ id: w.wbsId, label: w.wbsName });
+  });
+  return opts;
+});
+
+const budgetStatusOptions = [
+  { id: '', label: 'Tất cả Trạng thái' },
+  { id: 'Paid', label: 'Đã thanh toán' },
+  { id: 'Advanced', label: 'Tạm ứng' },
+  { id: 'Pending', label: 'Chờ thanh toán' }
+];
+
+function getSelectedLabel(options, selectedId, fallback) {
+  const found = options.find(o => o.id === selectedId);
+  return found ? found.label : fallback;
+}
 
 const showCreateExpenseModal = ref(false);
 

@@ -1,0 +1,25 @@
+/* EventAZ Light Theme Definition */
+html.light, :root {
+  --bg-surface: #f8f9ff;
+  --bg-surface-bright: #f8f9ff;
+  --bg-surface-dim: #cbdbf5;
+  --bg-surface-container: #e5eeff;
+  --bg-surface-container-low: #eff4ff;
+  --bg-surface-container-lowest: #ffffff;
+  --bg-surface-container-high: #dce9ff;
+  --bg-surface-container-highest: #d3e4fe;
+
+  --text-on-surface: #0b1c30;
+  --text-on-surface-variant: #444653;
+  --text-on-background: #0b1c30;
+
+  --border-outline: #757684;
+  --border-outline-variant: #c4c5d5;
+
+  --color-primary: #00288e;
+  --color-primary-container: #1e40af;
+  --color-on-primary: #ffffff;
+
+  --color-secondary: #712ae2;
+  --color-secondary-container: #8a4cfc;
+}

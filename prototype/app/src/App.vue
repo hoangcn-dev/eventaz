@@ -58,13 +58,15 @@
       <!-- Shared App Header -->
       <AppHeader @toggle-mobile-menu="handleToggleMobileMenu" />
 
-      <!-- Shared App Left Sidebar -->
-      <AppSidebar 
-        ref="sidebarRef"
-        @open-create-event="showCreateModal = true"
-        @open-clone-event="showCloneModal = true"
-        @sidebar-toggled="handleSidebarToggled"
-      />
+    <!-- Shared App Left Sidebar -->
+    <AppSidebar 
+      v-if="!isAuthPage"
+      ref="sidebarRef"
+      @open-create-event="showCreateModal = true"
+      @open-clone-event="showCloneModal = true"
+      @select-event="showCreateModal = false"
+      @sidebar-toggled="handleSidebarToggled"
+    />
 
       <!-- Main Content Shell -->
       <main 
@@ -91,13 +93,13 @@
     </template>
 
     <!-- Global Shared Modals -->
-    <CreateEventModal :isOpen="showCreateModal" @close="showCreateModal = false" />
+    <CreateEventModal :isOpen="showCreateModal" :isSidebarCollapsed="isSidebarCollapsed" @close="showCreateModal = false" />
     <CloneEventModal :isOpen="showCloneModal" @close="showCloneModal = false" />
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import PublicHeader from './components/PublicHeader.vue';
 import PublicFooter from './components/PublicFooter.vue';
@@ -115,6 +117,12 @@ const showCreateModal = ref(false);
 const showCloneModal = ref(false);
 const sidebarRef = ref(null);
 const isSidebarCollapsed = ref(false);
+
+// Tự động ẩn trang/modal tạo mới sự kiện khi chọn hoặc chuyển sang bất kỳ sự kiện nào
+watch(() => route.path, () => {
+  showCreateModal.value = false;
+  showCloneModal.value = false;
+});
 
 const isPublicPage = computed(() => {
   return route.meta && route.meta.isPublicPage;

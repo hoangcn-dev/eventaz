@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "name": "Tổng quan",
+        "route": "/overview"
+    },
+    {
+        "id": 2,
+        "name": "Thông tin sự kiện",
+        "route": "/info"
+    },
+    {
+        "id": 3,
+        "name": "Nhân sự",
+        "route": "/personnel"
+    },
+    {
+        "id": 4,
+        "name": "Công việc",
+        "route": "/tasks"
+    },
+    {
+        "id": 5,
+        "name": "Chương trình sự kiện",
+        "route": "/program"
+    },
+    {
+        "id": 6,
+        "name": "Ngân sách và tài chính",
+        "route": "/budget"
+    },
+    {
+        "id": 7,
+        "name": "Truyền thông và quảng bá",
+        "route": "/promotions"
+    },
+    {
+        "id": 8,
+        "name": "Vé, chỗ ngồi và địa điểm",
+        "route": "/ticket-seat-venue"
+    },
+    {
+        "id": 9,
+        "name": "Khách mời",
+        "route": "/guests"
+    },
+    {
+        "id": 10,
+        "name": "Tài liệu",
+        "route": "/documents"
+    },
+    {
+        "id": 11,
+        "name": "Thiết bị và vật tư",
+        "route": "/equipment"
+    },
+    {
+        "id": 12,
+        "name": "Phê duyệt",
+        "route": "/approvals"
+    }
+]

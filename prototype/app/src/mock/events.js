@@ -1,9 +1,5 @@
-/**
- * EventAZ Mock Data - Events Management (ESM Module)
- */
 import { getTemplateById } from './templates.js';
 import { getUserById } from './users.js';
-import initialEvents from './events.json';
 
 export const LIFECYCLE_STATES = {
     "Planning": { code: "Planning", nameVi: "Thiết lập", color: "bg-blue-600", textClass: "text-blue-600", bgLight: "bg-blue-50", stepOrder: 1 },
@@ -23,10 +19,50 @@ export const EVENT_STAGES = [
     { id: 4, name: "Đã kết thúc & Tổng kết", code: "Closed" }
 ];
 
-let eventsList = initialEvents;
+export const defaultEvents = [
+    {
+        "id": "E-2024-99X",
+        "name": "Sự kiện test 2026",
+        "category": "Hội thảo Công nghệ",
+        "status": "Ongoing",
+        "startDate": "2026-10-15",
+        "endDate": "2026-10-17",
+        "eventType": "Hybrid",
+        "location": "Trung tâm Hội nghị Quốc gia, Hà Nội",
+        "scale": "small",
+        "budget": 500000000,
+        "description": "Sự kiện hội tụ hơn 1.500 chuyên gia công nghệ.",
+        "directorId": "USR-009",
+        "createdAt": "2026-08-01 09:00:00"
+    }
+];
+
+let eventsList = defaultEvents;
 let currentEventIdState = "E-2024-99X";
 
-export const defaultEvents = initialEvents;
+export async function loadEventsAsync() {
+    if (typeof window !== 'undefined') {
+        try {
+            // Nạp events.json không qua cache để luôn cập nhật ảnh và dữ liệu mới nhất
+            const res = await fetch(`/events.json?t=${Date.now()}`, { cache: 'no-store' });
+            if (res.ok) {
+                const data = await res.json();
+                if (Array.isArray(data) && data.length > 0) {
+                    eventsList = data;
+                    window.dispatchEvent(new CustomEvent('eventaz:events-updated'));
+                }
+            }
+        } catch (err) {
+            console.warn('Could not load public/events.json:', err);
+        }
+    }
+    return getEvents();
+}
+
+// Tự động nạp dữ liệu từ public/events.json nếu có
+if (typeof window !== 'undefined') {
+    loadEventsAsync();
+}
 
 export function resolveEventDirector(eventObj) {
     if (!eventObj) return eventObj;
@@ -119,11 +155,52 @@ export function saveEvent(eventData) {
         eventsList.unshift(eventData);
     }
     syncEventsToFile(eventsList);
+    if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('eventaz:events-updated', { detail: eventData }));
+    }
     return resolveEventDirector(eventData);
 }
 
+export function updateEventEnabledModules(eventId, enabledModules) {
+    const events = getEvents();
+    const evt = events.find(e => e.id === eventId);
+    if (evt) {
+        evt.enabledModules = [...enabledModules];
+        saveEvent(evt);
+    }
+    return evt;
+}
+
 export function createEvent(eventData) {
-    return saveEvent(eventData);
+    const newId = eventData.id || `E-2026-${Date.now().toString().slice(-4)}`;
+    const fullEvent = {
+        id: newId,
+        name: eventData.name || 'Sự kiện mới',
+        category: eventData.category || 'Hội thảo / Triển lãm',
+        status: eventData.status || 'Planning',
+        startDate: eventData.startDate || '2026-12-01',
+        endDate: eventData.endDate || '2026-12-02',
+        eventType: eventData.eventType || 'Offline',
+        location: eventData.location || 'Trung tâm Hội nghị Quốc gia, Hà Nội',
+        scale: eventData.scale || 'mega',
+        scope: eventData.scope || 'Public',
+        budget: eventData.budget || 500000000,
+        description: eventData.description || `Sự kiện ${eventData.name || ''} được khởi tạo thành công.`,
+        templateSource: eventData.templateSource || 'custom',
+        templateId: eventData.templateId || '',
+        enabledModules: eventData.enabledModules || ['wbs', 'personnel', 'runOfShow', 'approvals', 'budget'],
+        wbs: eventData.wbs || [],
+        auditLogs: [
+            {
+                id: 'LOG-01',
+                timestamp: new Date().toISOString().replace('T', ' ').slice(0, 19),
+                user: 'Nguyễn Văn Trưởng',
+                action: `Khởi tạo sự kiện [${eventData.name || newId}]`
+            }
+        ],
+        createdAt: new Date().toISOString().replace('T', ' ').slice(0, 19)
+    };
+    return saveEvent(fullEvent);
 }
 
 export function cloneEvent(sourceId, isTpl, form) {
@@ -177,3 +254,111 @@ export function changeEventStatus(eventId, newStatus) {
     }
     return evt;
 }
+
+export function formatTimeRemaining(targetTime) {
+    if (!targetTime) return 'Chưa thiết lập';
+    let target = null;
+    if (typeof targetTime === 'string') {
+        const match = targetTime.match(/^(\d{2})\/(\d{2})\/(\d{4})\s+(\d{2}):(\d{2})$/);
+        if (match) {
+            const [, d, m, y, hh, mm] = match;
+            target = new Date(Number(y), Number(m) - 1, Number(d), Number(hh), Number(mm));
+        } else {
+            target = new Date(targetTime);
+        }
+    } else {
+        target = new Date(targetTime);
+    }
+
+    if (isNaN(target.getTime())) return 'Thời gian không hợp lệ';
+
+    const now = new Date();
+    const diffMs = target.getTime() - now.getTime();
+
+    if (diffMs <= 0) {
+        return 'Đã hết thời gian';
+    }
+
+    const diffSec = Math.floor(diffMs / 1000);
+    const diffMin = Math.floor(diffSec / 60);
+    const diffHours = Math.floor(diffMin / 60);
+    const diffDays = Math.floor(diffHours / 24);
+    const diffMonths = Math.floor(diffDays / 30);
+    const diffYears = Math.floor(diffDays / 365);
+
+    if (diffYears >= 1) {
+        return `Còn ${diffYears} năm`;
+    }
+    if (diffMonths >= 1) {
+        return `Còn ${diffMonths} tháng`;
+    }
+    if (diffDays >= 1) {
+        return `Còn ${diffDays} ngày`;
+    }
+    if (diffHours >= 1) {
+        return `Còn ${diffHours} giờ`;
+    }
+    if (diffMin >= 1) {
+        return `Còn ${diffMin} phút`;
+    }
+    if (diffSec >= 1) {
+        return `Còn ${diffSec} giây`;
+    }
+    return `Đã kết thúc`;
+}
+
+export function getFormattedNow() {
+    const d = new Date();
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    const hours = String(d.getHours()).padStart(2, '0');
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
+}
+
+export function moveToNextStage(eventId, isManual = true) {
+    const events = getEvents();
+    const evt = events.find(e => e.id === eventId);
+    if (!evt) return { success: false, error: 'Không tìm thấy sự kiện' };
+
+    const stages = evt.lifecycleStates || LIFECYCLE_STATES;
+    const sorted = Object.entries(stages).map(([code, s]) => ({ code, ...s }))
+        .sort((a, b) => (Number(a.stepOrder) || 0) - (Number(b.stepOrder) || 0));
+
+    const currentIndex = sorted.findIndex(s => s.code === evt.status);
+    if (currentIndex === -1) return { success: false, error: 'Trạng thái hiện tại không hợp lệ' };
+
+    if (currentIndex >= sorted.length - 1) {
+        return { success: false, error: 'Sự kiện đã ở giai đoạn cuối cùng' };
+    }
+
+    const currentStage = sorted[currentIndex];
+    const nextStage = sorted[currentIndex + 1];
+
+    const nowStr = getFormattedNow();
+
+    // Gán trực tiếp giá trị mốc thực tế vào endTime của giai đoạn cũ và startTime của giai đoạn mới
+    if (evt.lifecycleStates) {
+        if (evt.lifecycleStates[currentStage.code]) {
+            evt.lifecycleStates[currentStage.code].endTime = nowStr;
+        }
+        if (evt.lifecycleStates[nextStage.code]) {
+            evt.lifecycleStates[nextStage.code].startTime = nowStr;
+        }
+    }
+
+    evt.status = nextStage.code;
+    evt.lastStatusChangeTime = new Date().toISOString();
+    evt.auditLogs = evt.auditLogs || [];
+    evt.auditLogs.unshift({
+        id: `LOG-0${evt.auditLogs.length + 1}`,
+        timestamp: new Date().toISOString().replace('T', ' ').slice(0, 19),
+        user: "Nguyễn Văn Trưởng",
+        action: `Chuyển sang giai đoạn: ${nextStage.nameVi || nextStage.code} (${isManual ? 'Thủ công' : 'Tự động'})`
+    });
+
+    saveEvent(evt);
+    return { success: true, event: evt, nextStage };
+}
+

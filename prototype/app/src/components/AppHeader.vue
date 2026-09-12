@@ -1,5 +1,5 @@
 <template>
-  <header class="fixed top-0 left-0 right-0 h-16 bg-surface-container-lowest border-b border-outline-variant z-50 flex items-center justify-between pl-4 pr-0 shadow-sm">
+  <header class="fixed top-0 left-0 right-0 h-16 bg-surface-container-lowest border-b border-outline-variant z-[60] flex items-center justify-between pl-4 pr-0 shadow-sm">
     <!-- Cụm Logo & Tên Công Ty -->
     <div class="flex items-center gap-4">
       <button @click="$emit('toggle-mobile-menu')" class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant lg:hidden">
@@ -73,11 +73,11 @@
     </div>
   </header>
 
-  <!-- Menu Dropdown Danh sách hành động (Slide-down mượt bắt đầu từ sau mép dưới Topbar z-40) -->
+  <!-- Menu Dropdown Danh sách hành động (Slide-down mượt bắt đầu từ sau mép dưới Topbar z-[70]) -->
   <transition name="slide-down">
     <div 
       v-show="showUserDropdown" 
-      class="fixed top-16 right-0 bg-surface-container-lowest border-b border-l border-outline-variant shadow-xl p-1.5 z-40 rounded-none"
+      class="fixed top-16 right-0 bg-surface-container-lowest border-b border-l border-outline-variant shadow-xl p-1.5 z-[70] rounded-none"
       :style="{ left: userProfileLeft ? `${userProfileLeft}px` : 'auto' }"
     >
 
@@ -125,14 +125,14 @@
   <div 
     v-show="showNotificationDrawer" 
     @click="showNotificationDrawer = false"
-    class="fixed inset-0 top-16 bg-black/20 z-40 transition-opacity"
+    class="fixed inset-0 top-16 bg-black/20 z-[70] transition-opacity"
   ></div>
 
   <!-- Drawer Thông báo (Slide-down từ mép dưới Topbar xuống tận đáy màn hình) -->
   <transition name="slide-down">
     <div 
       v-show="showNotificationDrawer" 
-      class="fixed top-16 right-0 bottom-0 w-80 sm:w-96 bg-surface-container-lowest border-l border-outline-variant shadow-2xl z-40 flex flex-col overflow-hidden"
+      class="fixed top-16 right-0 bottom-0 w-80 sm:w-96 bg-surface-container-lowest border-l border-outline-variant shadow-2xl z-[70] flex flex-col overflow-hidden"
     >
       <!-- Header Drawer -->
       <div class="p-4 border-b border-outline-variant flex items-center justify-between bg-surface-container-low/50">

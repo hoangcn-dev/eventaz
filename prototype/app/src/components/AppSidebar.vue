@@ -3,7 +3,7 @@
     <!-- Main Sidebar Drawer -->
     <aside 
       :class="[
-        'fixed top-0 left-0 bottom-0 z-40 w-72 bg-inverse-surface text-inverse-on-surface border-r border-outline-variant/30 flex flex-col pt-16 transition-all duration-300 shadow-2xl',
+        'fixed top-0 left-0 bottom-0 z-[55] w-72 bg-inverse-surface text-inverse-on-surface border-r border-outline-variant/30 flex flex-col pt-16 transition-all duration-300 shadow-2xl',
         isCollapsed ? '-translate-x-full' : 'translate-x-0'
       ]"
     >
@@ -11,7 +11,7 @@
       <button 
         @click="toggleSidebar"
         :class="[
-          'absolute right-0 top-1/2 -translate-y-1/2 z-50 w-5 h-10 bg-slate-800 text-white rounded-r-md border border-l-0 border-white/20 shadow-lg flex items-center justify-center opacity-60 hover:opacity-100 hover:bg-primary transition-all duration-200 cursor-pointer focus:outline-none',
+          'absolute right-0 top-1/2 -translate-y-1/2 z-[60] w-5 h-10 bg-slate-800 text-white rounded-r-md border border-l-0 border-white/20 shadow-lg flex items-center justify-center opacity-60 hover:opacity-100 hover:bg-primary transition-all duration-200 cursor-pointer focus:outline-none',
           isCollapsed ? 'translate-x-full' : 'translate-x-1/2'
         ]"
         title="Ẩn/Hiện Sidebar"
@@ -239,14 +239,26 @@
         }"
       ></div>
     </div>
+
+    <!-- Docked Bottom Section: Nút Tạo mới sự kiện -->
+    <div class="p-3.5 border-t border-white/10 bg-slate-950/80 backdrop-blur shrink-0">
+      <button 
+        @click="emit('open-create-event')"
+        type="button"
+        class="w-full py-2.5 px-4 bg-primary hover:bg-primary-hover text-white font-bold text-xs rounded-xl shadow-lg flex items-center justify-center gap-2 transition-all cursor-pointer hover:shadow-primary/25 active:scale-[0.98]"
+      >
+        <span class="material-symbols-outlined text-[18px]">add_circle</span>
+        <span>Tạo mới sự kiện</span>
+      </button>
+    </div>
     </aside>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { getEvents, getCurrentEventId, setCurrentEventId, LIFECYCLE_STATES } from '../mock/events.js';
+import { getEvents, loadEventsAsync, getCurrentEventId, setCurrentEventId, LIFECYCLE_STATES } from '../mock/events.js';
 
 const SIDEBAR_STORAGE_KEY = 'eventaz_sidebar_collapsed';
 
@@ -323,16 +335,27 @@ function toggleSidebar() {
   emit('sidebar-toggled', isCollapsed.value);
 }
 
-function loadEvents() {
+async function loadEvents() {
+  await loadEventsAsync();
   eventsList.value = getEvents();
   currentEventId.value = getCurrentEventId();
   currentEvent.value = eventsList.value.find(e => e.id === currentEventId.value) || eventsList.value[0] || {};
+}
+
+function handleEventsUpdated(e) {
+  loadEvents();
+  isEventsOpen.value = true;
+  if (e && e.detail && e.detail.id) {
+    currentEventId.value = e.detail.id;
+  }
+  setTimeout(updateScrollThumb, 50);
 }
 
 function selectEvent(eventId) {
   setCurrentEventId(eventId);
   currentEventId.value = eventId;
   currentEvent.value = eventsList.value.find(e => e.id === eventId) || {};
+  emit('select-event', eventId);
   router.push('/event/overview');
 }
 
@@ -387,9 +410,18 @@ watch(
 onMounted(() => {
   loadSidebarState();
   loadEvents();
+  if (typeof window !== 'undefined') {
+    window.addEventListener('eventaz:events-updated', handleEventsUpdated);
+  }
   setTimeout(() => {
     updateScrollThumb();
   }, 100);
+});
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('eventaz:events-updated', handleEventsUpdated);
+  }
 });
 
 defineExpose({

@@ -7,6 +7,26 @@ function jsonAndMediaStoragePlugin() {
   return {
     name: 'json-and-media-storage-plugin',
     configureServer(server) {
+      // Serve static uploaded files directly from public/uploads
+      server.middlewares.use('/uploads', (req, res, next) => {
+        const filePath = path.join(__dirname, 'public/uploads', req.url.split('?')[0]);
+        if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+          const ext = path.extname(filePath).toLowerCase();
+          const mimeTypes = {
+            '.jpg': 'image/jpeg',
+            '.jpeg': 'image/jpeg',
+            '.png': 'image/png',
+            '.gif': 'image/gif',
+            '.webp': 'image/webp',
+            '.svg': 'image/svg+xml'
+          };
+          res.setHeader('Content-Type', mimeTypes[ext] || 'application/octet-stream');
+          fs.createReadStream(filePath).pipe(res);
+          return;
+        }
+        next();
+      });
+
       server.middlewares.use('/api/save-json', (req, res) => {
         if (req.method === 'POST') {
           let body = '';
@@ -15,13 +35,9 @@ function jsonAndMediaStoragePlugin() {
             try {
               const { filename, data } = JSON.parse(body);
               if (filename && (filename.endsWith('.json'))) {
+                // Lưu dữ liệu duy nhất vào thư mục public
                 const publicPath = path.resolve(__dirname, './public', filename);
                 fs.writeFileSync(publicPath, JSON.stringify(data, null, 2), 'utf-8');
-
-                const srcMockPath = path.resolve(__dirname, './src/mock', filename);
-                if (fs.existsSync(srcMockPath)) {
-                  fs.writeFileSync(srcMockPath, JSON.stringify(data, null, 2), 'utf-8');
-                }
 
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
@@ -57,7 +73,7 @@ function jsonAndMediaStoragePlugin() {
               if (!fs.existsSync(uploadsDir)) {
                 fs.mkdirSync(uploadsDir, { recursive: true });
               }
-              const cleanBase64 = base64Data.replace(/^data:image\/\w+;base64,/, '');
+              const cleanBase64 = base64Data.replace(/^data:[^;]+;base64,/, '');
               const buffer = Buffer.from(cleanBase64, 'base64');
               const safeName = `${Date.now()}-${filename.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
               const filePath = path.join(uploadsDir, safeName);

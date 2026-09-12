@@ -100,13 +100,25 @@
               </div>
               <span v-else class="text-xs font-bold text-on-surface-variant">Giai đoạn {{ item.stepOrder }}</span>
 
-              <span v-if="item.code===currentEvent.status" class="w-3 h-3 rounded-full bg-emerald-500 ring-2 ring-emerald-200" title="Đang diễn ra"></span>
+              <div v-if="item.code===currentEvent.status" class="flex items-center gap-1.5 shrink-0 ml-auto">
+                <span class="text-[11px] font-mono text-emerald-700 font-bold">{{ getStageTimeRemaining(item) }}</span>
+                <span class="w-3 h-3 rounded-full bg-emerald-500 ring-2 ring-emerald-200 shrink-0" title="Đang diễn ra"></span>
+              </div>
               <small v-else class="">{{ isOngoingOrPastStage(item) ? 'Đã kết thúc' : 'Chưa diễn ra' }}</small>
             </div>
             <p class="font-bold text-sm text-on-surface leading-tight">{{ item.nameVi }}</p>
+
             <span class="text-[11px] font-mono text-on-surface-variant">Tỉ lệ hoàn thành: {{ item.completionRate || '95%' }}</span>
             <span class="text-[11px] font-mono text-on-surface-variant">Tồn đọng: {{ item.backlogCount || '1' }}</span>
-            <button @click.stop="addAssignee(item.code)" class="text-[11px] text-primary hover:underline font-medium text-left flex items-center gap-1 cursor-pointer transition-colors mt-1">
+            <div v-if="item.assignee" class="flex items-center justify-start gap-1 mt-1 text-[11px] text-primary font-medium overflow-hidden">
+              <span @click.stop="addAssignee(item.code)" class="hover:underline cursor-pointer truncate max-w-[85%]" :title="`Người phụ trách: ${item.assignee} (Bấm để thay đổi)`">
+                👤 {{ item.assignee }}
+              </span>
+              <button @click.stop="removeStageAssignee(item.code)" class="text-slate-400 hover:text-red-500 p-0.5 rounded-full transition-colors flex items-center justify-center cursor-pointer shrink-0" title="Bỏ người phụ trách">
+                <span class="material-symbols-outlined text-[13px]">close</span>
+              </button>
+            </div>
+            <button v-else @click.stop="addAssignee(item.code)" class="text-[11px] text-primary hover:underline font-medium text-left flex items-center gap-1 cursor-pointer transition-colors mt-1">
               + Thêm người phụ trách
             </button>
           </div>
@@ -120,6 +132,38 @@
           title="Cuộn xem tiếp"
         >
           <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+        </button>
+      </div>
+
+      <!-- Nút chuyển giai đoạn kế tiếp nằm ở Bottom của thẻ Tiến trình sự kiện -->
+      <div class="pt-3 border-t border-outline-variant/60 flex items-center justify-between flex-wrap gap-3">
+        <div class="flex items-center gap-2 text-xs font-medium text-on-surface-variant">
+          <span class="material-symbols-outlined text-[18px] text-primary">schedule</span>
+          <span>Giai đoạn hiện tại: <strong class="text-on-surface font-bold">{{ currentStageName }}</strong></span>
+        </div>
+
+        <button 
+          v-if="currentEvent.isCompleted" 
+          disabled 
+          class="px-4 py-2 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-xl border border-emerald-300 flex items-center gap-2 opacity-90 cursor-default"
+        >
+          <span class="material-symbols-outlined text-[16px]">check_circle</span>
+          <span>Sự kiện đã kết thúc hoàn tất</span>
+        </button>
+        <button 
+          v-else-if="nextStageItem" 
+          @click="handleNextStageClick" 
+          class="px-4 py-2 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer"
+        >
+          <span>Chuyển giai đoạn kế tiếp: {{ nextStageItem.nameVi }}</span>
+          <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+        </button>
+        <button 
+          v-else 
+          @click="handleNextStageClick" 
+          class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer"
+        >
+          <span>Kết thúc sự kiện</span>
         </button>
       </div>
 
@@ -168,18 +212,54 @@
         </div>
       </div>
 
-      <!-- 3. Thời gian bắt đầu - kết thúc -->
+      <!-- 3. Thời gian bắt đầu - kết thúc (Định dạng dd/MM/yyyy HH:mm) -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label class="block text-xs font-bold text-on-surface uppercase tracking-wider mb-1">Thời gian Bắt đầu</label>
-          <input type="date" v-model="currentEvent.startDate" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm focus:border-primary focus:outline-none font-medium">
+          <label class="block text-xs font-bold text-on-surface uppercase tracking-wider mb-1">Thời gian Bắt đầu (dd/MM/yyyy HH:mm)</label>
+          <div class="relative flex items-center">
+            <input 
+              type="text" 
+              v-model="startDateDisplay" 
+              @input="handleStartDateInput" 
+              placeholder="dd/MM/yyyy HH:mm (Ví dụ: 15/10/2026 09:00)" 
+              class="w-full pl-4 pr-10 py-2.5 border border-outline-variant rounded-xl text-sm focus:border-primary focus:outline-none font-medium"
+            >
+            <input 
+              type="datetime-local" 
+              ref="startDatePickerRef" 
+              :value="formatToDatetimeLocal(startDateDisplay)" 
+              @input="handleStartDatePickerChange" 
+              class="opacity-0 absolute right-2 w-7 h-7 cursor-pointer z-10"
+            >
+            <button type="button" @click="triggerStartDatePicker" class="absolute right-2.5 p-1 text-on-surface-variant hover:text-primary transition-colors cursor-pointer" title="Chọn ngày & giờ từ lịch">
+              <span class="material-symbols-outlined text-[20px]">calendar_today</span>
+            </button>
+          </div>
           <p class="text-[11px] text-on-surface-variant mt-1 italic">
             * Nếu bỏ trống, thời gian bắt đầu sẽ tự động gán khi hoàn thành giai đoạn Thiết lập.
           </p>
         </div>
         <div>
-          <label class="block text-xs font-bold text-on-surface uppercase tracking-wider mb-1">Thời gian Kết thúc</label>
-          <input type="date" v-model="currentEvent.endDate" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm focus:border-primary focus:outline-none font-medium">
+          <label class="block text-xs font-bold text-on-surface uppercase tracking-wider mb-1">Thời gian Kết thúc (dd/MM/yyyy HH:mm)</label>
+          <div class="relative flex items-center">
+            <input 
+              type="text" 
+              v-model="endDateDisplay" 
+              @input="handleEndDateInput" 
+              placeholder="dd/MM/yyyy HH:mm (Ví dụ: 17/10/2026 18:00)" 
+              class="w-full pl-4 pr-10 py-2.5 border border-outline-variant rounded-xl text-sm focus:border-primary focus:outline-none font-medium"
+            >
+            <input 
+              type="datetime-local" 
+              ref="endDatePickerRef" 
+              :value="formatToDatetimeLocal(endDateDisplay)" 
+              @input="handleEndDatePickerChange" 
+              class="opacity-0 absolute right-2 w-7 h-7 cursor-pointer z-10"
+            >
+            <button type="button" @click="triggerEndDatePicker" class="absolute right-2.5 p-1 text-on-surface-variant hover:text-primary transition-colors cursor-pointer" title="Chọn ngày & giờ từ lịch">
+              <span class="material-symbols-outlined text-[20px]">calendar_today</span>
+            </button>
+          </div>
           <p class="text-[11px] text-on-surface-variant mt-1 italic">
             * Có thể bỏ trống thời gian kết thúc.
           </p>
@@ -289,8 +369,8 @@
         <div class="flex justify-between items-center">
           <label class="block text-xs font-bold text-on-surface uppercase tracking-wider">Mô tả sự kiện (Định dạng HTML)</label>
           <div class="flex items-center gap-1 bg-surface-container-low p-1 rounded-lg border border-outline-variant/60 text-xs font-medium">
-            <button type="button" @click="htmlEditorMode = 'rich'" :class="['px-2 py-0.5 rounded', htmlEditorMode === 'rich' ? 'bg-white shadow text-primary font-bold' : 'text-on-surface-variant']">Soạn thảo Rich Text</button>
-            <button type="button" @click="htmlEditorMode = 'code'" :class="['px-2 py-0.5 rounded', htmlEditorMode === 'code' ? 'bg-white shadow text-primary font-bold' : 'text-on-surface-variant']">Mã nguồn HTML</button>
+            <button type="button" @click="switchHtmlEditorMode('rich')" :class="['px-2 py-0.5 rounded', htmlEditorMode === 'rich' ? 'bg-white shadow text-primary font-bold' : 'text-on-surface-variant']">Soạn thảo Rich Text</button>
+            <button type="button" @click="switchHtmlEditorMode('code')" :class="['px-2 py-0.5 rounded', htmlEditorMode === 'code' ? 'bg-white shadow text-primary font-bold' : 'text-on-surface-variant']">Mã nguồn HTML</button>
           </div>
         </div>
 
@@ -310,10 +390,9 @@
             </button>
           </div>
           <div 
-            id="richHtmlContent" 
+            ref="richHtmlEditorRef" 
             contenteditable="true" 
             @input="syncHtmlFromEditor" 
-            v-html="currentEvent.descriptionHtml || '<p>Nhập mô tả sự kiện...</p>'"
             class="p-4 min-h-[120px] max-h-[250px] overflow-y-auto text-sm focus:outline-none"
           ></div>
         </div>
@@ -529,34 +608,52 @@
             <div class="col-span-2"></div>
           </div>
 
-          <!-- Row 5: Tỉ lệ hoàn thành -->
+          <!-- Row 5: Tỉ lệ hoàn thành (Chỉ đọc) -->
           <div class="grid grid-cols-12 items-start py-2.5 border-b border-outline-variant/40">
             <span class="col-span-4 font-medium text-on-surface-variant">Tỉ lệ hoàn thành:</span>
-            <span class="col-span-6 font-bold text-on-surface break-words whitespace-normal pr-2">{{ selectedStage.completionRate || '95%' }}</span>
-            <div class="col-span-2 text-right">
-              <button @click="openQuickEdit('completionRate', 'Tỉ lệ hoàn thành', selectedStage.completionRate || '95%')" class="text-primary hover:underline font-medium text-xs">Sửa</button>
-            </div>
+            <span class="col-span-8 font-bold text-on-surface break-words whitespace-normal pr-2">{{ selectedStage.completionRate || '95%' }}</span>
           </div>
 
-          <!-- Row 6: Công việc tồn đọng -->
+          <!-- Row 6: Công việc tồn đọng (Chỉ đọc) -->
           <div class="grid grid-cols-12 items-start py-2.5 border-b border-outline-variant/40">
             <span class="col-span-4 font-medium text-on-surface-variant">Công việc tồn đọng:</span>
-            <span class="col-span-6 font-bold text-on-surface break-words whitespace-normal pr-2">{{ selectedStage.backlogCount || '1 công việc' }}</span>
-            <div class="col-span-2 text-right">
-              <button @click="openQuickEdit('backlogCount', 'Công việc tồn đọng', selectedStage.backlogCount || '1 công việc')" class="text-primary hover:underline font-medium text-xs">Sửa</button>
-            </div>
+            <span class="col-span-8 font-bold text-on-surface break-words whitespace-normal pr-2">{{ selectedStage.backlogCount || '1 công việc' }}</span>
           </div>
 
           <!-- Row 7: Người phụ trách -->
           <div class="grid grid-cols-12 items-start py-2.5 border-b border-outline-variant/40">
             <span class="col-span-4 font-medium text-on-surface-variant">Người phụ trách:</span>
-            <span class="col-span-6 font-bold text-on-surface break-words whitespace-normal pr-2">{{ selectedStage.assignee || 'Nguyễn Văn Trưởng (Event Director)' }}</span>
+            <div class="col-span-6 font-bold text-on-surface break-words whitespace-normal pr-2 flex items-center gap-1.5">
+              <span>{{ selectedStage.assignee || 'Chưa có người phụ trách' }}</span>
+              <button v-if="selectedStage.assignee" @click="removeStageAssignee(selectedStage.code)" class="text-slate-400 hover:text-red-500 p-0.5 rounded-full transition-colors flex items-center justify-center cursor-pointer" title="Bỏ người phụ trách">
+                <span class="material-symbols-outlined text-[14px]">close</span>
+              </button>
+            </div>
             <div class="col-span-2 text-right">
-              <button @click="openQuickEdit('assignee', 'Người phụ trách', selectedStage.assignee || 'Nguyễn Văn Trưởng (Event Director)')" class="text-primary hover:underline font-medium text-xs">Sửa</button>
+              <button @click="addAssignee(selectedStage.code)" class="text-primary hover:underline font-medium text-xs">Sửa</button>
             </div>
           </div>
 
-          <!-- Row 8: Mô tả công việc -->
+          <!-- Row 8: Thời gian bắt đầu kế hoạch -->
+          <div class="grid grid-cols-12 items-start py-2.5 border-b border-outline-variant/40">
+            <span class="col-span-4 font-medium text-on-surface-variant">TG Bắt đầu kế hoạch:</span>
+            <span class="col-span-6 font-mono text-[11px] font-bold text-primary break-words whitespace-normal">{{ selectedStage.startTime || 'Chưa thiết lập' }}</span>
+            <div class="col-span-2 text-right">
+              <button @click="openQuickEdit('startTime', 'Thời gian bắt đầu kế hoạch', selectedStage.startTime || '')" class="text-primary hover:underline font-medium text-xs">Sửa</button>
+            </div>
+          </div>
+
+          <!-- Row 9: Thời gian kết thúc kế hoạch -->
+          <div class="grid grid-cols-12 items-start py-2.5 border-b border-outline-variant/40">
+            <span class="col-span-4 font-medium text-on-surface-variant">TG Kết thúc kế hoạch:</span>
+            <span class="col-span-6 font-mono text-[11px] font-bold text-primary break-words whitespace-normal">{{ selectedStage.endTime || 'Chưa thiết lập' }}</span>
+            <div class="col-span-2 text-right">
+              <button @click="openQuickEdit('endTime', 'Thời gian kết thúc kế hoạch', selectedStage.endTime || '')" class="text-primary hover:underline font-medium text-xs">Sửa</button>
+            </div>
+          </div>
+
+
+          <!-- Row 10: Mô tả công việc -->
           <div class="grid grid-cols-12 items-start py-2.5 border-b border-outline-variant/40">
             <span class="col-span-4 font-medium text-on-surface-variant">Mô tả công việc:</span>
             <span class="col-span-6 font-normal text-on-surface break-words whitespace-normal pr-2">{{ selectedStage.description || 'Tiến hành chuẩn bị, kiểm duyệt các hạng mục thiết lập, nhân sự và trang thiết bị phục vụ cho giai đoạn.' }}</span>
@@ -589,28 +686,63 @@
       </div>
     </div>
 
-    <!-- Quick Edit Popup: Single Input Only -->
+    <!-- Quick Edit Popup: Hỗ trợ cả Input Text và Bộ chọn Ngày giờ (Datetime-local) -->
     <div v-if="showQuickEditModal" @click.self="cancelQuickEdit" class="fixed inset-0 z-[60] bg-black/40 flex items-center justify-center p-4">
-      <div class="bg-white p-4 border border-outline-variant shadow-xl w-full max-w-sm rounded-none space-y-3 animate-in fade-in duration-150">
-        <div class="text-xs font-bold text-on-surface uppercase tracking-wider">
-          Chỉnh sửa {{ quickEditLabel }}
+      <div class="bg-white p-5 border border-outline-variant shadow-xl w-full max-w-sm rounded-xl space-y-4 animate-in fade-in duration-150">
+        <div class="text-xs font-bold text-on-surface uppercase tracking-wider flex justify-between items-center border-b border-outline-variant/60 pb-2">
+          <span>Chỉnh sửa {{ quickEditLabel }}</span>
+          <button @click="cancelQuickEdit" class="text-on-surface-variant hover:text-on-surface">
+            <span class="material-symbols-outlined text-[16px]">close</span>
+          </button>
         </div>
-        <input 
-          ref="quickEditInputRef" 
-          type="text" 
-          v-model="quickEditValue" 
-          @input="validateQuickEdit"
-          @keyup.enter="saveQuickEdit" 
-          @keyup.esc="cancelQuickEdit" 
-          :class="['w-full px-3 py-2 border rounded-none text-xs font-medium focus:outline-none transition-colors', quickEditError ? 'border-red-500 text-red-600 focus:ring-1 focus:ring-red-500' : 'border-primary focus:ring-1 focus:ring-primary']"
-        />
+
+        <!-- Bộ chọn Ngày & Giờ trực quan khi chỉnh sửa mốc thời gian -->
+        <div v-if="quickEditType === 'datetime'" class="space-y-2">
+          <label class="block text-[11px] font-bold text-on-surface-variant uppercase">Chọn Ngày & Giờ từ lịch:</label>
+          <input 
+            type="datetime-local" 
+            v-model="quickEditDatetimeValue"
+            class="w-full px-3 py-2 border border-outline-variant rounded-lg text-xs font-mono font-bold text-primary focus:border-primary focus:outline-none shadow-2xs"
+          />
+          <p class="text-[10px] text-on-surface-variant italic">Định dạng hiển thị chuẩn: dd/MM/yyyy HH:mm</p>
+        </div>
+        
+        <!-- Ô nhập văn bản nhiều dòng cho Mô tả công việc -->
+        <div v-else-if="quickEditType === 'textarea'" class="space-y-1">
+          <textarea 
+            ref="quickEditInputRef" 
+            v-model="quickEditValue" 
+            rows="4" 
+            placeholder="Nhập mô tả công việc..."
+            class="w-full px-3 py-2 border border-outline-variant rounded-lg text-xs font-medium focus:border-primary focus:outline-none transition-colors"
+          ></textarea>
+        </div>
+        
+        <!-- Ô nhập văn bản 1 dòng thông thường đối với các trường thông tin khác -->
+        <div v-else class="space-y-1">
+          <input 
+            ref="quickEditInputRef" 
+            type="text" 
+            v-model="quickEditValue" 
+            @input="validateQuickEdit"
+            @keyup.enter="saveQuickEdit" 
+            @keyup.esc="cancelQuickEdit" 
+            :class="['w-full px-3 py-2 border rounded-lg text-xs font-medium focus:outline-none transition-colors', quickEditError ? 'border-red-500 text-red-600 focus:ring-1 focus:ring-red-500' : 'border-primary focus:ring-1 focus:ring-primary']"
+          />
+        </div>
+
         <p v-if="quickEditError" class="text-[11px] font-bold text-red-500 flex items-center gap-1">
           <span class="material-symbols-outlined text-[14px]">error</span>
           <span>{{ quickEditError }}</span>
         </p>
-        <div class="flex justify-between text-[11px] text-on-surface-variant">
-          <span>Enter để xác nhận</span>
-          <span>Esc / click ngoài để hủy</span>
+
+        <div class="flex justify-end gap-2 pt-2 border-t border-outline-variant/40">
+          <button @click="cancelQuickEdit" class="px-3 py-1.5 border border-outline-variant text-on-surface-variant font-medium text-xs rounded-lg hover:bg-surface-container transition-colors">
+            Hủy
+          </button>
+          <button @click="saveQuickEdit" class="px-4 py-1.5 bg-primary text-white font-bold text-xs rounded-lg hover:bg-primary-hover shadow-xs transition-colors">
+            Xác nhận
+          </button>
         </div>
       </div>
     </div>
@@ -726,12 +858,10 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, nextTick } from 'vue';
-import { getCurrentEvent, saveEvent, LIFECYCLE_STATES, changeEventStatus, resetEventsToDefault, uploadImageApi, deleteImageApi } from '../mock/events.js';
+import { ref, reactive, onMounted, onUnmounted, nextTick, computed } from 'vue';
+import { getCurrentEvent, loadEventsAsync, saveEvent, LIFECYCLE_STATES, changeEventStatus, resetEventsToDefault, uploadImageApi, deleteImageApi, moveToNextStage, formatTimeRemaining } from '../mock/events.js';
 import { saveTemplate } from '../mock/templates.js';
 import SearchAssignPersonnelModal from '../components/SearchAssignPersonnelModal.vue';
-
-import { computed } from 'vue';
 
 const currentEvent = ref({});
 const lifecycleStates = reactive(LIFECYCLE_STATES);
@@ -744,6 +874,78 @@ const sortedLifecycleStates = computed(() => {
   entries.sort((a, b) => (Number(a.stepOrder) || 0) - (Number(b.stepOrder) || 0));
   return entries;
 });
+
+// Xác định giai đoạn kế tiếp ngay sau giai đoạn hiện tại
+const nextStageItem = computed(() => {
+  const list = sortedLifecycleStates.value;
+  if (!currentEvent.value || !currentEvent.value.status) return null;
+  const currIdx = list.findIndex(s => s.code === currentEvent.value.status);
+  if (currIdx !== -1 && currIdx < list.length - 1) {
+    return list[currIdx + 1];
+  }
+  return null;
+});
+
+// Lấy tên Tiếng Việt của giai đoạn hiện tại
+const currentStageName = computed(() => {
+  if (!currentEvent.value || !currentEvent.value.status) return 'Chưa xác định';
+  const found = lifecycleStates[currentEvent.value.status];
+  return found ? (found.nameVi || found.code) : currentEvent.value.status;
+});
+
+// Tính thời gian còn lại cho giai đoạn đang diễn ra
+function getStageTimeRemaining(stageItem) {
+  if (!stageItem) return '';
+  const targetTime = stageItem.endTime || currentEvent.value.endDate;
+  return formatTimeRemaining(targetTime);
+}
+
+// Xử lý sự kiện khi bấm nút Chuyển giai đoạn kế tiếp / Kết thúc ở Bottom của Tiến trình sự kiện
+function handleNextStageClick() {
+  if (!nextStageItem.value) {
+    if (confirm('Xác nhận kết thúc hoàn tất sự kiện này?')) {
+      currentEvent.value.isCompleted = true;
+      saveEvent(currentEvent.value);
+      alert('Đã hoàn tất kết thúc sự kiện thành công!');
+    }
+    return;
+  }
+  
+  const nextName = nextStageItem.value.nameVi || nextStageItem.value.code;
+  if (confirm(`Xác nhận chuyển sang giai đoạn kế tiếp: [${nextName}]?`)) {
+    const res = moveToNextStage(currentEvent.value.id, true);
+    if (res.success) {
+      currentEvent.value = res.event;
+      if (currentEvent.value.lifecycleStates) {
+        Object.assign(lifecycleStates, currentEvent.value.lifecycleStates);
+      }
+      alert(`Đã chuyển thành công sang giai đoạn: [${nextName}]!`);
+    } else {
+      alert(`Không thể chuyển giai đoạn: ${res.error}`);
+    }
+  }
+}
+
+let autoStageInterval = null;
+
+// Kiểm tra tự động chuyển giai đoạn khi hết hạn
+function checkAutoStageTransition() {
+  if (!currentEvent.value || !currentEvent.value.status) return;
+  const currentStage = lifecycleStates[currentEvent.value.status];
+  if (!currentStage || !currentStage.endTime) return;
+
+  const remaining = formatTimeRemaining(currentStage.endTime);
+  if (remaining === 'Đã hết thời gian') {
+    const res = moveToNextStage(currentEvent.value.id, false);
+    if (res.success) {
+      currentEvent.value = res.event;
+      if (currentEvent.value.lifecycleStates) {
+        Object.assign(lifecycleStates, currentEvent.value.lifecycleStates);
+      }
+      console.log(`[Auto Transition] Đã tự động chuyển sang giai đoạn: ${res.nextStage.nameVi}`);
+    }
+  }
+}
 
 // Quản lý chế độ xóa nhiều giai đoạn và danh sách các giai đoạn được chọn
 const isDeleteStageMode = ref(false);
@@ -795,6 +997,8 @@ const showQuickEditModal = ref(false);
 const quickEditKey = ref('');
 const quickEditLabel = ref('');
 const quickEditValue = ref('');
+const quickEditType = ref('text');
+const quickEditDatetimeValue = ref('');
 const quickEditError = ref('');
 const quickEditInputRef = ref(null);
 
@@ -824,8 +1028,19 @@ function openStageDetail(code, stateObj) {
 function openQuickEdit(key, label, currentValue) {
   quickEditKey.value = key;
   quickEditLabel.value = label;
-  quickEditValue.value = currentValue || '';
   quickEditError.value = '';
+
+  if (key === 'startTime' || key === 'endTime' || key === 'startDate' || key === 'endDate') {
+    quickEditType.value = 'datetime';
+    quickEditDatetimeValue.value = formatToDatetimeLocal(currentValue);
+  } else if (key === 'description') {
+    quickEditType.value = 'textarea';
+    quickEditValue.value = currentValue || '';
+  } else {
+    quickEditType.value = 'text';
+    quickEditValue.value = currentValue || '';
+  }
+
   showQuickEditModal.value = true;
   nextTick(() => {
     quickEditInputRef.value?.focus();
@@ -863,18 +1078,47 @@ function reorderAllStages(targetCode, newOrder) {
   markFormModified();
 }
 
+function syncAdjacentStageTimes(targetCode, key, newValue) {
+  const stagesList = sortedLifecycleStates.value;
+  const currIndex = stagesList.findIndex(s => s.code === targetCode);
+  if (currIndex === -1) return;
+
+  if (key === 'startTime' && currIndex > 0) {
+    const prevCode = stagesList[currIndex - 1].code;
+    if (lifecycleStates[prevCode]) {
+      lifecycleStates[prevCode].endTime = newValue;
+    }
+  } else if (key === 'endTime' && currIndex < stagesList.length - 1) {
+    const nextCode = stagesList[currIndex + 1].code;
+    if (lifecycleStates[nextCode]) {
+      lifecycleStates[nextCode].startTime = newValue;
+    }
+  }
+}
+
 function saveQuickEdit() {
-  if (!validateQuickEdit()) {
+  if (quickEditType.value === 'text' && !validateQuickEdit()) {
     return;
   }
   if (quickEditKey.value) {
+    let finalVal = quickEditValue.value;
+
+    if (quickEditType.value === 'datetime') {
+      const defaultTime = quickEditKey.value === 'endTime' ? '18:00' : '09:00';
+      finalVal = formatToDDMMYYYYHHmm(quickEditDatetimeValue.value, defaultTime);
+    }
+
     if (quickEditKey.value === 'stepOrder') {
-      const newOrder = parseInt(quickEditValue.value, 10);
+      const newOrder = parseInt(finalVal, 10);
       reorderAllStages(selectedStage.value.code, newOrder);
     } else {
-      selectedStage.value[quickEditKey.value] = quickEditValue.value;
+      selectedStage.value[quickEditKey.value] = finalVal;
       if (lifecycleStates[selectedStage.value.code]) {
-        lifecycleStates[selectedStage.value.code][quickEditKey.value] = quickEditValue.value;
+        lifecycleStates[selectedStage.value.code][quickEditKey.value] = finalVal;
+      }
+      // Tự động đồng bộ mốc thời gian liền kề của giai đoạn trước/sau
+      if (quickEditKey.value === 'startTime' || quickEditKey.value === 'endTime') {
+        syncAdjacentStageTimes(selectedStage.value.code, quickEditKey.value, finalVal);
       }
     }
     isStageModified.value = true;
@@ -955,7 +1199,137 @@ const showMapPickerModal = ref(false);
 const tempLat = ref(21.0074);
 const tempLng = ref(105.7828);
 const htmlEditorMode = ref('rich');
+const richHtmlEditorRef = ref(null);
 const newReviewImageUrl = ref('');
+
+const startDateDisplay = ref('');
+const endDateDisplay = ref('');
+const startDatePickerRef = ref(null);
+const endDatePickerRef = ref(null);
+
+// Chuyển từ YYYY-MM-DD/ISO sang dd/MM/yyyy HH:mm
+function formatToDDMMYYYYHHmm(dateStr, defaultTime = '09:00') {
+  if (!dateStr) return '';
+  const str = String(dateStr).trim();
+  
+  // Nếu đã ở dạng dd/MM/yyyy HH:mm
+  if (/^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}$/.test(str)) return str;
+  
+  // Nếu ở dạng dd/MM/yyyy
+  if (/^\d{2}\/\d{2}\/\d{4}$/.test(str)) {
+    return `${str} ${defaultTime}`;
+  }
+  
+  // Nếu ở dạng YYYY-MM-DDTHH:mm hoặc YYYY-MM-DD HH:mm
+  if (/^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}/.test(str)) {
+    const parts = str.replace('T', ' ').split(' ');
+    const [y, m, d] = parts[0].split('-');
+    const timeParts = parts[1].split(':');
+    return `${d}/${m}/${y} ${timeParts[0]}:${timeParts[1]}`;
+  }
+
+  // Nếu ở dạng YYYY-MM-DD
+  if (/^\d{4}-\d{2}-\d{2}$/.test(str)) {
+    const [y, m, d] = str.split('-');
+    return `${d}/${m}/${y} ${defaultTime}`;
+  }
+  
+  const dObj = new Date(str);
+  if (!isNaN(dObj.getTime())) {
+    const day = String(dObj.getDate()).padStart(2, '0');
+    const month = String(dObj.getMonth() + 1).padStart(2, '0');
+    const year = dObj.getFullYear();
+    const hours = String(dObj.getHours()).padStart(2, '0');
+    const minutes = String(dObj.getMinutes()).padStart(2, '0');
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
+  }
+  return str;
+}
+
+// Chuyển từ dd/MM/yyyy HH:mm sang YYYY-MM-DDTHH:mm dùng cho input datetime-local picker
+function formatToDatetimeLocal(ddmmyyyyHHmmStr) {
+  if (!ddmmyyyyHHmmStr) return '';
+  const str = String(ddmmyyyyHHmmStr).trim();
+
+  // Dạng dd/MM/yyyy HH:mm
+  const matchWithTime = str.match(/^(\d{2})\/(\d{2})\/(\d{4})\s+(\d{2}):(\d{2})$/);
+  if (matchWithTime) {
+    const [, d, m, y, hh, mm] = matchWithTime;
+    return `${y}-${m}-${d}T${hh}:${mm}`;
+  }
+
+  // Dạng dd/MM/yyyy (không có giờ)
+  const matchOnlyDate = str.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (matchOnlyDate) {
+    const [, d, m, y] = matchOnlyDate;
+    return `${y}-${m}-${d}T09:00`;
+  }
+
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(str)) return str.slice(0, 16);
+  if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return `${str}T09:00`;
+  return '';
+}
+
+function handleStartDateInput() {
+  currentEvent.value.startDate = startDateDisplay.value;
+  markFormModified();
+}
+
+function handleEndDateInput() {
+  currentEvent.value.endDate = endDateDisplay.value;
+  markFormModified();
+}
+
+function triggerStartDatePicker() {
+  if (startDatePickerRef.value) {
+    if (typeof startDatePickerRef.value.showPicker === 'function') {
+      startDatePickerRef.value.showPicker();
+    } else {
+      startDatePickerRef.value.click();
+    }
+  }
+}
+
+function triggerEndDatePicker() {
+  if (endDatePickerRef.value) {
+    if (typeof endDatePickerRef.value.showPicker === 'function') {
+      endDatePickerRef.value.showPicker();
+    } else {
+      endDatePickerRef.value.click();
+    }
+  }
+}
+
+function handleStartDatePickerChange(e) {
+  const dtVal = e.target.value;
+  if (dtVal) {
+    const formatted = formatToDDMMYYYYHHmm(dtVal, '09:00');
+    startDateDisplay.value = formatted;
+    currentEvent.value.startDate = formatted;
+    markFormModified();
+  }
+}
+
+function handleEndDatePickerChange(e) {
+  const dtVal = e.target.value;
+  if (dtVal) {
+    const formatted = formatToDDMMYYYYHHmm(dtVal, '18:00');
+    endDateDisplay.value = formatted;
+    currentEvent.value.endDate = formatted;
+    markFormModified();
+  }
+}
+
+function switchHtmlEditorMode(mode) {
+  htmlEditorMode.value = mode;
+  if (mode === 'rich') {
+    nextTick(() => {
+      if (richHtmlEditorRef.value) {
+        richHtmlEditorRef.value.innerHTML = currentEvent.value.descriptionHtml || '';
+      }
+    });
+  }
+}
 
 const scaleOptions = [
   { value: 'small', label: 'Nhỏ', desc: '< 50 người' },
@@ -970,7 +1344,9 @@ const templateForm = reactive({
   description: ''
 });
 
-function loadData() {
+async function loadData() {
+  // Nạp dữ liệu sự kiện từ public/events.json trước khi cập nhật currentEvent
+  await loadEventsAsync();
   currentEvent.value = getCurrentEvent();
 
   if (currentEvent.value.lifecycleStates) {
@@ -995,8 +1371,19 @@ function loadData() {
     currentEvent.value.descriptionHtml = `<p><b>${currentEvent.value.name || 'Sự kiện'}</b> là diễn đàn công nghệ đỉnh cao khu vực với sự tham gia của các chuyên gia và đối tác hàng đầu.</p>`;
   }
 
+  startDateDisplay.value = formatToDDMMYYYYHHmm(currentEvent.value.startDate, '09:00');
+  endDateDisplay.value = formatToDDMMYYYYHHmm(currentEvent.value.endDate, '18:00');
+  currentEvent.value.startDate = startDateDisplay.value;
+  currentEvent.value.endDate = endDateDisplay.value;
+
   templateForm.name = `Mẫu chuẩn: ${currentEvent.value.name}`;
   templateForm.description = `Template mẫu được xuất từ sự kiện ${currentEvent.value.id}`;
+
+  nextTick(() => {
+    if (richHtmlEditorRef.value) {
+      richHtmlEditorRef.value.innerHTML = currentEvent.value.descriptionHtml || '';
+    }
+  });
 }
 
 function handleEventTypeChange() {
@@ -1052,16 +1439,23 @@ function triggerBannerFileUpload() {
 }
 
 function handleBannerFileUpload(event) {
-  const file = event.target.files?.[0];
+  const inputEl = event.target;
+  const file = inputEl.files?.[0];
   if (!file) return;
+
   const reader = new FileReader();
   reader.onload = (e) => {
     const oldBannerUrl = currentEvent.value.bannerUrl;
     if (oldBannerUrl && oldBannerUrl.startsWith('/uploads/')) {
       pendingDeleteImageUrls.value.push(oldBannerUrl);
     }
-    currentEvent.value.bannerUrl = e.target.result;
+    // Gán dữ liệu Base64 để hiển thị preview ngay tại client (chưa gửi API server)
+    currentEvent.value = {
+      ...currentEvent.value,
+      bannerUrl: e.target.result
+    };
     markFormModified();
+    inputEl.value = '';
   };
   reader.readAsDataURL(file);
 }
@@ -1071,18 +1465,25 @@ function triggerReviewFilesUpload() {
 }
 
 function handleReviewFilesUpload(event) {
-  const files = Array.from(event.target.files || []);
+  const inputEl = event.target;
+  const files = Array.from(inputEl.files || []);
   if (files.length === 0) return;
 
   if (!currentEvent.value.reviewImages) {
     currentEvent.value.reviewImages = [];
   }
 
+  let readCount = 0;
   files.forEach(file => {
     const reader = new FileReader();
     reader.onload = (e) => {
-      currentEvent.value.reviewImages.push(e.target.result);
+      // Gán dữ liệu Base64 vào mảng để hiển thị preview ngay tại client (chưa gửi API server)
+      currentEvent.value.reviewImages = [...(currentEvent.value.reviewImages || []), e.target.result];
       markFormModified();
+      readCount++;
+      if (readCount === files.length) {
+        inputEl.value = '';
+      }
     };
     reader.readAsDataURL(file);
   });
@@ -1106,14 +1507,16 @@ function removeReviewImage(index) {
 }
 
 function applyHtmlFormat(command, value = null) {
+  if (richHtmlEditorRef.value) {
+    richHtmlEditorRef.value.focus();
+  }
   document.execCommand(command, false, value);
   syncHtmlFromEditor();
 }
 
 function syncHtmlFromEditor() {
-  const el = document.getElementById('richHtmlContent');
-  if (el) {
-    currentEvent.value.descriptionHtml = el.innerHTML;
+  if (richHtmlEditorRef.value) {
+    currentEvent.value.descriptionHtml = richHtmlEditorRef.value.innerHTML;
     markFormModified();
   }
 }
@@ -1270,6 +1673,24 @@ function addAssignee(stageCode) {
   showSearchPersonnelModal.value = true;
 }
 
+function removeStageAssignee(stageCode) {
+  const code = stageCode || (selectedStage.value ? selectedStage.value.code : '');
+  if (!code) return;
+
+  const currentName = (lifecycleStates[code] && lifecycleStates[code].assignee) || (selectedStage.value && selectedStage.value.assignee) || '';
+  if (confirm(`Bạn có chắc chắn muốn bỏ người phụ trách [${currentName || 'này'}] khỏi giai đoạn không?`)) {
+    if (lifecycleStates[code]) {
+      lifecycleStates[code].assignee = '';
+    }
+    if (selectedStage.value && selectedStage.value.code === code) {
+      selectedStage.value.assignee = '';
+    }
+    isStageModified.value = true;
+    currentEvent.value.lifecycleStates = JSON.parse(JSON.stringify(lifecycleStates));
+    markFormModified();
+  }
+}
+
 function handlePersonnelConfirmed(users) {
   if (users && users.length > 0) {
     if (assignTarget.value === 'director') {
@@ -1282,6 +1703,10 @@ function handlePersonnelConfirmed(users) {
       const names = users.map(u => u.name).join(', ');
       if (currentAssignStageCode.value && lifecycleStates[currentAssignStageCode.value]) {
         lifecycleStates[currentAssignStageCode.value].assignee = names;
+        if (selectedStage.value && selectedStage.value.code === currentAssignStageCode.value) {
+          selectedStage.value.assignee = names;
+        }
+        isStageModified.value = true;
       }
       alert(`Đã gán thành công ${users.length} nhân sự [${names}] cho giai đoạn!`);
     }
@@ -1310,10 +1735,17 @@ function handleSaveTemplate() {
   alert(`Lưu thành công Template mẫu: [${newTpl.name}] (FR-01.5)!`);
 }
 
-onMounted(() => {
-  loadData();
+onMounted(async () => {
+  await loadData();
   nextTick(() => {
     updateScrollButtons();
   });
+  autoStageInterval = setInterval(checkAutoStageTransition, 20000);
+});
+
+onUnmounted(() => {
+  if (autoStageInterval) {
+    clearInterval(autoStageInterval);
+  }
 });
 </script>

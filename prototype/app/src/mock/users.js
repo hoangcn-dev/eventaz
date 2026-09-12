@@ -2,8 +2,6 @@
  * EventAZ Mock Data - Users & Personnel (Module Vue App)
  */
 
-import initialUsers from './users.json';
-
 const USERS_STORAGE_KEY = "eventaz_mock_users_v3";
 const EVENT_ROSTER_KEY = "eventaz_mock_event_roster_v3";
 
@@ -22,7 +20,11 @@ export const ATTENDANCE_STATUSES = {
     "Absent": { code: "Absent", nameVi: "Vắng mặt", color: "bg-red-100 text-red-800 border-red-300" }
 };
 
-export const defaultUsers = initialUsers;
+export const defaultUsers = [
+    { id: "USR-001", name: "Nguyễn Văn Trưởng", email: "truong.nv@eventaz.vn", roleVi: "Trưởng Ban Tổ Chức", department: "Ban Điều Hành", status: "active" },
+    { id: "USR-002", name: "Trần Thi Hậu Cần", email: "haucan.tt@eventaz.vn", roleVi: "Trưởng ban Hậu cần", department: "Ban Hậu Cần", status: "active" },
+    { id: "USR-003", name: "Lê Văn Nội Dung", email: "noidung.lv@eventaz.vn", roleVi: "Trưởng ban Nội dung", department: "Ban Nội Dung", status: "active" }
+];
 
 export const defaultEventRosters = {
     "E-2024-99X": [
@@ -37,7 +39,18 @@ export const defaultEventRosters = {
     ]
 };
 
-let usersList = initialUsers;
+let usersList = defaultUsers;
+
+if (typeof window !== 'undefined') {
+    fetch('/users.json')
+        .then(res => res.json())
+        .then(data => {
+            if (Array.isArray(data) && data.length > 0) {
+                usersList = data;
+            }
+        })
+        .catch(err => console.warn('Could not load public/users.json:', err));
+}
 
 export function getUsers() {
     return usersList;
